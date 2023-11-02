@@ -1,10 +1,6 @@
 import React from "react";
 import ButtonLink from './ButtonLink'
 
-const handleClick = (e) => {
-    e.preventDefault();
-    // Do sth
-}
 function LandingMain() {
     return(
         <div className="w-screen h-screen bg-landing-bg bg-cover bg-center pt-28">
