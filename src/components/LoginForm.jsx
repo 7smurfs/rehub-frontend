@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../auth/AuthProvider";
-// import LogoWText from "../assets/RH-logo-with-text.svg"
+import userIcon from "../assets/user-icon.svg";
 
 function LoginForm() {
 
@@ -36,7 +36,7 @@ function LoginForm() {
             {/*Za desktop*/}
             <div className="w-[420px] h-[430px] bg-white [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px] mt-8 flex flex-col">
                 <div className="w-full h-24 bg-sky-600 opacity-50 rounded-tl-[10px] rounded-tr-[10px] flex justify-center items-end pb-4">
-                    <img src="./user-icon.svg" alt="User icon" className="w-[32px] h-[32px] mr-1" />
+                    <img src={ userIcon } alt="User icon" className="w-[32px] h-[32px] mr-1" />
                     <span className="text-white font-bold text-3xl ml-1">Prijava</span>
                 </div>
                 <div className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
