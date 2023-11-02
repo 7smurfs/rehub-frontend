@@ -1,14 +1,15 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import PageLayout from "../components/PageLayout";
 
 function Index() {
     return (
-        <div className="w-screen h-screen bg-white flex flex-col justify-between">
+        <PageLayout>
             <Header />
             <h1>This is the some random shit</h1>
             <Footer />
-        </div>
+        </PageLayout>
     );
 };
 

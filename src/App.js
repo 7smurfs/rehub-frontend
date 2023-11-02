@@ -1,19 +1,26 @@
 import './index.css';
 import Login from './pages/Login';
-import Index from './pages/Index';
+import Landing from './pages/Landing';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './auth/AuthProvider';
 
 
 function App() {
   return (
+
     <Router>
-      <Routes>
-        <Route path="/login" element={<Login />}/>
-        <Route exact path="/" element={<Index />}/>
-        <Route path="/about" element={<>About smurf</>}/>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route exact path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/about" element={<>About smurf</>} />
+          <Route path="/dashboard" element={<>Dashboard smurf</>} />
+        </Routes>
+      </AuthProvider>
     </Router>
+
+
   );
 }
 

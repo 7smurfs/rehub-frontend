@@ -1,18 +1,19 @@
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import LoginForm from '../components/LoginForm';
+import PageLayout from '../components/PageLayout';
 import React from 'react';
 
 function Login() {
-    return(
+    return (
 
-        <div className="w-screen h-screen bg-white flex flex-col justify-between">
+        <PageLayout>
 
             <Header />
             <LoginForm />
             <Footer />
 
-        </div>
+        </PageLayout>
     );
 }
 export default Login;
