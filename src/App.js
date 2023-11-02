@@ -1,11 +1,26 @@
 import './index.css';
+import Login from './pages/Login';
+import Landing from './pages/Landing';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './auth/AuthProvider';
+
+
 function App() {
   return (
-    <div className='w-screen h-screen bg-slate-700'>
-      <h1 className="text-3xl font-bold underline text-white">
-      Hello world!
-      </h1>
-    </div>
+
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route exact path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/about" element={<>About smurf</>} />
+          <Route path="/dashboard" element={<>Dashboard smurf</>} />
+        </Routes>
+      </AuthProvider>
+    </Router>
+
+
   );
 }
 
