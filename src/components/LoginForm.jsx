@@ -41,10 +41,10 @@ function LoginForm() {
                 </div>
                 <div className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
                     <label className="font-bold text-sky-600 text-lg mt-[30px] self-start ml-[60px]">E-mail:</label>
-                    <input type="text" name="email" id="email" className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px]" value={email} onChange={e => setEmail(e.target.value)}/>
+                    <input type="text" name="email" id="email" className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2" value={email} onChange={e => setEmail(e.target.value)}/>
 
                     <label className="font-bold text-sky-600 text-lg mt-[15px] self-start ml-[60px]">Lozinka:</label>
-                    <input type="password" name="pass" id="pass" className="w-[300px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px]" value={password} onChange={e => setPassword(e.target.value)}/>
+                    <input type="password" name="pass" id="pass" className="w-[300px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2" value={password} onChange={e => setPassword(e.target.value)}/>
 
                     <span className="text-sky-600 self-start ml-[60px]">Zaboravljena lozinka?</span>
                     <button className="bg-sky-600 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mt-[45px]" onClick={handleSubmit}>Prijava</button>
