@@ -4,6 +4,7 @@ import Landing from './pages/Landing';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './auth/AuthProvider';
+import Dashboard from './pages/Dashboard';
 
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
           <Route exact path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<>About smurf</>} />
-          <Route path="/dashboard" element={<>Dashboard smurf</>} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/register" element={<>Register smurf</>} />
         </Routes>
       </AuthProvider>
     </Router>
