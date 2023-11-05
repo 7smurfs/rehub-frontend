@@ -58,5 +58,5 @@ jobs:
         with:
           app-name: 'rehub'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_1234 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_34B9FEB0A07745D58C4C964FD480C533 }}
           package: .
