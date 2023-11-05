@@ -7,13 +7,7 @@ import LandingMain from "../components/LandingMain";
 function Index() {
     return (
         <PageLayout>
-            <Header array={
-                [
-                    ["Kontakt", "/contact"],
-                    ["Registracija", "/register"],
-                ]
-            
-            }/>
+            <Header />
             <LandingMain />
             <Footer />
         </PageLayout>

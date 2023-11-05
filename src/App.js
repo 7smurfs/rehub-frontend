@@ -8,18 +8,19 @@ import Dashboard from './pages/Dashboard';
 import Register from "./pages/Register";
 
 
+
 function App() {
   return (
 
     <Router>
       <AuthProvider>
-        <Routes>
-          <Route exact path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/about" element={<>About smurf</>} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
+          <Routes>
+            <Route exact path="/" element={<Landing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/about" element={<>About smurf</>} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
       </AuthProvider>
     </Router>
 

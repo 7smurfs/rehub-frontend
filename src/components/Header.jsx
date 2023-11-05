@@ -3,24 +3,11 @@ import LogoWText from "../assets/RH-logo-with-text.svg";
 import { AuthContext } from "../auth/AuthProvider"; // replace with the actual path
 import { useNavigate } from "react-router-dom";
 
-function Header({ array }) {
+function Header() {
 
     const { isAuthenticated, logout } = useContext(AuthContext);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(isAuthenticated);
     const navigate = useNavigate();
-
-    function createButtons() {
-
-        if (!array) {
-            return null;
-        }
-
-        return array.map((element) => {
-            return (
-                <Button text={element[0]} onClick={() => navigate(element[1])} />
-            );
-        });
-    }
 
     useEffect(() => {
         setIsUserAuthenticated(isAuthenticated);
@@ -31,11 +18,22 @@ function Header({ array }) {
             <header className="bg-sky-200 w-screen h-28 flex justify-between">
                 <img src={LogoWText} alt="ReHub logo with text" className="w-56 mb-2" />
                 <div className="flex justify-between">
-                    {createButtons()}
-                    {isUserAuthenticated && <Button text="Logout" onClick={logout} />}
+                    {/* If authenticated then Moj profil, kontakt, odjava. Else: kontakt, register, prijava */}
+                    {isUserAuthenticated ? (
+                        <>
+                            <Button text="Moj profil" onClick={() => navigate("/profile")} />
+                            <Button text="Kontakt" onClick={() => navigate("/contact")} />
+                            <Button text="Odjava" onClick={logout} />
+                        </>
+                    ) : (
+                        <>
+                            <Button text="Kontakt" onClick={() => navigate("/contact")} />
+                            <Button text="Registracija" onClick={() => navigate("/register")} />
+                            <Button text="Prijava" onClick={() => navigate("/login")} />
+                        </>
+                    )}
                 </div>
             </header>
-
             <div className="bg-sky-600 w-screen h-9 opacity-50"></div>
         </div>
     );
