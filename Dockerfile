@@ -9,4 +9,4 @@ RUN npm install
 COPY . /app
 
 EXPOSE 3000
-CMD ["server", "-s", "build"]
+CMD ["npm", "start"]
