@@ -53,6 +53,6 @@ function LoginForm() {
             </div>
         </div>
     );
-};
+}
 
 export default LoginForm;

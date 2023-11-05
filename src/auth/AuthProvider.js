@@ -1,16 +1,8 @@
 import React, { createContext, useState, useEffect } from "react";
-import axios from 'axios'; // Import axios
 import { useNavigate } from "react-router-dom";
-
+import api from "../http/api";
 export const AuthContext = createContext();
 
-const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL,
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': '*'
-  }
-});
 
 export const AuthProvider = ({ children }) => {
 
@@ -28,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const response = await axiosInstance.post(`/auth/login`, {
+            const response = await api.post(`/auth/login`, {
                 username: email,
                 password: password
             });
