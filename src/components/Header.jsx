@@ -18,23 +18,32 @@ function Header() {
             <header className="bg-sky-200 w-screen h-28 flex justify-between">
                 <img src={LogoWText} alt="ReHub logo with text" className="w-56 mb-2" />
                 <div className="flex justify-between">
-                    <button className="bg-sky-600 mr-2 flex w-36 h-24 rounded-br-[5px] rounded-bl-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
-                        <span className="text-white font-bold p-5 self-end">Kontakt</span>
-                    </button>
+                    {/* If authenticated then Moj profil, kontakt, odjava. Else: kontakt, register, prijava */}
                     {isUserAuthenticated ? (
-                        <button onClick={logout} className="bg-sky-600 mr-2 flex w-36 h-24 rounded-br-[5px] rounded-bl-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
-                            <span className="text-white font-bold p-5 self-end">Logout</span>
-                        </button>
+                        <>
+                            <Button text="Moj profil" onClick={() => navigate("/profile")} />
+                            <Button text="Kontakt" onClick={() => navigate("/contact")} />
+                            <Button text="Odjava" onClick={logout} />
+                        </>
                     ) : (
-                        <button onClick={() => navigate("/register")} className="bg-sky-600 mr-6 ml-2 flex w-36 h-24 rounded-br-[5px] rounded-bl-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
-                            <span className="text-white font-bold p-5 self-end">Registracija</span>
-                        </button>
+                        <>
+                            <Button text="Kontakt" onClick={() => navigate("/contact")} />
+                            <Button text="Registracija" onClick={() => navigate("/register")} />
+                            <Button text="Prijava" onClick={() => navigate("/login")} />
+                        </>
                     )}
                 </div>
             </header>
-
             <div className="bg-sky-600 w-screen h-9 opacity-50"></div>
         </div>
+    );
+}
+
+function Button({ text, onClick }) {
+    return (
+        <button onClick={onClick} className="bg-sky-600 mr-2 flex w-36 h-24 rounded-br-[5px] rounded-bl-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+            <span className="text-white font-bold p-5 self-end">{text}</span>
+        </button>
     );
 }
 
