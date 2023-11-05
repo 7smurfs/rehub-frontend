@@ -47,6 +47,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push
+        run: echo $(ls)
         uses: docker/build-push-action@v2
         with:
           context: .
