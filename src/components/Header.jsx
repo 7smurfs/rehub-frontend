@@ -16,7 +16,7 @@ function Header() {
     return (
         <div>
             <header className="bg-sky-200 w-screen h-28 flex justify-between">
-                <img src={LogoWText} alt="ReHub logo with text" className="w-56 mb-2" />
+                <img src={LogoWText} alt="ReHub logo with text" onClick={() => navigate("/")} className="w-56 mb-2 cursor-pointer" />
                 <div className="flex justify-between">
                     {/* If authenticated then Moj profil, kontakt, odjava. Else: kontakt, register, prijava */}
                     {isUserAuthenticated ? (

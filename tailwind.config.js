@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'landing-bg': "url('assets/landing-page-bg.svg')"
+        'landing-bg': "url('assets/landing-page-bg.webp')"
       }
     },
   },
