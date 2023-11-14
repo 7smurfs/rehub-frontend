@@ -30,7 +30,7 @@ function RegisterForm() {
         e.preventDefault();
 
         try {
-            const response = await api.post('/patient', registerData);
+            const response = await api.post('/patient/register', registerData);
             console.log("User registered successfully: ", response.data);
             navigate('/login');
 
