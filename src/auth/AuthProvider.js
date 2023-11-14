@@ -32,8 +32,7 @@ export const AuthProvider = ({ children }) => {
             // Redirect to a different route
             navigate('/dashboard');
         } catch (error) {
-            // Handle error
-            console.error(error);
+            throw error;
         }
     };
 
