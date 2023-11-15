@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import api from "../http/api";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 function RegisterForm() {
@@ -21,6 +22,7 @@ function RegisterForm() {
         gender: '',
         dateOfBirth: ''
     });
+    const [captchaValid, setCaptchaValid] = useState(false);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -67,10 +69,15 @@ function RegisterForm() {
         }
         if (registerData.password !== registerData.confirmPassword) {
             toast.warn("Lozinke se ne podudaraju")
+            return;
         }
         if (registerData.dateOfBirth.match(/^ *$/) !== null) {
             toast.info("Unesite datum rođenja")
+            return;
         }
+        if (!captchaValid)
+            toast.warn("Potvrdite da niste robot")
+
     }
 
     const handleSubmit = async (e) => {
@@ -87,7 +94,6 @@ function RegisterForm() {
             }
         }
     };
-
 
     return (
         <>
@@ -170,10 +176,22 @@ function RegisterForm() {
                             <option value={"OTHER"}>Drugo</option>
                         </select>
                     </div>
-                </div>
-                <button className="bg-sky-600 text-white font-semibold px-8 py-4 my-10 rounded-[5px]"
+                    <div className={"flex items-center justify-center"}>
+                        <ReCAPTCHA
+                            sitekey={process.env.REACT_APP_RECAPTCHA_KEY.toString()}
+                            onChange={() => setCaptchaValid(true)}
+                        />
+                    </div>
+                    <button
+                        disabled={!captchaValid && true}
+                        className={captchaValid ?
+                            "bg-sky-600 text-white font-semibold px-8 py-4 my-10 rounded-[5px]"
+                            :
+                            "bg-gray-600 text-white font-semibold px-8 py-4 my-10 rounded-[5px]"
+                        }
                         onClick={handleSubmit}>Registriraj se
-                </button>
+                    </button>
+                </div>
             </div>
             <ToastContainer
                 position="bottom-right"
