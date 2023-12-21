@@ -3,10 +3,10 @@ import "../index.css";
 
 function Footer() {
     return (
-        <footer className="">
+        <footer>
             <div className="bg-sky-600 w-screen h-12 opacity-50"></div>
         </footer>
     );
-};
+}
 
 export default Footer; 
