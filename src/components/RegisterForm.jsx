@@ -100,7 +100,7 @@ function RegisterForm() {
             <div className="flex flex-col justify-center items-center h-screen w-screen">
                 <span
                     className="text-sky-700 font-bold text-3xl justify-self-center self-center my-10">Registracija</span>
-                <div className="grid grid-cols-2 grid-rows-5 gap-0 w-screen justify-items-center pl-64 pr-64">
+                <form className="grid grid-cols-2 grid-rows-5 gap-0 w-screen justify-items-center pl-64 pr-64">
                     <div className="col-span-1">
                         <label className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Ime:</label>
                         <input type="text" name="firstName" id="firstName" value={registerData.firstName}
@@ -191,7 +191,7 @@ function RegisterForm() {
                         }
                         onClick={handleSubmit}>Registriraj se
                     </button>
-                </div>
+                </form>
             </div>
             <ToastContainer
                 position="bottom-right"
