@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
 
-    const { isAuthenticated, logout } = useContext(AuthContext);
+    const { isAuthenticated, logout, userInfo } = useContext(AuthContext);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(isAuthenticated);
     const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ function Header() {
                     {/* If authenticated then Moj profil, kontakt, odjava. Else: kontakt, register, prijava */}
                     {isUserAuthenticated ? (
                         <>
-                            <Button text="Moj profil" onClick={() => navigate("/profile")} />
+                            <Button text={`${userInfo.firstName} ${userInfo.lastName}`} onClick={() => navigate("/profile")} />
                             <Button text="Kontakt" onClick={() => navigate("/contact")} />
                             <Button text="Odjava" onClick={logout} />
                         </>

@@ -9,7 +9,7 @@ import AdminDashMain from "../components/AdminDashMain";
 function Dashboard() {
 
     /* Za isprobati ucitavanje potrebnog dashboarda */
-    let user = "Admin";
+    let user = "User";
 
     return (
         <PageLayout>
