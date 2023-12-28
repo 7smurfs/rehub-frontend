@@ -162,8 +162,8 @@ function RegisterForm() {
                                    onChange={handleChange}
                                    className="w-[400px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
 
-                            <img src={showPass ? show : hide} onClick={togglePass}
-                                 className="w-6 absolute top-[22%] left-[91%] cursor-pointer"/>
+                            <img src={showPass ? hide : show} onClick={togglePass}
+                                 className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'passEye'}/>
                         </div>
 
                     </div>
@@ -174,8 +174,8 @@ function RegisterForm() {
                             <input type={showRepeatPass ? "password" : "text"} name="confirmPassword" id="confirmPassword"
                                    value={registerData.confirmPassword} onChange={handleChange}
                                    className="w-[400px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
-                            <img src={showRepeatPass ? show : hide} onClick={toggleRepeatPass}
-                                 className="w-6 absolute top-[22%] left-[91%] cursor-pointer"/>
+                            <img src={showRepeatPass ? hide : show} onClick={toggleRepeatPass}
+                                 className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'eyePass'}/>
                         </div>
 
                     </div>

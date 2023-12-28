@@ -25,7 +25,7 @@ function Contact() {
                     <div className="col-span-1 my-8" style={{marginRight: "40px"}}>
                         <img
                             src={PictureText}
-                            alt="Big Picture"
+                            alt="hospital_image"
                             className="w-full h-auto"
                         />
                     </div>
@@ -33,7 +33,7 @@ function Contact() {
                     <div className="col-span-1" style={{ display: 'flex' ,flexDirection: 'column',justifyContent: 'center'}}>
                         <div className="mb-4 text-sky-500 text-lg mt-[15px] " style={{ display: 'inline-block', verticalAlign: 'top'}}>
                             <img src={EmailIcon} alt="email_icon" style={imageStyle}></img>
-                            <p style={{ display: 'inline-block', verticalAlign: 'middle' }}>info@rehub.hr</p>
+                            <p style={{ display: 'inline-block', verticalAlign: 'middle' }}>rehub.noreply@gmail.com</p>
                         </div>
 
                         <div className="mb-4 text-sky-500 text-lg mt-[15px] " style={{ display: 'inline-block', verticalAlign: 'top'}}>
