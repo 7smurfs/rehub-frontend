@@ -2,7 +2,7 @@ import React from "react";
 import PageLayout from "../components/PageLayout";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import PictureText from "../assets/building-with-lake.svg";
+import PictureText from "../assets/building-with-lake.webp";
 import EmailIcon from "../assets/email-icon.svg";
 import LocationIcon from "../assets/location-icon.svg";
 import WorkingHoursIcon from "../assets/working-hours-icon.svg";
