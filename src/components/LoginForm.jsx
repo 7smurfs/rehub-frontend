@@ -2,12 +2,15 @@ import React, {useContext, useState} from "react";
 import {AuthContext} from "../auth/AuthProvider";
 import userIcon from "../assets/user-icon.svg";
 import {toast, ToastContainer} from "react-toastify";
+import show from "../assets/show-pass.svg";
+import hide from "../assets/hide-pass.svg";
 
 function LoginForm() {
 
     const {login} = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPass, setShowPass] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -21,6 +24,10 @@ function LoginForm() {
                 toast.warn("Podaci nisu valjani.");
             }
         }
+    }
+
+    const togglePass = () => {
+        setShowPass(prevState => !prevState);
     }
 
     return (
@@ -41,9 +48,13 @@ function LoginForm() {
 
                         <label
                             className="font-bold text-sky-600 text-lg mt-[15px] self-start ml-[60px]">Lozinka:</label>
-                        <input type="password" name="pass" id="pass"
-                               className="w-[300px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"
-                               value={password} onChange={e => setPassword(e.target.value)}/>
+                        <div className="relative">
+                            <input type={showPass ? "password" : "text"} name="pass" id="pass"
+                                   className="w-[300px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"
+                                   value={password} onChange={e => setPassword(e.target.value)}/>
+                            <img src={showPass ? show : hide} onClick={togglePass} className="w-6 absolute top-[22%] left-[89%] cursor-pointer"/>
+                        </div>
+
 
                         <span className="text-sky-600 self-start ml-[60px]">Zaboravljena lozinka?</span>
                         <button className="bg-sky-600 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mt-[45px]"
