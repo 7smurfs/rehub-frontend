@@ -33,7 +33,7 @@ function LoginForm() {
 
     return (
         <>
-            <form className="flex justify-center">
+            <div className="flex justify-center">
                 <div
                     className="w-[420px] h-[430px] bg-white [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px] mt-8 flex flex-col">
                     <div
@@ -63,7 +63,7 @@ function LoginForm() {
                         </button>
                     </form>
                 </div>
-            </form>
+            </div>
             <ToastContainer
                 position="bottom-right"
                 autoClose={2000}
