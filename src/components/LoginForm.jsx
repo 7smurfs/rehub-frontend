@@ -11,7 +11,7 @@ function LoginForm() {
     const {login} = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [showPass, setShowPass] = useState(true);
+    const [showPass, setShowPass] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -50,7 +50,7 @@ function LoginForm() {
                         <label
                             className="font-bold text-sky-600 text-lg mt-[15px] self-start ml-[60px]">Lozinka:</label>
                         <div className="relative">
-                            <input type={showPass ? "password" : "text"} name="pass" id="pass"
+                            <input type={showPass ? "text" : "password"} name="pass" id="pass"
                                    className="w-[300px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"
                                    value={password} onChange={e => setPassword(e.target.value)}/>
                             <img src={showPass ? hide : show} onClick={togglePass} className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
