@@ -4,6 +4,8 @@ import api from "../http/api";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from "react-google-recaptcha";
+import show from "../assets/show-pass.svg";
+import hide from "../assets/hide-pass.svg";
 
 
 function RegisterForm() {
@@ -23,6 +25,9 @@ function RegisterForm() {
         dateOfBirth: ''
     });
     const [captchaValid, setCaptchaValid] = useState(false);
+
+    const [showPass, setShowPass] = useState(false);
+    const [showRepeatPass, setShowRepeatPass] = useState(false);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -95,6 +100,14 @@ function RegisterForm() {
         }
     };
 
+    const togglePass = () => {
+        setShowPass(prevState => !prevState);
+    }
+
+    const toggleRepeatPass = () => {
+        setShowRepeatPass(prevState => !prevState);
+    }
+
     return (
         <>
             <div className="flex flex-col justify-center items-center h-screen w-screen">
@@ -144,17 +157,27 @@ function RegisterForm() {
 
                     <div className="col-span-1">
                         <label className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Lozinka:</label>
-                        <input type="password" name="password" id="password" value={registerData.password}
-                               onChange={handleChange}
-                               className="w-[400px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                        <div className="relative">
+                            <input type={showPass ? "password" : "text"} name="password" id="password" value={registerData.password}
+                                   onChange={handleChange}
+                                   className="w-[400px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
+
+                            <img src={showPass ? show : hide} onClick={togglePass}
+                                 className="w-6 absolute top-[22%] left-[91%] cursor-pointer"/>
+                        </div>
+
                     </div>
 
                     <div className="col-span-1">
-                        <label className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Ponovljena
-                            lozinka:</label>
-                        <input type="password" name="confirmPassword" id="confirmPassword"
-                               value={registerData.confirmPassword} onChange={handleChange}
-                               className="w-[400px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                        <label className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Ponovljena lozinka:</label>
+                        <div className="relative">
+                            <input type={showRepeatPass ? "password" : "text"} name="confirmPassword" id="confirmPassword"
+                                   value={registerData.confirmPassword} onChange={handleChange}
+                                   className="w-[400px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                            <img src={showRepeatPass ? show : hide} onClick={toggleRepeatPass}
+                                 className="w-6 absolute top-[22%] left-[91%] cursor-pointer"/>
+                        </div>
+
                     </div>
 
                     <div className="col-span-1">
