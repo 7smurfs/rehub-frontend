@@ -25,7 +25,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/passwordReset" element={<PasswordReset />} />
-                    <Route path="/password/reset/:token" element={<SetNewPassword />} />
+                    <Route path="/password/reset/:tkn" element={<SetNewPassword />} />
                 </Routes>
             </AuthProvider>
         </Router>
