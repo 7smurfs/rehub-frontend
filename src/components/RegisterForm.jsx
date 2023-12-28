@@ -26,8 +26,8 @@ function RegisterForm() {
     });
     const [captchaValid, setCaptchaValid] = useState(false);
 
-    const [showPass, setShowPass] = useState(true);
-    const [showRepeatPass, setShowRepeatPass] = useState(true);
+    const [showPass, setShowPass] = useState(false);
+    const [showRepeatPass, setShowRepeatPass] = useState(false);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -158,7 +158,7 @@ function RegisterForm() {
                     <div className="col-span-1">
                         <label className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Lozinka:</label>
                         <div className="relative">
-                            <input type={showPass ? "password" : "text"} name="password" id="password" value={registerData.password}
+                            <input type={showPass ? "text" : "password"} name="password" id="password" value={registerData.password}
                                    onChange={handleChange}
                                    className="w-[400px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
 
@@ -171,7 +171,7 @@ function RegisterForm() {
                     <div className="col-span-1">
                         <label className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Ponovljena lozinka:</label>
                         <div className="relative">
-                            <input type={showRepeatPass ? "password" : "text"} name="confirmPassword" id="confirmPassword"
+                            <input type={showRepeatPass ? "text" : "password"} name="confirmPassword" id="confirmPassword"
                                    value={registerData.confirmPassword} onChange={handleChange}
                                    className="w-[400px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             <img src={showRepeatPass ? hide : show} onClick={toggleRepeatPass}
