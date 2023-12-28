@@ -33,7 +33,7 @@ function LoginForm() {
                         <img src={userIcon} alt="User icon" className="w-[32px] h-[32px] mr-1"/>
                         <span className="text-white font-bold text-3xl ml-1">Prijava</span>
                     </div>
-                    <div className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
+                    <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
                         <label className="font-bold text-sky-600 text-lg mt-[30px] self-start ml-[60px]">E-mail:</label>
                         <input type="text" name="email" id="email"
                                className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2" value={email}
@@ -49,7 +49,7 @@ function LoginForm() {
                         <button className="bg-sky-600 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mt-[45px]"
                                 onClick={handleSubmit}>Prijava
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
             <ToastContainer
