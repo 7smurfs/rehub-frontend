@@ -26,8 +26,8 @@ function RegisterForm() {
     });
     const [captchaValid, setCaptchaValid] = useState(false);
 
-    const [showPass, setShowPass] = useState(false);
-    const [showRepeatPass, setShowRepeatPass] = useState(false);
+    const [showPass, setShowPass] = useState(true);
+    const [showRepeatPass, setShowRepeatPass] = useState(true);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
