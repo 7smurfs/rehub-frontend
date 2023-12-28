@@ -4,23 +4,23 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import UserDashMain from "../components/UserDashMain";
 import EmployeeDashMain from "../components/EmployeeDashMain";
-import AdminDashboard from "../components/AdminDashboard";
+import SuperAdminDashboard from "../components/SuperAdminDashboard";
 
 function Dashboard() {
 
     /* Za isprobati ucitavanje potrebnog dashboarda */
-    let user = "User";
+    let user = "SUPERADMIN";
 
     return (
         <>
             <PageLayout>
                 <Header/>
-                {user === "User" ? (
+                {user === "PATIENT" ? (
                     <UserDashMain/>
-                ) : user === "Employee" ? (
+                ) : user === "EMPLOYEE" ? (
                     <EmployeeDashMain/>
                 ) : (
-                    <AdminDashboard/>
+                    <SuperAdminDashboard/>
                 )}
                 <Footer/>
                 {/* Kad se Footer koristi s UserMain-om pojavi se scroll x */}

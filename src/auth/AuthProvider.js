@@ -17,16 +17,13 @@ export const AuthProvider = ({ children }) => {
 
         if (token && !isAuthenticated) {
             setIsAuthenticated(true);
-
             if (storedUserInfo) {
-
                 const parsedUserInfo = JSON.parse(storedUserInfo);
                 setUserInfo({
                     firstName: parsedUserInfo.firstName,
                     lastName: parsedUserInfo.lastName
                 });
             }
-
             navigate('/dashboard');
         }
     }, [navigate, isAuthenticated]);
