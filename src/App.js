@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Register from "./pages/Register";
 import Contact from "./pages/Contact";
 import PasswordReset from "./pages/PasswordReset";
+import SetNewPassword from "./pages/SetNewPassword";
 
 
 
@@ -24,6 +25,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/passwordReset" element={<PasswordReset />} />
+                    <Route path="/password/reset/:token" element={<SetNewPassword />} />
                 </Routes>
             </AuthProvider>
         </Router>
