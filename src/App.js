@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './auth/AuthProvider';
 import Dashboard from './pages/Dashboard';
 import Register from "./pages/Register";
+import Contact from "./pages/Contact";
 
 
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/about" element={<>About smurf</>} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/register" element={<Register />} />
+              <Route path="/contact" element={<Contact />} />
           </Routes>
       </AuthProvider>
     </Router>
