@@ -23,11 +23,7 @@ function Contact() {
             <div className="flex justify-center items-center h-screen">
                 <div className="grid grid-cols-2 gap-2" style={{paddingLeft: "50px"}}>
                     <div className="col-span-1 my-8" style={{marginRight: "40px"}}>
-                        <img
-                            src={PictureText}
-                            alt="Big Picture"
-                            className="w-full h-auto"
-                        />
+                        <img src={PictureText} alt="Big Picture" className="w-[500px] rounded-[5px] h-auto"/>
                     </div>
 
                     <div className="col-span-1" style={{ display: 'flex' ,flexDirection: 'column',justifyContent: 'center'}}>
@@ -38,7 +34,7 @@ function Contact() {
 
                         <div className="mb-4 text-sky-500 text-lg mt-[15px] " style={{ display: 'inline-block', verticalAlign: 'top'}}>
                             <img src={LocationIcon} alt="location_icon" style={imageStyle}></img>
-                            <p style={{ display: 'inline-block', verticalAlign: 'middle' }}>Ulica Marka Makovljevića 28b, <br />
+                            <p style={{ display: 'inline-block', verticalAlign: 'middle' }}>Ulica Marka Markovića 28b, <br/>
                                 10000 Zagreb</p>
                         </div>
                         <div className="mb-4 text-sky-500 text-lg mt-[15px] " style={{ display: 'inline-block', verticalAlign: 'top'}}>
