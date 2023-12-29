@@ -4,13 +4,14 @@ import userIcon from "../assets/user-icon.svg";
 import {toast, ToastContainer} from "react-toastify";
 import show from "../assets/show-pass.svg";
 import hide from "../assets/hide-pass.svg";
+import {Link} from "react-router-dom";
 
 function LoginForm() {
 
     const {login} = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [showPass, setShowPass] = useState(true);
+    const [showPass, setShowPass] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -32,7 +33,7 @@ function LoginForm() {
 
     return (
         <>
-            <form className="flex justify-center">
+            <div className="flex justify-center">
                 <div
                     className="w-[420px] h-[430px] bg-white [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px] mt-8 flex flex-col">
                     <div
@@ -49,20 +50,20 @@ function LoginForm() {
                         <label
                             className="font-bold text-sky-600 text-lg mt-[15px] self-start ml-[60px]">Lozinka:</label>
                         <div className="relative">
-                            <input type={showPass ? "password" : "text"} name="pass" id="pass"
+                            <input type={showPass ? "text" : "password"} name="pass" id="pass"
                                    className="w-[300px] h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"
                                    value={password} onChange={e => setPassword(e.target.value)}/>
                             <img src={showPass ? hide : show} onClick={togglePass} className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
                         </div>
 
+                        <Link to="/passwordReset" className="self-start ml-[60px]"><span className="text-sky-600">Zaboravljena lozinka?</span></Link>
 
-                        <span className="text-sky-600 self-start ml-[60px]">Zaboravljena lozinka?</span>
                         <button className="bg-sky-600 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mt-[45px]"
                                 onClick={handleSubmit}>Prijava
                         </button>
                     </form>
                 </div>
-            </form>
+            </div>
             <ToastContainer
                 position="bottom-right"
                 autoClose={2000}
