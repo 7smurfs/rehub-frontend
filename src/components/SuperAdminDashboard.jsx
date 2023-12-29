@@ -15,6 +15,7 @@ function SuperAdminDashboard() {
     const [employeeList, setEmployeeList] = useState([]);
     const [roomList, setRoomList] = useState([]);
     const [equipmentList, setEquipmentList] = useState([]);
+    const [selected, setSelected] = useState(0);
 
     const [registerData, setRegisterData] = useState({
         firstName: '',
@@ -95,6 +96,7 @@ function SuperAdminDashboard() {
         }).then((res) => {
             setEmployeeList(res.data)
         })
+        setSelected(1);
         setShowComponent(1);
     }
 
@@ -107,6 +109,7 @@ function SuperAdminDashboard() {
                 setPatientsList(res.data);
             }
         )
+        setSelected(2);
         setShowComponent(2);
     }
 
@@ -120,7 +123,22 @@ function SuperAdminDashboard() {
         }).catch(() => {
             toast.error("Provjerite internetsku vezu.");
         })
+        setSelected(3);
         setShowComponent(3);
+    };
+
+    const showEquipmentComponent = async () => {
+        await api.get('/employee/equipment', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then((res) => {
+            setEquipmentList(res.data);
+        }).catch(() => {
+            toast.error("Provjerite internetsku vezu.");
+        })
+        setSelected(4);
+        setShowComponent(4);
     };
 
     const invalidateEmployee = async (employeeId) => {
@@ -235,21 +253,24 @@ function SuperAdminDashboard() {
         })
     };
 
+
+
+
     return (
         <>
             <div className="flex flex-col h-full">
-                <div className={'grid grid-cols-4 font-bold text-2xl tracking-wider text-center text-sky-800 my-3'}>
+                <div className={'grid grid-cols-4 font-semibold text-2xl tracking-wider text-center text-sky-800 my-3'}>
                     <div onClick={showEmployeeComponent}
-                         className={'bg-sky-200 rounded-xl h-full p-3 mx-3 cursor-pointer'}>OSOBLJE
+                         className={`tab ${selected === 1 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>OSOBLJE
                     </div>
                     <div onClick={showPatientComponent}
-                         className={'bg-sky-200 rounded-xl h-full p-3 mx-3 cursor-pointer'}>PACIJENTI
+                         className={`tab ${selected === 2 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>PACIJENTI
                     </div>
                     <div onClick={showRoomComponent}
-                         className={'bg-sky-200 rounded-xl h-full p-3 mx-3 cursor-pointer'}>SOBE
+                         className={`tab ${selected === 3 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>SOBE
                     </div>
-                    <div onClick={() => setShowComponent(4)}
-                         className={'bg-sky-200 rounded-xl h-full p-3 mx-3 cursor-pointer'}>OPREMA
+                    <div onClick={showEquipmentComponent}
+                         className={`tab ${selected === 4 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>OPREMA
                     </div>
                 </div>
                 <div className={'flex justify-center my-auto'}>
