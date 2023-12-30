@@ -38,7 +38,7 @@ function SuperAdminDashboard() {
        name: '',
         status: 'OPERABLE',
        specialMessage: '',
-        roomId: 2
+        roomId: 0
     });
 
     useEffect(() => {
@@ -139,18 +139,39 @@ function SuperAdminDashboard() {
         setShowComponent(3);
     };
 
+
     const showEquipmentComponent = async () => {
-        await api.get('/employee/equipment', {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        }).then((res) => {
-            setEquipmentList(res.data);
-        }).catch(() => {
+        try {
+            const [roomRes, equipmentRes] = await Promise.all([
+                api.get('/employee/room', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }}),
+
+                api.get('/employee/equipment', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }})
+
+            ])
+
+            setEquipmentList(equipmentRes.data);
+            setRoomList(roomRes.data);
+
+            /*console.log(equipmentRes.data);
+            console.log(roomRes.data);*/
+
+            setSelected(4);
+            setShowComponent(4);
+        } catch(err) {
             toast.error("Provjerite internetsku vezu.");
-        })
-        setSelected(4);
-        setShowComponent(4);
+        }
+        /*.then((res) => {
+
+        }).catch(() => {
+
+        })*/
+
     };
 
     const invalidateEmployee = async (employeeId) => {
@@ -448,7 +469,7 @@ function SuperAdminDashboard() {
                                         key={key}
                                         className={room.status === 'OPERABLE' ?
                                             'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4' :
-                                            'bg-gray-400 p-4 text-white flex flex-row justify-between rounded-lg text-2xl m-4'}>
+                                            'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
                                         <span className={'font-bold'}>{room.label}</span>
                                         <div className={'flex flex-row justify-center items-center'}>
                                             <span className={'font-bold'}>Kapacitet: {room.capacity} {room.id}</span>
@@ -509,7 +530,7 @@ function SuperAdminDashboard() {
                                         className={equipment.status === 'OPERABLE' ?
                                             'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4' :
                                             'bg-gray-400 p-4 text-white flex flex-row justify-between rounded-lg text-2xl m-4'}>
-                                        <span className={'font-bold'}>{equipment.name}</span>
+                                        <span className={'font-bold'}>{equipment.name} {equipment.id}</span>
                                         <div className={'flex flex-row justify-center items-center'}>
                                             <img src={Cross} alt={'cross'}
                                                  onClick={() => invalidateEquipment(equipment.id)}
@@ -525,7 +546,7 @@ function SuperAdminDashboard() {
                             <div className={'bg-sky-200 h-[60vh] rounded-xl p-2 text-center'}>
                                 <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU OPREMU</span>
                                 <form className={'grid grid-cols-2'}>
-                                    <div className={'col-span-2'}>
+                                    <div>
                                         <label
                                             className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Naziv
                                             opreme:</label>
@@ -535,12 +556,25 @@ function SuperAdminDashboard() {
                                                className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
 
+                                    <div>
+                                        <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Soba:</label>
+                                        <select name="roomId" id="roomId" onChange={handleEquipmentChange}
+                                                value={equipmentRegisterData.roomId}
+                                                className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
+                                            <option value={""}>Odaberite sobu...</option>
+                                            {roomList.map((room, key) => (
+                                                <option key={key} value={room.id}>{room.label}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
                                     <div className={'col-span-2'}>
                                         <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Dodatne
                                             informacije:</label>
                                         <textarea name={'specialMessage'} id={'specialMessage'} maxLength={255}
                                                   className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
-                                                  onChange={handleEquipmentChange} value={equipmentRegisterData.specialMessage}/>
+                                                  onChange={handleEquipmentChange}
+                                                  value={equipmentRegisterData.specialMessage}/>
                                     </div>
                                 </form>
                                 <button onClick={registerNewEquipment}
