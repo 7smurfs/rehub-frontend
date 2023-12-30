@@ -34,6 +34,13 @@ function SuperAdminDashboard() {
         specialMessage: ''
     });
 
+    const [equipmentRegisterData, setEquipmentRegisterData] = useState({
+       name: '',
+        status: 'OPERABLE',
+       specialMessage: '',
+        roomId: 2
+    });
+
     useEffect(() => {
         setStatistics(api.get('/stats', {
             headers: {
@@ -50,6 +57,11 @@ function SuperAdminDashboard() {
     const handleRoomChange = (e) => {
         const {name, value} = e.target;
         setRoomRegisterData({...roomRegisterData, [name]: value});
+    }
+
+    const handleEquipmentChange = (e) => {
+        const {name, value} = e.target;
+        setEquipmentRegisterData({...equipmentRegisterData, [name]: value});
     }
     const validateRegisterData = () => {
         if (registerData.firstName.match(/^ *$/) !== null) {
@@ -254,6 +266,42 @@ function SuperAdminDashboard() {
     };
 
 
+    const validateEquipmentRegisterData = () => {
+        if (equipmentRegisterData.name.match(/^ *$/) !== null) {
+            toast.info("Unesite naziv opreme");
+        }
+    };
+
+    const registerNewEquipment = async (e) => {
+        e.preventDefault();
+        validateEquipmentRegisterData();
+        await api.post('/employee/equipment', equipmentRegisterData, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => {
+            toast.success("Uspješno unesena nova oprema");
+            setEquipmentRegisterData({
+                name: '',
+                specialMessage: ''
+            });
+        }).catch((err) => {
+            if (err.code === "ERR_NETWORK") {
+                toast.error("Greška. Provjerite internet vezu ili kontaktirajte podršku.")
+            } else {
+                toast.warn("Podaci nisu valjani. Provjerite podatke opreme.");
+            }
+        });
+    };
+
+    const invalidateEquipment = async (equipmentId) => {
+        await api.delete('/employee/equipment/' + equipmentId, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => toast.success('Uspješno izbrisana oprema.'))
+            .catch(() => toast.error('Dogodila se pogreška.'))
+    };
 
 
     return (
@@ -403,7 +451,7 @@ function SuperAdminDashboard() {
                                             'bg-gray-400 p-4 text-white flex flex-row justify-between rounded-lg text-2xl m-4'}>
                                         <span className={'font-bold'}>{room.label}</span>
                                         <div className={'flex flex-row justify-center items-center'}>
-                                            <span className={'font-bold'}>Kapacitet: {room.capacity}</span>
+                                            <span className={'font-bold'}>Kapacitet: {room.capacity} {room.id}</span>
                                             <img src={Cross} alt={'cross'}
                                                  onClick={() => invalidateRoom(room.id)}
                                                  className={'h-7 mx-2 cursor-pointer'}/>
@@ -446,14 +494,61 @@ function SuperAdminDashboard() {
                                     </div>
                                 </form>
                                 <button onClick={registerNewRoom}
-                                        className={'bg-sky-950 font-bold text-white p-3 rounded-xl my-3'}>UNESI
+                                        className={'bg-sky-950 font-bold text-white p-3 rounded-xl my-2'}>UNESI
                                     SOBU
                                 </button>
                             </div>
                         </div>
                     }
                     {
-                        showComponent === 4 && <div></div>
+                        showComponent === 4 && <div className={'mx-2 w-full grid grid-cols-2 gap-2'}>
+                            <div className={'bg-sky-200 h-[60vh] rounded-xl overflow-y-scroll p-2'}>
+                                {equipmentList.map((equipment, key) => (
+                                    <div
+                                        key={key}
+                                        className={equipment.status === 'OPERABLE' ?
+                                            'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4' :
+                                            'bg-gray-400 p-4 text-white flex flex-row justify-between rounded-lg text-2xl m-4'}>
+                                        <span className={'font-bold'}>{equipment.name}</span>
+                                        <div className={'flex flex-row justify-center items-center'}>
+                                            <img src={Cross} alt={'cross'}
+                                                 onClick={() => invalidateEquipment(equipment.id)}
+                                                 className={'h-7 mx-2 cursor-pointer'}/>
+                                            {equipment.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'} className={'h-7 mx-2 cursor-pointer'}/> :
+                                                <img src={Operable} alt={'operable'}
+                                                     className={'h-7 mx-2 cursor-pointer'}/>}
+
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className={'bg-sky-200 h-[60vh] rounded-xl p-2 text-center'}>
+                                <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU OPREMU</span>
+                                <form className={'grid grid-cols-2'}>
+                                    <div className={'col-span-2'}>
+                                        <label
+                                            className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Naziv
+                                            opreme:</label>
+                                        <input type="text" name="name" id="name"
+                                               value={equipmentRegisterData.name}
+                                               onChange={handleEquipmentChange}
+                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                    </div>
+
+                                    <div className={'col-span-2'}>
+                                        <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Dodatne
+                                            informacije:</label>
+                                        <textarea name={'specialMessage'} id={'specialMessage'} maxLength={255}
+                                                  className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
+                                                  onChange={handleEquipmentChange} value={equipmentRegisterData.specialMessage}/>
+                                    </div>
+                                </form>
+                                <button onClick={registerNewEquipment}
+                                        className={'bg-sky-950 font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                                    OPREMU
+                                </button>
+                            </div>
+                        </div>
                     }
                     {
                         showComponent === null &&
