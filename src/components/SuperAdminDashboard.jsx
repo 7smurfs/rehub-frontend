@@ -35,9 +35,8 @@ function SuperAdminDashboard() {
     });
 
     const [equipmentRegisterData, setEquipmentRegisterData] = useState({
-       name: '',
-        status: 'OPERABLE',
-       specialMessage: '',
+        name: '',
+        specialMessage: '',
         roomId: 0
     });
 
@@ -158,20 +157,11 @@ function SuperAdminDashboard() {
             setEquipmentList(equipmentRes.data);
             setRoomList(roomRes.data);
 
-            /*console.log(equipmentRes.data);
-            console.log(roomRes.data);*/
-
             setSelected(4);
             setShowComponent(4);
         } catch(err) {
             toast.error("Provjerite internetsku vezu.");
         }
-        /*.then((res) => {
-
-        }).catch(() => {
-
-        })*/
-
     };
 
     const invalidateEmployee = async (employeeId) => {
@@ -324,6 +314,31 @@ function SuperAdminDashboard() {
             .catch(() => toast.error('Dogodila se pogreška.'))
     };
 
+    const setEquipmentAsOperable = async (equipmentId) => {
+        await api.post('/employee/equipment/operable/' + equipmentId, null, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => {
+            toast.success("Oprema je postavljena kao operabilna.");
+        }).catch(() => {
+            toast.error("Dogodila se pogreška.");
+        })
+    };
+
+    const setEquipmentAsOutOfService = async (equipmentId) => {
+        await api.post('/employee/equipment/inoperable/' + equipmentId, null, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => {
+            toast.success("Oprema je postavljena kao inoperabilna.");
+        }).catch(() => {
+            toast.error("Dogodila se pogreška.");
+        })
+    };
+
+
 
     return (
         <>
@@ -472,7 +487,7 @@ function SuperAdminDashboard() {
                                             'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
                                         <span className={'font-bold'}>{room.label}</span>
                                         <div className={'flex flex-row justify-center items-center'}>
-                                            <span className={'font-bold'}>Kapacitet: {room.capacity} {room.id}</span>
+                                            <span className={'font-bold'}>Kapacitet: {room.capacity}</span>
                                             <img src={Cross} alt={'cross'}
                                                  onClick={() => invalidateRoom(room.id)}
                                                  className={'h-7 mx-2 cursor-pointer'}/>
@@ -525,25 +540,21 @@ function SuperAdminDashboard() {
                         showComponent === 4 && <div className={'mx-2 w-full grid grid-cols-2 gap-2'}>
                             <div className={'bg-sky-200 h-[60vh] rounded-xl overflow-y-scroll p-2'}>
                                 {equipmentList.map((equipment, key) => (
-                                    <div
-                                        key={key}
-                                        className={equipment.status === 'OPERABLE' ?
-                                            'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4' :
-                                            'bg-gray-400 p-4 text-white flex flex-row justify-between rounded-lg text-2xl m-4'}>
-                                        <span className={'font-bold'}>{equipment.name} {equipment.id}</span>
+
+                                    <div key={key} className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4' : 'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>                               <span className={'font-bold'}>{equipment.name}</span>
                                         <div className={'flex flex-row justify-center items-center'}>
                                             <img src={Cross} alt={'cross'}
-                                                 onClick={() => invalidateEquipment(equipment.id)}
-                                                 className={'h-7 mx-2 cursor-pointer'}/>
-                                            {equipment.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'} className={'h-7 mx-2 cursor-pointer'}/> :
-                                                <img src={Operable} alt={'operable'}
-                                                     className={'h-7 mx-2 cursor-pointer'}/>}
+                                         onClick={() => invalidateEquipment(equipment.id)}
+                                         className={'h-7 mx-2 cursor-pointer'}/>
+                                        {
+                                            equipment.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'} onClick={() => setEquipmentAsOutOfService(equipment.id)} className={'h-7 mx-2 cursor-pointer'}/> : <img src={Operable} alt={'operable'} onClick={setEquipmentAsOperable(equipment.id)} className={'h-7 mx-2 cursor-pointer'}/>
+                                        }
 
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                            <div className={'bg-sky-200 h-[60vh] rounded-xl p-2 text-center'}>
+                            ))}
+                        </div>
+                        <div className={'bg-sky-200 h-[60vh] rounded-xl p-2 text-center'}>
                                 <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU OPREMU</span>
                                 <form className={'grid grid-cols-2'}>
                                     <div>
