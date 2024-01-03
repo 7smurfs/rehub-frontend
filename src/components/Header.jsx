@@ -1,14 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import LogoWText from "../assets/RH-logo-with-text.svg";
 import { AuthContext } from "../auth/AuthProvider"; // replace with the actual path
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
 
     const { isAuthenticated, logout, userInfo } = useContext(AuthContext);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(isAuthenticated);
     const navigate = useNavigate();
-    const location = useLocation();
 
     useEffect(() => {
         setIsUserAuthenticated(isAuthenticated);
@@ -17,22 +16,16 @@ function Header() {
     return (
         <div>
             <header className="bg-sky-200 w-screen h-28 flex justify-between">
-                <img src={LogoWText} alt="ReHub logo with text" onClick={() => ((location.pathname === '/profile' || location.pathname === '/dashboard') ? navigate('/dashboard') : navigate("/"))} className="w-56 mb-2 cursor-pointer" />
+                <img src={LogoWText} alt="ReHub logo with text" onClick={() => navigate("/")} className="w-56 mb-2 cursor-pointer" />
                 <div className="flex justify-between">
                     {/* If authenticated then Moj profil, kontakt, odjava. Else: kontakt, register, prijava */}
-                    {isUserAuthenticated ? (location.pathname === '/profile' ? (
-                        <>
-                            <Button text="Glavna" onClick={() => navigate("/dashboard")} />
-                            <Button text="Kontakt" onClick={() => navigate("/contact")} />
-                            <Button text="Odjava" onClick={logout} />
-                        </>
-                    ) : (
+                    {isUserAuthenticated ? (
                         <>
                             <Button text={`${userInfo.firstName} ${userInfo.lastName}`} onClick={() => navigate("/profile")} />
                             <Button text="Kontakt" onClick={() => navigate("/contact")} />
                             <Button text="Odjava" onClick={logout} />
                         </>
-                    )) : (
+                    ) : (
                         <>
                             <Button text={"FAQ"} onClick={() => navigate('/faq')} />
                             <Button text="Kontakt" onClick={() => navigate("/contact")} />
