@@ -191,7 +191,7 @@ function SuperAdminDashboard() {
             }
         }).then(() => {
             toast.success("Uspješno unesen novi zaposlenik");
-            setRoomRegisterData({
+            setRegisterData({
                 firstName: '',
                 lastName: '',
                 username: '',
@@ -342,7 +342,7 @@ function SuperAdminDashboard() {
 
     return (
         <>
-            <div className="flex flex-col h-full">
+            <div className="flex flex-col h-full w-full">
                 <div className={'grid grid-cols-4 font-semibold text-2xl tracking-wider text-center text-sky-800 my-3'}>
                     <div onClick={showEmployeeComponent}
                          className={`tab ${selected === 1 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>OSOBLJE
@@ -357,11 +357,11 @@ function SuperAdminDashboard() {
                          className={`tab ${selected === 4 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>OPREMA
                     </div>
                 </div>
-                <div className={'flex justify-center my-auto'}>
+                <div className={'flex justify-center h-full my-3'}>
                     {
                         showComponent === 1 &&
                         <div className={'mx-2 w-full grid grid-cols-2 gap-2'}>
-                            <div className={'bg-sky-200 h-[60vh] rounded-xl overflow-y-scroll p-2'}>
+                            <div className={'bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'}>
                                 {employeeList.map((employee, key) => (
                                     <div
                                         key={key}
@@ -384,67 +384,67 @@ function SuperAdminDashboard() {
                                     </div>
                                 ))}
                             </div>
-                            <div className={'bg-sky-200 h-[60vh] rounded-xl p-2 text-center'}>
+                            <div className={'bg-sky-200 h-full rounded-xl p-2 text-center'}>
                                 <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVOG ZAPOSLENIKA</span>
                                 <form className={'grid grid-cols-2'}>
-                                    <div>
+                                    <div className={'pr-1'}>
                                         <label
                                             className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Ime:</label>
                                         <input type="text" name="firstName" id="firstName"
                                                value={registerData.firstName}
                                                onChange={handleChange}
-                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                               className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
-                                    <div>
+                                    <div className={'pl-1'}>
                                         <label
                                             className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Prezime:</label>
                                         <input type="text" name="lastName" id="lastName" value={registerData.lastName}
                                                onChange={handleChange}
-                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                               className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
-                                    <div>
+                                    <div className={'pr-1'}>
                                         <label
                                             className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>E-mail:</label>
                                         <input type="email" name="username" id="username" value={registerData.username}
                                                onChange={handleChange}
-                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                               className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
-                                    <div>
+                                    <div className={'pl-1'}>
                                         <label
                                             className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>OIB:</label>
                                         <input type="text" name="pin" id="pin" value={registerData.pin}
                                                onChange={handleChange}
-                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                               className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
-                                    <div>
+                                    <div className={'pr-1'}>
                                         <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Datum
                                             rođenja:</label>
                                         <input type="date" name="dateOfBirth" id="dateOfBirth"
                                                value={registerData.dateOfBirth}
                                                onChange={handleChange}
-                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                               className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
-                                    <div>
+                                    <div className={'pl-1'}>
                                         <label
                                             className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Profesija:</label>
                                         <input type="text" name="profession" id="profession" onChange={handleChange}
                                                value={registerData.profession}
-                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                               className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
-                                    <div>
+                                    <div className={'pr-1'}>
                                         <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Broj
                                             mobitela:</label>
                                         <input type="text" name="phoneNumber" id="phoneNumber"
                                                value={registerData.phoneNumber}
                                                onChange={handleChange}
-                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                               className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
-                                    <div>
+                                    <div className={'pl-1'}>
                                         <label
                                             className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Spol:</label>
                                         <select name="gender" id="gender" onChange={handleChange}
                                                 value={registerData.gender}
-                                                className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
+                                                className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
                                             <option value={""}>Odaberi spol</option>
                                             <option value={"MALE"}>Muško</option>
                                             <option value={"FEMALE"}>Žensko</option>
@@ -460,9 +460,9 @@ function SuperAdminDashboard() {
                         </div>
                     }
                     {
-                        showComponent === 2 && <div className={'mx-2 w-[90vw]'}>
+                        showComponent === 2 && <div className={'mx-2 w-[90vw] h-full'}>
                             <div
-                                className={'bg-sky-200 flex flex-col h-[60vh] items-center rounded-xl overflow-y-scroll p-2'}>
+                                className={'bg-sky-200 flex flex-col h-full items-center rounded-xl overflow-y-scroll p-2'}>
                                 {patientsList.map((patient, key) => (
                                     <div
                                         key={key}
@@ -478,7 +478,7 @@ function SuperAdminDashboard() {
                     }
                     {
                         showComponent === 3 && <div className={'mx-2 w-full grid grid-cols-2 gap-2'}>
-                            <div className={'bg-sky-200 h-[60vh] rounded-xl overflow-y-scroll p-2'}>
+                            <div className={'bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'}>
                                 {roomList.map((room, key) => (
                                     <div
                                         key={key}
@@ -502,24 +502,24 @@ function SuperAdminDashboard() {
                                     </div>
                                 ))}
                             </div>
-                            <div className={'bg-sky-200 h-[60vh] rounded-xl p-2 text-center'}>
+                            <div className={'bg-sky-200 h-full rounded-xl p-2 text-center'}>
                                 <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU SOBU</span>
                                 <form className={'grid grid-cols-2'}>
-                                    <div>
+                                    <div className={'pr-1'}>
                                         <label
                                             className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Oznaka
                                             sobe:</label>
                                         <input type="text" name="label" id="label"
                                                value={roomRegisterData.label}
                                                onChange={handleRoomChange}
-                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                               className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
-                                    <div>
+                                    <div className={'pl-1'}>
                                         <label
                                             className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Kapacitet:</label>
                                         <input type="text" name="capacity" id="capacity" value={roomRegisterData.capacity}
                                                onChange={handleRoomChange}
-                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                               className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
                                     <div className={'col-span-2'}>
                                         <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Dodatne
@@ -538,7 +538,7 @@ function SuperAdminDashboard() {
                     }
                     {
                         showComponent === 4 && <div className={'mx-2 w-full grid grid-cols-2 gap-2'}>
-                            <div className={'bg-sky-200 h-[60vh] rounded-xl overflow-y-scroll p-2'}>
+                            <div className={'bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'}>
                                 {equipmentList.map((equipment, key) => (
 
                                     <div key={key} className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4' : 'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>                               <span className={'font-bold'}>{equipment.name}</span>
@@ -554,24 +554,24 @@ function SuperAdminDashboard() {
                                     </div>
                             ))}
                         </div>
-                        <div className={'bg-sky-200 h-[60vh] rounded-xl p-2 text-center'}>
+                        <div className={'bg-sky-200 h-full rounded-xl p-2 text-center'}>
                                 <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU OPREMU</span>
                                 <form className={'grid grid-cols-2'}>
-                                    <div>
+                                    <div className={'pr-1'}>
                                         <label
                                             className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Naziv
                                             opreme:</label>
                                         <input type="text" name="name" id="name"
                                                value={equipmentRegisterData.name}
                                                onChange={handleEquipmentChange}
-                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                               className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                                     </div>
 
-                                    <div>
+                                    <div className={'pl-1'}>
                                         <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Soba:</label>
                                         <select name="roomId" id="roomId" onChange={handleEquipmentChange}
                                                 value={equipmentRegisterData.roomId}
-                                                className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
+                                                className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
                                             <option value={""}>Odaberite sobu...</option>
                                             {roomList.map((room, key) => (
                                                 <option key={key} value={room.id}>{room.label}</option>

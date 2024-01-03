@@ -14,8 +14,8 @@ function Header() {
     }, [isAuthenticated]);
 
     return (
-        <div>
-            <header className="bg-sky-200 w-screen h-28 flex justify-between">
+        <div className={"w-full"}>
+            <header className="bg-sky-200 w-full h-28 flex justify-between">
                 <img src={LogoWText} alt="ReHub logo with text" onClick={() => navigate("/")} className="w-56 mb-2 cursor-pointer" />
                 <div className="flex justify-between">
                     {/* If authenticated then Moj profil, kontakt, odjava. Else: kontakt, register, prijava */}
@@ -35,7 +35,7 @@ function Header() {
                     )}
                 </div>
             </header>
-            <div className="bg-sky-600 w-screen h-9 opacity-50"></div>
+            <div className="bg-sky-600 w-full h-9 opacity-50"></div>
         </div>
     );
 }
