@@ -547,7 +547,7 @@ function SuperAdminDashboard() {
                                          onClick={() => invalidateEquipment(equipment.id)}
                                          className={'h-7 mx-2 cursor-pointer'}/>
                                         {
-                                            equipment.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'} onClick={() => setEquipmentAsOutOfService(equipment.id)} className={'h-7 mx-2 cursor-pointer'}/> : <img src={Operable} alt={'operable'} onClick={setEquipmentAsOperable(equipment.id)} className={'h-7 mx-2 cursor-pointer'}/>
+                                            equipment.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'} onClick={() => setEquipmentAsOutOfService(equipment.id)} className={'h-7 mx-2 cursor-pointer'}/> : <img src={Operable} alt={'operable'} onClick={() => setEquipmentAsOperable(equipment.id)} className={'h-7 mx-2 cursor-pointer'}/>
                                         }
 
                                         </div>
