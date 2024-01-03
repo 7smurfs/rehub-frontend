@@ -15,6 +15,7 @@ function SuperAdminDashboard() {
     const [employeeList, setEmployeeList] = useState([]);
     const [roomList, setRoomList] = useState([]);
     const [equipmentList, setEquipmentList] = useState([]);
+    const [selected, setSelected] = useState(0);
 
     const [registerData, setRegisterData] = useState({
         firstName: '',
@@ -33,6 +34,12 @@ function SuperAdminDashboard() {
         specialMessage: ''
     });
 
+    const [equipmentRegisterData, setEquipmentRegisterData] = useState({
+        name: '',
+        specialMessage: '',
+        roomId: 0
+    });
+
     useEffect(() => {
         setStatistics(api.get('/stats', {
             headers: {
@@ -49,6 +56,11 @@ function SuperAdminDashboard() {
     const handleRoomChange = (e) => {
         const {name, value} = e.target;
         setRoomRegisterData({...roomRegisterData, [name]: value});
+    }
+
+    const handleEquipmentChange = (e) => {
+        const {name, value} = e.target;
+        setEquipmentRegisterData({...equipmentRegisterData, [name]: value});
     }
     const validateRegisterData = () => {
         if (registerData.firstName.match(/^ *$/) !== null) {
@@ -95,6 +107,7 @@ function SuperAdminDashboard() {
         }).then((res) => {
             setEmployeeList(res.data)
         })
+        setSelected(1);
         setShowComponent(1);
     }
 
@@ -107,6 +120,7 @@ function SuperAdminDashboard() {
                 setPatientsList(res.data);
             }
         )
+        setSelected(2);
         setShowComponent(2);
     }
 
@@ -120,7 +134,34 @@ function SuperAdminDashboard() {
         }).catch(() => {
             toast.error("Provjerite internetsku vezu.");
         })
+        setSelected(3);
         setShowComponent(3);
+    };
+
+
+    const showEquipmentComponent = async () => {
+        try {
+            const [roomRes, equipmentRes] = await Promise.all([
+                api.get('/employee/room', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }}),
+
+                api.get('/employee/equipment', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }})
+
+            ])
+
+            setEquipmentList(equipmentRes.data);
+            setRoomList(roomRes.data);
+
+            setSelected(4);
+            setShowComponent(4);
+        } catch(err) {
+            toast.error("Provjerite internetsku vezu.");
+        }
     };
 
     const invalidateEmployee = async (employeeId) => {
@@ -235,21 +276,85 @@ function SuperAdminDashboard() {
         })
     };
 
+
+    const validateEquipmentRegisterData = () => {
+        if (equipmentRegisterData.name.match(/^ *$/) !== null) {
+            toast.info("Unesite naziv opreme");
+        }
+    };
+
+    const registerNewEquipment = async (e) => {
+        e.preventDefault();
+        validateEquipmentRegisterData();
+        await api.post('/employee/equipment', equipmentRegisterData, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => {
+            toast.success("Uspješno unesena nova oprema");
+            setEquipmentRegisterData({
+                name: '',
+                specialMessage: ''
+            });
+        }).catch((err) => {
+            if (err.code === "ERR_NETWORK") {
+                toast.error("Greška. Provjerite internet vezu ili kontaktirajte podršku.")
+            } else {
+                toast.warn("Podaci nisu valjani. Provjerite podatke opreme.");
+            }
+        });
+    };
+
+    const invalidateEquipment = async (equipmentId) => {
+        await api.delete('/employee/equipment/' + equipmentId, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => toast.success('Uspješno izbrisana oprema.'))
+            .catch(() => toast.error('Dogodila se pogreška.'))
+    };
+
+    const setEquipmentAsOperable = async (equipmentId) => {
+        await api.post('/employee/equipment/operable/' + equipmentId, null, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => {
+            toast.success("Oprema je postavljena kao operabilna.");
+        }).catch(() => {
+            toast.error("Dogodila se pogreška.");
+        })
+    };
+
+    const setEquipmentAsOutOfService = async (equipmentId) => {
+        await api.post('/employee/equipment/inoperable/' + equipmentId, null, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => {
+            toast.success("Oprema je postavljena kao inoperabilna.");
+        }).catch(() => {
+            toast.error("Dogodila se pogreška.");
+        })
+    };
+
+
+
     return (
         <>
             <div className="flex flex-col h-full">
-                <div className={'grid grid-cols-4 font-bold text-2xl tracking-wider text-center text-sky-800 my-3'}>
+                <div className={'grid grid-cols-4 font-semibold text-2xl tracking-wider text-center text-sky-800 my-3'}>
                     <div onClick={showEmployeeComponent}
-                         className={'bg-sky-200 rounded-xl h-full p-3 mx-3 cursor-pointer'}>OSOBLJE
+                         className={`tab ${selected === 1 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>OSOBLJE
                     </div>
                     <div onClick={showPatientComponent}
-                         className={'bg-sky-200 rounded-xl h-full p-3 mx-3 cursor-pointer'}>PACIJENTI
+                         className={`tab ${selected === 2 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>PACIJENTI
                     </div>
                     <div onClick={showRoomComponent}
-                         className={'bg-sky-200 rounded-xl h-full p-3 mx-3 cursor-pointer'}>SOBE
+                         className={`tab ${selected === 3 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>SOBE
                     </div>
-                    <div onClick={() => setShowComponent(4)}
-                         className={'bg-sky-200 rounded-xl h-full p-3 mx-3 cursor-pointer'}>OPREMA
+                    <div onClick={showEquipmentComponent}
+                         className={`tab ${selected === 4 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>OPREMA
                     </div>
                 </div>
                 <div className={'flex justify-center my-auto'}>
@@ -379,7 +484,7 @@ function SuperAdminDashboard() {
                                         key={key}
                                         className={room.status === 'OPERABLE' ?
                                             'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4' :
-                                            'bg-gray-400 p-4 text-white flex flex-row justify-between rounded-lg text-2xl m-4'}>
+                                            'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
                                         <span className={'font-bold'}>{room.label}</span>
                                         <div className={'flex flex-row justify-center items-center'}>
                                             <span className={'font-bold'}>Kapacitet: {room.capacity}</span>
@@ -425,14 +530,70 @@ function SuperAdminDashboard() {
                                     </div>
                                 </form>
                                 <button onClick={registerNewRoom}
-                                        className={'bg-sky-950 font-bold text-white p-3 rounded-xl my-3'}>UNESI
+                                        className={'bg-sky-950 font-bold text-white p-3 rounded-xl my-2'}>UNESI
                                     SOBU
                                 </button>
                             </div>
                         </div>
                     }
                     {
-                        showComponent === 4 && <div></div>
+                        showComponent === 4 && <div className={'mx-2 w-full grid grid-cols-2 gap-2'}>
+                            <div className={'bg-sky-200 h-[60vh] rounded-xl overflow-y-scroll p-2'}>
+                                {equipmentList.map((equipment, key) => (
+
+                                    <div key={key} className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4' : 'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>                               <span className={'font-bold'}>{equipment.name}</span>
+                                        <div className={'flex flex-row justify-center items-center'}>
+                                            <img src={Cross} alt={'cross'}
+                                         onClick={() => invalidateEquipment(equipment.id)}
+                                         className={'h-7 mx-2 cursor-pointer'}/>
+                                        {
+                                            equipment.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'} onClick={() => setEquipmentAsOutOfService(equipment.id)} className={'h-7 mx-2 cursor-pointer'}/> : <img src={Operable} alt={'operable'} onClick={setEquipmentAsOperable(equipment.id)} className={'h-7 mx-2 cursor-pointer'}/>
+                                        }
+
+                                        </div>
+                                    </div>
+                            ))}
+                        </div>
+                        <div className={'bg-sky-200 h-[60vh] rounded-xl p-2 text-center'}>
+                                <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU OPREMU</span>
+                                <form className={'grid grid-cols-2'}>
+                                    <div>
+                                        <label
+                                            className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Naziv
+                                            opreme:</label>
+                                        <input type="text" name="name" id="name"
+                                               value={equipmentRegisterData.name}
+                                               onChange={handleEquipmentChange}
+                                               className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
+                                    </div>
+
+                                    <div>
+                                        <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Soba:</label>
+                                        <select name="roomId" id="roomId" onChange={handleEquipmentChange}
+                                                value={equipmentRegisterData.roomId}
+                                                className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
+                                            <option value={""}>Odaberite sobu...</option>
+                                            {roomList.map((room, key) => (
+                                                <option key={key} value={room.id}>{room.label}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className={'col-span-2'}>
+                                        <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Dodatne
+                                            informacije:</label>
+                                        <textarea name={'specialMessage'} id={'specialMessage'} maxLength={255}
+                                                  className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
+                                                  onChange={handleEquipmentChange}
+                                                  value={equipmentRegisterData.specialMessage}/>
+                                    </div>
+                                </form>
+                                <button onClick={registerNewEquipment}
+                                        className={'bg-sky-950 font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                                    OPREMU
+                                </button>
+                            </div>
+                        </div>
                     }
                     {
                         showComponent === null &&
