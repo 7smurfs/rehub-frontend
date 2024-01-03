@@ -1,19 +1,18 @@
-import React from 'react';
+import React from "react";
 import PageLayout from "../components/PageLayout";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import RegisterForm from "../components/RegisterForm";
+import FAQComponent from "../components/FAQComponent";
 
+function FAQ() {
 
-function Register() {
-
-    return(
+    return (
         <PageLayout>
             <Header />
-            <RegisterForm />
+            <FAQComponent />
             <Footer />
         </PageLayout>
     );
 }
 
-export default Register;
+export default FAQ;

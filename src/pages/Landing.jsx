@@ -17,7 +17,7 @@ function Landing() {
         if (isUserAuthenticated) {
             navigate('/dashboard');
         }
-    }, [isAuthenticated]);
+    }, [isUserAuthenticated, isAuthenticated, navigate]);
 
     return (
         <PageLayout>
