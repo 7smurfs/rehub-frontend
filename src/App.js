@@ -11,6 +11,7 @@ import PasswordReset from "./pages/PasswordReset";
 import SetNewPassword from "./pages/SetNewPassword";
 import PageNotFound from "./pages/PageNotFound";
 import FAQ from "./pages/FAQ";
+import MyProfile from "./pages/MyProfile";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                     <Route path="/password/reset/:tkn" element={<SetNewPassword/>}/>
                     <Route path={'/faq'} element={<FAQ />} />
                     <Route path={'*'} element={<PageNotFound/>}/>
+                    <Route path="/profile" element={<MyProfile />}/>
                 </Routes>
             </AuthProvider>
         </Router>
