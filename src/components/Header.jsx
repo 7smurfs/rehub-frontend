@@ -27,6 +27,7 @@ function Header() {
                         </>
                     ) : (
                         <>
+                            <Button text={"FAQ"} onClick={() => navigate('/faq')} />
                             <Button text="Kontakt" onClick={() => navigate("/contact")} />
                             <Button text="Registracija" onClick={() => navigate("/register")} />
                             <Button text="Prijava" onClick={() => navigate("/login")} />
