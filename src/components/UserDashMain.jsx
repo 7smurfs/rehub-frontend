@@ -35,6 +35,7 @@ function UserDashMain() {
     const formatTherapies = (therapies) => {
         return therapies.map(therapy => {
             return {
+                id: therapy.id,
                 title: therapy.type,
                 start: therapy.startAt,
                 end: therapy.endAt
@@ -59,13 +60,24 @@ function UserDashMain() {
                             text
                             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                             initialView="timeGridWeek"
+                            businessHours={{
+                                daysOfWeek: [1, 2, 3, 4, 5],
+                                startTime: '08:00',
+                                endTime: '20:00'
+                            }}
+                            displayEventEnd={true}
                             editable={false}
+                            eventTimeFormat={{
+                                hour: 'numeric',
+                                minute: '2-digit',
+                                meridiem: 'short'
+                            }}
                             headerToolbar={{
-                                left: 'prev,next today',
+                                left: 'prev,next',
                                 center: 'title',
                                 right: 'dayGridMonth,timeGridWeek'
                             }}
-                            slotEventOverlap
+                            slotEventOverlap={true}
                             weekends={false}
                             events={formatedTherapies}
                         />
