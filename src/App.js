@@ -12,6 +12,7 @@ import SetNewPassword from "./pages/SetNewPassword";
 import PageNotFound from "./pages/PageNotFound";
 import FAQ from "./pages/FAQ";
 import MyProfile from "./pages/MyProfile";
+import NewTherapyPage from "./pages/NewTherapyPage";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
                     <Route path={'/faq'} element={<FAQ />} />
                     <Route path={'*'} element={<PageNotFound/>}/>
                     <Route path="/profile" element={<MyProfile />}/>
+                    <Route path={'/dashboard/new-therapy'} element={<NewTherapyPage />} />
                 </Routes>
             </AuthProvider>
         </Router>
