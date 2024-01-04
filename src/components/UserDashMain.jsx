@@ -4,10 +4,16 @@ import arrow from "../assets/right-arrow.svg";
 import api from "../http/api";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
 
 function UserDashMain() {
 
     const [userTherapies, setUserTherapies] = useState([]);
+    const [formatedTherapies, setFormatedTherapies] = useState([]);
+
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -17,12 +23,24 @@ function UserDashMain() {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             }).then(res => {
-                setUserTherapies(res.data);
+                let therapies = res.data;
+                setUserTherapies(therapies);
+                setFormatedTherapies(formatTherapies(therapies));
             });
         }
 
         getUserTherapies().catch(() => toast.error('Dogodila se pogreška.'));
     }, []);
+
+    const formatTherapies = (therapies) => {
+        return therapies.map(therapy => {
+            return {
+                title: therapy.type,
+                start: therapy.startAt,
+                end: therapy.endAt
+            };
+        });
+    }
 
     const goToNewTherapy = (e) => {
         e.preventDefault();
@@ -35,8 +53,23 @@ function UserDashMain() {
                 <div className="bg-sky-600 rounded-t-[5px] h-14">
                     <h3 className="font-bold text-lg text-white p-3">Kalendar</h3>
                 </div>
-                <div className="bg-sky-400">
-
+                <div className={'h-5/6 m-2'}>
+                    <div className={'h-full w-full overflow-y-scroll'}>
+                        <FullCalendar
+                            text
+                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                            initialView="timeGridWeek"
+                            editable={false}
+                            headerToolbar={{
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'dayGridMonth,timeGridWeek'
+                            }}
+                            slotEventOverlap
+                            weekends={false}
+                            events={formatedTherapies}
+                        />
+                    </div>
                 </div>
             </div>
 
