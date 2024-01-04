@@ -12,7 +12,7 @@ function ContactMain() {
             <div className="flex justify-center items-center h-screen">
                 <div className="grid grid-cols-2 gap-2 pl-[50px]">
                     <div className="col-span-1 my-8 mr-[40px]">
-                        <img src={PictureText} alt="Big Picture" className="w-[500px] rounded-[5px] h-auto"/>
+                        <img src={PictureText} alt="Building" className="w-[500px] rounded-[5px] h-auto"/>
                     </div>
 
                     <div className="col-span-1 flex flex-col justify-center">
