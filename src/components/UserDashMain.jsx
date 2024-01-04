@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
 
 function UserDashMain() {
 
@@ -57,8 +56,7 @@ function UserDashMain() {
                 <div className={'h-5/6 m-2'}>
                     <div className={'h-full w-full overflow-y-scroll'}>
                         <FullCalendar
-                            text
-                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                            plugins={[dayGridPlugin, timeGridPlugin]}
                             initialView="timeGridWeek"
                             businessHours={{
                                 daysOfWeek: [1, 2, 3, 4, 5],
