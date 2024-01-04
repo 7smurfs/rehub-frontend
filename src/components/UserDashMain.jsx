@@ -47,10 +47,6 @@ function UserDashMain() {
         navigate('/dashboard/new-therapy');
     };
 
-    const handleEventClick = (e) => {
-        console.log(e.event.title);
-    };
-
     return (
         <div className="grid grid-cols-2 grid-rows-1 h-4/5 gap-5 p-5">
             <div className="row-span-1 col-span-1 bg-sky-100 rounded-[5px]">
@@ -63,6 +59,7 @@ function UserDashMain() {
                             text
                             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                             initialView="timeGridWeek"
+                            editable={false}
                             headerToolbar={{
                                 left: 'prev,next today',
                                 center: 'title',
@@ -71,7 +68,6 @@ function UserDashMain() {
                             slotEventOverlap
                             weekends={false}
                             events={formatedTherapies}
-                            eventClick={handleEventClick}
                         />
                     </div>
                 </div>
