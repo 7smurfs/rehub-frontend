@@ -145,12 +145,14 @@ function SuperAdminDashboard() {
                 api.get('/employee/room', {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }}),
+                    }
+                }),
 
                 api.get('/employee/equipment', {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }})
+                    }
+                })
 
             ])
 
@@ -159,7 +161,7 @@ function SuperAdminDashboard() {
 
             setSelected(4);
             setShowComponent(4);
-        } catch(err) {
+        } catch (err) {
             toast.error("Provjerite internetsku vezu.");
         }
     };
@@ -337,7 +339,6 @@ function SuperAdminDashboard() {
             toast.error("Dogodila se pogreška.");
         })
     };
-
 
 
     return (
@@ -541,20 +542,28 @@ function SuperAdminDashboard() {
                             <div className={'bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'}>
                                 {equipmentList.map((equipment, key) => (
 
-                                    <div key={key} className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4' : 'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>                               <span className={'font-bold'}>{equipment.name}</span>
+                                    <div key={key}
+                                         className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4' : 'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
+                                        <span className={'font-bold'}>{equipment.name}</span>
                                         <div className={'flex flex-row justify-center items-center'}>
                                             <img src={Cross} alt={'cross'}
-                                         onClick={() => invalidateEquipment(equipment.id)}
-                                         className={'h-7 mx-2 cursor-pointer'}/>
-                                        {
-                                            equipment.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'} onClick={() => setEquipmentAsOutOfService(equipment.id)} className={'h-7 mx-2 cursor-pointer'}/> : <img src={Operable} alt={'operable'} onClick={() => setEquipmentAsOperable(equipment.id)} className={'h-7 mx-2 cursor-pointer'}/>
-                                        }
+                                                 onClick={() => invalidateEquipment(equipment.id)}
+                                                 className={'h-7 mx-2 cursor-pointer'}/>
+                                            {
+                                                equipment.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'}
+                                                                                       onClick={() => setEquipmentAsOutOfService(equipment.id)}
+                                                                                       className={'h-7 mx-2 cursor-pointer'}/> :
+                                                    <img src={Operable} alt={'operable'}
+                                                         onClick={() => setEquipmentAsOperable(equipment.id)}
+                                                         className={'h-7 mx-2 cursor-pointer'}/>
+                                            }
 
                                         </div>
                                     </div>
                             ))}
                         </div>
                         <div className={'bg-sky-200 h-full rounded-xl p-2 text-center'}>
+
                                 <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU OPREMU</span>
                                 <form className={'grid grid-cols-2'}>
                                     <div className={'pr-1'}>
@@ -569,6 +578,7 @@ function SuperAdminDashboard() {
 
                                     <div className={'pl-1'}>
                                         <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Soba:</label>
+
                                         <select name="roomId" id="roomId" onChange={handleEquipmentChange}
                                                 value={equipmentRegisterData.roomId}
                                                 className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
