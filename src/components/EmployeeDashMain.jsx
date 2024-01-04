@@ -11,6 +11,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 function EmployeeDashMain() {
 
     const [roomList, setRoomList] = useState([]);
+    /*const [room, setRoom] = useState('');*/
     const [equipmentList, setEquipmentList] = useState([]);
     const [apptsList, setApptsList] = useState([]);
     const [formatedTherapies, setFormatedTherapies] = useState([]);
@@ -42,7 +43,7 @@ function EmployeeDashMain() {
             setRoomList(roomRes.data);
             setEquipmentList(equipmentRes.data);
             setApptsList(apptsRes.data);
-            console.log(apptsRes.data)
+            console.log(equipmentRes.data)
 
         } catch (err) {
             toast.error("Provjerite internetsku vezu.");
@@ -64,6 +65,17 @@ function EmployeeDashMain() {
         navigate('/dashboard/new-therapy');
     };
 
+    /*const getRoom = async (roomId) => {
+        await api.get('/employee/room/' + roomId, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then((res) => {
+            setRoom(res.data);
+        }).catch(() => {
+            toast.error("Provjerite internetsku vezu.");
+        })
+    }*/
 
 
     return(
@@ -73,18 +85,30 @@ function EmployeeDashMain() {
                     <span className={'text-sky-600 font-bold text-2xl'}>Kalendar</span>
                 </div>
                 <div className={'h-4/5 w-full'}>
-                    <div className={'h-full w-full overflow-y-auto'}>
+                    <div className={'h-full w-full'}>
                         <FullCalendar
+                            height={"100%"}
                             text
                             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                             initialView="timeGridWeek"
+                            businessHours={{
+                                daysOfWeek: [1, 2, 3, 4, 5],
+                                startTime: '08:00',
+                                endTime: '20:00'
+                            }}
+                            displayEventEnd={true}
                             editable={false}
+                            eventTimeFormat={{
+                                hour: 'numeric',
+                                minute: '2-digit',
+                                meridiem: 'short'
+                            }}
                             headerToolbar={{
-                                left: 'prev,next today',
+                                left: 'prev,next',
                                 center: 'title',
                                 right: 'dayGridMonth,timeGridWeek'
                             }}
-                            slotEventOverlap
+                            slotEventOverlap={true}
                             weekends={false}
                             events={formatedTherapies}
                         />
@@ -104,7 +128,8 @@ function EmployeeDashMain() {
                         {apptsList.map((appt, key) => (
                             <div key={key} className={'bg-sky-200 w-full flex justify-between py-3 pl-3'}>
                                 <div className={'h-full flex items-center'}>
-                                    <span className={'text-sky-800 font-bold'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
+                                    <span
+                                        className={'text-sky-800 font-bold'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
                                 </div>
                                 <div className={'w-20 flex items-center justify-center'}>
                                     <Link to={'/appointment'}>
@@ -126,14 +151,14 @@ function EmployeeDashMain() {
                         <span className={'text-gray-500 text-lg'}>Nema dostupnih soba.</span>
                     </div>
                 ) : (
-                    <div className={'h-4/5 bg-sky-50 mx-2 overflow-y-scroll'}>
+                    <div className={'h-3/5 bg-sky-50 mx-2 overflow-y-scroll'}>
                         {roomList.map((room, key) => (
                             <div
                                 key={key}
                                 className={room.status === 'OPERABLE' ?
                                     'bg-white p-4 text-sky-900 flex flex-row justify-between text-sm m-4' :
                                     'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
-                                <span className={'font-bold text-lg'}>{room.label}</span>
+                                <span className={'font-bold text-sm'}>{room.label}</span>
                                 <div className={'flex flex-row justify-center items-center'}>
                                     <span className={'font-bold'}>Kapacitet: {room.capacity}</span>
                                 </div>
@@ -152,16 +177,16 @@ function EmployeeDashMain() {
                         <span className={'text-gray-500 text-lg'}>Nema dostupne opreme.</span>
                     </div>
                 ) : (
-                    <div className={'h-4/5 bg-sky-50 mx-2 overflow-y-scroll'}>
+                    <div className={'h-3/5 bg-sky-50 mx-2 overflow-y-scroll'}>
                         {equipmentList.map((equipment, key) => (
                             <div
                                 key={key}
                                 className={equipment.status === 'OPERABLE' ?
                                     'bg-white p-4 text-sky-900 flex flex-row justify-between text-sm m-4' :
                                     'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
-                                <span className={'font-bold text-lg'}>{equipment.name}</span>
+                                <span className={'font-bold text-sm'}>{equipment.name}</span>
                                 <div className={'flex flex-row justify-center items-center'}>
-                                    <span className={'font-bold'}>Soba: </span>
+                                    <span className={'font-bold'}>Soba:</span>
                                 </div>
                             </div>
                         ))}
