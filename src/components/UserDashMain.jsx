@@ -7,12 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import Popup from "reactjs-popup";
 
 function UserDashMain() {
 
     const [userTherapies, setUserTherapies] = useState([]);
-    const [formatedTherapies, setFormatedTherapies] = useState([]);
+    const [formattedTherapies, setFormattedTherapies] = useState([]);
+    const [popupTherapy, setPopupTherapy] = useState(null);
+    const [open, setOpen] = useState(false);
 
     let navigate = useNavigate();
 
@@ -25,7 +27,7 @@ function UserDashMain() {
             }).then(res => {
                 let therapies = res.data;
                 setUserTherapies(therapies);
-                setFormatedTherapies(formatTherapies(therapies));
+                setFormattedTherapies(formatTherapies(therapies));
             });
         }
 
@@ -35,12 +37,23 @@ function UserDashMain() {
     const formatTherapies = (therapies) => {
         return therapies.map(therapy => {
             return {
+                id: therapy.id,
                 title: therapy.type,
                 start: therapy.startAt,
                 end: therapy.endAt
             };
         });
     }
+
+    const cancelTherapy = async (id) => {
+        await api.delete('/patient/therapy/' + id, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => toast.success("Uspješno otkazana terapija."))
+            .catch(() => toast.error("Dogodila se pogreska"));
+        navigate('/');
+    };
 
     const goToNewTherapy = (e) => {
         e.preventDefault();
@@ -56,18 +69,28 @@ function UserDashMain() {
                 <div className={'h-5/6 m-2'}>
                     <div className={'h-full w-full overflow-y-scroll'}>
                         <FullCalendar
-                            text
-                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                            plugins={[dayGridPlugin, timeGridPlugin]}
                             initialView="timeGridWeek"
+                            businessHours={{
+                                daysOfWeek: [1, 2, 3, 4, 5],
+                                startTime: '08:00',
+                                endTime: '20:00'
+                            }}
+                            displayEventEnd={true}
                             editable={false}
+                            eventTimeFormat={{
+                                hour: 'numeric',
+                                minute: '2-digit',
+                                meridiem: 'short'
+                            }}
                             headerToolbar={{
-                                left: 'prev,next today',
+                                left: 'prev,next',
                                 center: 'title',
                                 right: 'dayGridMonth,timeGridWeek'
                             }}
-                            slotEventOverlap
+                            slotEventOverlap={true}
                             weekends={false}
-                            events={formatedTherapies}
+                            events={formattedTherapies}
                         />
                     </div>
                 </div>
@@ -112,7 +135,10 @@ function UserDashMain() {
                                                     className="flex h-full items-center font-semibold">Soba: {therapy.roomLabel}</span>
                                                 {therapy.referenceTherapyId && <span className={'font-semibold'}>Šifra ref. terapije: {therapy.referenceTherapyId}</span>}
                                                 <img src={arrow} alt="arrow"
-                                                     onClick={() => navigate('/therapy/info/' + therapy.id)}
+                                                     onClick={() => {
+                                                         setPopupTherapy(therapy);
+                                                         setOpen(true);
+                                                     }}
                                                      className="h-8 cursor-pointer"/>
                                             </div>
                                         </div>
@@ -127,6 +153,69 @@ function UserDashMain() {
                         </>
                     )}
                 </div>
+                <Popup open={open} closeOnDocumentClick={false} onClose={() => setOpen(false)} modal>
+                    <div className={'bg-sky-100 h-[40vh] text-sky-950 text-xl p-5 tracking-wider'}>
+                        <div className={'h-1/6 pb-3'}>
+                            <h2 className={'font-semibold text-2xl'}>Terapija
+                                - {popupTherapy !== null && popupTherapy.patientResponse['firstName']}
+                                &nbsp;{popupTherapy !== null && popupTherapy.patientResponse['lastName']}</h2>
+                        </div>
+                        <div className={'h-4/6 px-2 flex flex-col gap-2 py-2'}>
+                            <div className={'flex'}>
+                                <span className={'w-28 font-semibold'}>VRSTA: </span>
+                                <span>{popupTherapy !== null && popupTherapy.type}</span>
+                            </div>
+                            <div className={'flex'}>
+                                <span className={'w-28 font-semibold'}>ZAHTJEV: </span>
+                                <span>{popupTherapy !== null && popupTherapy.request}</span>
+                            </div>
+                            {
+                                popupTherapy !== null &&
+                                <>
+                                    {popupTherapy.startAt &&
+                                        <div className={'flex'}>
+                                            <span className={'w-28 font-semibold'}>DATUM: </span>
+                                            <span>{new Date(popupTherapy.startAt).getDay()}.{(new Date(popupTherapy.startAt).getMonth() + 1).toString().padStart(2, '0')}.{new Date(popupTherapy.startAt).getFullYear()}</span>
+                                        </div>
+                                    }
+                                    {popupTherapy.endAt &&
+                                        <div className={'flex'}>
+                                            <span className={'w-28 font-semibold'}>VRIJEME: </span>
+                                            <span>{new Date(popupTherapy.startAt).getHours().toString().padStart(2, '0')}:{new Date(popupTherapy.startAt).getMinutes().toString().padStart(2, '0')} - {new Date(popupTherapy.endAt).getHours().toString().padStart(2, '0')}:{new Date(popupTherapy.endAt).getMinutes().toString().padStart(2, '0')}</span>
+                                        </div>
+                                    }
+                                </>
+                            }
+                            {
+                                popupTherapy !== null &&
+                                <div className={'flex'}>
+                                    {
+                                        popupTherapy.roomLabel &&
+                                        <>
+                                            <span className={'w-28 font-semibold'}>LOKACIJA: </span>
+                                            <span>{popupTherapy.roomLabel}</span>
+                                        </>
+                                    }
+
+                                </div>
+                            }
+
+                        </div>
+                        <div className={'flex justify-around items-center'}>
+                            <button onClick={() => setOpen(false)}
+                                    className={'w-1/3 p-3 bg-sky-800 text-white rounded-xl font-semibold'}>
+                                ZATVORI
+                            </button>
+                            <button onClick={() => {
+                                cancelTherapy(popupTherapy.id);
+                                setOpen(false);
+                            }}
+                                    className={'w-1/3 p-3 bg-red-950 text-white rounded-xl font-semibold'}>
+                                OTKAŽI
+                            </button>
+                        </div>
+                    </div>
+                </Popup>
             </div>
             <ToastContainer
                 position="bottom-right"

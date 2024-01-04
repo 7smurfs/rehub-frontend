@@ -38,6 +38,7 @@ function App() {
                     <Route path={'/dashboard/new-therapy'} element={<NewTherapyPage />} />
                     <Route path={'/therapy/info/:id'} element={<TherapyInfo />} />
                     <Route path={'/appointmentResult'} element={<AppointmentResult />} />
+
                 </Routes>
             </AuthProvider>
         </Router>
