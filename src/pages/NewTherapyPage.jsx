@@ -72,7 +72,6 @@ function NewTherapyPage() {
             newState.doctorLastName = doctorLastName;
             return newState;
         });
-        console.log(newTherapyData);
         await api.post('/patient/therapy', newTherapyData, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import arrow from "../assets/right-arrow.svg";
 import api from "../http/api";
 import {toast, ToastContainer} from "react-toastify";
@@ -36,6 +36,7 @@ function UserDashMain() {
                     <h3 className="font-bold text-lg text-white p-3">Kalendar</h3>
                 </div>
                 <div className="bg-sky-400">
+
                 </div>
             </div>
 
@@ -43,7 +44,7 @@ function UserDashMain() {
                 <div className="bg-sky-600 rounded-t-[5px] h-14">
                     <h3 className="font-bold text-lg text-white p-3">Moji termini</h3>
                 </div>
-                <div className="h-full -mt-14 pt-14 flex flex-col items-center justify-between">
+                <div className="h-full -mt-14 pt-14 flex flex-col items-center">
                     {userTherapies.length === 0 ? (
                         <>
                             <div className="h-full w-11/12 my-4 flex flex-col justify-center items-center bg-white">
@@ -64,7 +65,7 @@ function UserDashMain() {
                                     <div key={key} className="rounded-[5px] w-full">
                                         <div className={
                                             therapy.status === 'PENDING_APPROVAL' ? 'bg-yellow-800 p-1 rounded-t-md' :
-                                                therapy.status !== 'APPROVED' ? 'bg-sky-900 p-1 rounded-t-md' :
+                                                therapy.status === 'APPROVED' ? 'bg-sky-900 p-1 rounded-t-md' :
                                                     'bg-gray-700 p-1 rounded-t-md'
                                         }>
                                             <h5 className="text-white font-semibold p-1">{therapy.type}</h5>
@@ -74,12 +75,12 @@ function UserDashMain() {
                                             <span className={'text-ellipsis'}><span
                                                 className={'font-semibold'}>Zahtjev: </span>{therapy.request}</span>
                                             <div className={'flex flex-row items-center justify-between'}>
-
-                                                <span className="flex h-full items-center font-semibold">dd.mm.yyyy hh:mm-hh:mm</span>
+                                                <span
+                                                    className="flex h-full items-center font-semibold">Soba: {therapy.roomLabel}</span>
                                                 {therapy.referenceTherapyId && <span className={'font-semibold'}>Šifra ref. terapije: {therapy.referenceTherapyId}</span>}
-                                                <Link to={"/"}>
-                                                    <img src={arrow} alt="Arrow" className="h-8"/>
-                                                </Link>
+                                                <img src={arrow} alt="arrow"
+                                                     onClick={() => navigate('/therapy/info/' + therapy.id)}
+                                                     className="h-8 cursor-pointer"/>
                                             </div>
                                         </div>
                                     </div>

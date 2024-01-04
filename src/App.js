@@ -13,6 +13,7 @@ import PageNotFound from "./pages/PageNotFound";
 import FAQ from "./pages/FAQ";
 import MyProfile from "./pages/MyProfile";
 import NewTherapyPage from "./pages/NewTherapyPage";
+import TherapyInfo from "./pages/TherapyInfo";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                     <Route path={'*'} element={<PageNotFound/>}/>
                     <Route path="/profile" element={<MyProfile />}/>
                     <Route path={'/dashboard/new-therapy'} element={<NewTherapyPage />} />
+                    <Route path={'/therapy/info/:id'} element={<TherapyInfo />} />
                 </Routes>
             </AuthProvider>
         </Router>
