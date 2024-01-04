@@ -12,6 +12,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 function UserDashMain() {
 
     const [userTherapies, setUserTherapies] = useState([]);
+    const [formatedTherapies, setFormatedTherapies] = useState([]);
 
     let navigate = useNavigate();
 
@@ -22,12 +23,24 @@ function UserDashMain() {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             }).then(res => {
-                setUserTherapies(res.data);
+                let therapies = res.data;
+                setUserTherapies(therapies);
+                setFormatedTherapies(formatTherapies(therapies));
             });
         }
 
         getUserTherapies().catch(() => toast.error('Dogodila se pogreška.'));
     }, []);
+
+    const formatTherapies = (therapies) => {
+        return therapies.map(therapy => {
+            return {
+                title: therapy.type,
+                start: therapy.startAt,
+                end: therapy.endAt
+            };
+        });
+    }
 
     const goToNewTherapy = (e) => {
         e.preventDefault();
@@ -57,12 +70,7 @@ function UserDashMain() {
                             }}
                             slotEventOverlap
                             weekends={false}
-                            events={[
-                                {title: 'terapija', start: '2024-01-02T13:30:00', end: '2024-01-02T15:30:00'},
-                                {title: 'terapija', start: '2024-01-03T13:30:00', end: '2024-01-02T15:30:00'},
-                                {title: 'terapija', start: '2024-01-04T14:30:00', end: '2024-01-02T16:30:00'},
-                                {title: 'terapija', start: '2024-01-04T13:30:00', end: '2024-01-02T16:30:00'},
-                            ]}
+                            events={formatedTherapies}
                             eventClick={handleEventClick}
                         />
                     </div>
