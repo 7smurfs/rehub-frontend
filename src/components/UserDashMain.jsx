@@ -4,10 +4,15 @@ import arrow from "../assets/right-arrow.svg";
 import api from "../http/api";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
 
 function UserDashMain() {
 
     const [userTherapies, setUserTherapies] = useState([]);
+
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -29,14 +34,38 @@ function UserDashMain() {
         navigate('/dashboard/new-therapy');
     };
 
+    const handleEventClick = (e) => {
+        console.log(e.event.title);
+    };
+
     return (
         <div className="grid grid-cols-2 grid-rows-1 h-4/5 gap-5 p-5">
             <div className="row-span-1 col-span-1 bg-sky-100 rounded-[5px]">
                 <div className="bg-sky-600 rounded-t-[5px] h-14">
                     <h3 className="font-bold text-lg text-white p-3">Kalendar</h3>
                 </div>
-                <div className="bg-sky-400">
-
+                <div className={'h-5/6 m-2'}>
+                    <div className={'h-full w-full overflow-y-scroll'}>
+                        <FullCalendar
+                            text
+                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                            initialView="timeGridWeek"
+                            headerToolbar={{
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'dayGridMonth,timeGridWeek'
+                            }}
+                            slotEventOverlap
+                            weekends={false}
+                            events={[
+                                {title: 'terapija', start: '2024-01-02T13:30:00', end: '2024-01-02T15:30:00'},
+                                {title: 'terapija', start: '2024-01-03T13:30:00', end: '2024-01-02T15:30:00'},
+                                {title: 'terapija', start: '2024-01-04T14:30:00', end: '2024-01-02T16:30:00'},
+                                {title: 'terapija', start: '2024-01-04T13:30:00', end: '2024-01-02T16:30:00'},
+                            ]}
+                            eventClick={handleEventClick}
+                        />
+                    </div>
                 </div>
             </div>
 
