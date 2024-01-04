@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import AppointmentPopup from "./AppointmentPopup";
 
 function AssignApptMain() {
 
@@ -59,7 +60,7 @@ function AssignApptMain() {
                 </div>
             </div>
             <div className={'w-full flex justify-center pb-3 gap-3'}>
-                <button className={'bg-sky-800 w-24 p-2 rounded-[5px] text-white font-semibold'}>Dodaj</button>
+                <AppointmentPopup />
                 <button onClick={() => navigate('/dashboard')} className={'bg-sky-800 w-24 p-2 rounded-[5px] text-white font-semibold'}>Odustani</button>
             </div>
 
