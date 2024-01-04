@@ -1,14 +1,21 @@
 import React, {useState} from "react";
 import Arrow from "../assets/right-arrow.svg";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import api from "../http/api";
 import {toast} from "react-toastify";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 
 function EmployeeDashMain() {
 
     const [roomList, setRoomList] = useState([]);
     const [equipmentList, setEquipmentList] = useState([]);
     const [apptsList, setApptsList] = useState([]);
+    const [formatedTherapies, setFormatedTherapies] = useState([]);
+
+    let navigate = useNavigate();
 
     const showData = async () => {
         try {
@@ -42,6 +49,21 @@ function EmployeeDashMain() {
         }
     };
 
+    const formatTherapies = (therapies) => {
+        return therapies.map(therapy => {
+            return {
+                title: therapy.type,
+                start: therapy.startAt,
+                end: therapy.endAt
+            };
+        });
+    }
+
+    const goToNewTherapy = (e) => {
+        e.preventDefault();
+        navigate('/dashboard/new-therapy');
+    };
+
 
 
     return(
@@ -51,7 +73,22 @@ function EmployeeDashMain() {
                     <span className={'text-sky-600 font-bold text-2xl'}>Kalendar</span>
                 </div>
                 <div className={'h-4/5 w-full'}>
-
+                    <div className={'h-full w-full overflow-y-auto'}>
+                        <FullCalendar
+                            text
+                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                            initialView="timeGridWeek"
+                            editable={false}
+                            headerToolbar={{
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'dayGridMonth,timeGridWeek'
+                            }}
+                            slotEventOverlap
+                            weekends={false}
+                            events={formatedTherapies}
+                        />
+                    </div>
                 </div>
             </div>
             <div className={"h-full row-span-2 col-span-1 bg-sky-100 rounded-[5px]"}>
