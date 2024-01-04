@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Arrow from "../assets/right-arrow.svg";
 import {Link, useNavigate} from "react-router-dom";
 import api from "../http/api";
@@ -15,6 +15,7 @@ function EmployeeDashMain() {
     const [equipmentList, setEquipmentList] = useState([]);
     const [apptsList, setApptsList] = useState([]);
     const [formatedTherapies, setFormatedTherapies] = useState([]);
+    const [employeeTherapies, setEmployeeTherapies] = useState([]);
 
     let navigate = useNavigate();
 
@@ -50,6 +51,22 @@ function EmployeeDashMain() {
         }
     };
 
+    useEffect(() => {
+        async function getEmployeeTherapies() {
+            await api.get('/employee/accountable/therapies', {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(res => {
+                let therapies = res.data;
+                setEmployeeTherapies(therapies);
+                setFormatedTherapies(formatTherapies(therapies));
+            });
+        }
+
+        getEmployeeTherapies().catch(() => toast.error('Dogodila se pogreška.'));
+    }, []);
+
     const formatTherapies = (therapies) => {
         return therapies.map(therapy => {
             return {
@@ -59,11 +76,6 @@ function EmployeeDashMain() {
             };
         });
     }
-
-    const goToNewTherapy = (e) => {
-        e.preventDefault();
-        navigate('/dashboard/new-therapy');
-    };
 
     /*const getRoom = async (roomId) => {
         await api.get('/employee/room/' + roomId, {
@@ -115,7 +127,7 @@ function EmployeeDashMain() {
                     </div>
                 </div>
             </div>
-            <div className={"h-full row-span-2 col-span-1 bg-sky-100 rounded-[5px]"}>
+            <div className={"h-full row-span-1 col-span-1 bg-sky-100 rounded-[5px]"}>
                 <div className={'h-10 flex justify-center items-center'}>
                     <span className={'text-sky-600 font-bold text-2xl'}>Pregled prijava</span>
                 </div>
@@ -217,6 +229,26 @@ function EmployeeDashMain() {
             <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[5px]"}>
                 <div className={'h-10 flex justify-center items-center'}>
                     <span className={'text-sky-600 font-bold text-2xl'}>Rezultati terapija</span>
+                </div>
+                <div className={'h-4/6 bg-sky-50 mx-2 overflow-y-scroll p-3'}>
+
+                    <div className={'bg-sky-200 flex justify-between items-center p-3'}>
+                        <div>
+                            <span className={'font-bold text-sky-900'}>Iva Ivić</span>
+                            <p className={'text-sky-800 text-sm'}>Vježbe nogu</p>
+                        </div>
+                        <div>
+                            <Link to={'/appointmentResult'}>
+                                <img src={Arrow} alt="Arrow" className={'h-10'}/>
+                            </Link>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[5px]"}>
+                <div className={'h-10 flex justify-center items-center'}>
+                    <span className={'text-sky-600 font-bold text-2xl'}>Pacijenti i terapije</span>
                 </div>
                 <div className={'h-4/6 bg-sky-50 mx-2 overflow-y-scroll p-3'}>
 
