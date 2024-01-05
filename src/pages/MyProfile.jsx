@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from "react";
-import Popup from "react-popup";
 import PopupJS from "reactjs-popup";
 import PageLayout from "../components/PageLayout";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import api from "../http/api";
 
-import 'react-popup/style.css';
 import 'reactjs-popup/dist/index.css';
 import hide from "../assets/hide-pass.svg";
 import show from "../assets/show-pass.svg";
