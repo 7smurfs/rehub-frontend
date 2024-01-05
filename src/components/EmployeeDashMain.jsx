@@ -99,7 +99,7 @@ function EmployeeDashMain() {
                         <FullCalendar
                             height={"100%"}
                             text
-                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                            plugins={[dayGridPlugin, timeGridPlugin]}
                             initialView="timeGridWeek"
                             businessHours={{
                                 daysOfWeek: [1, 2, 3, 4, 5],
