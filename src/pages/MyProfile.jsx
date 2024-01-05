@@ -197,7 +197,7 @@ function MyProfile() {
                                             return 'PACIJENT';
                                         case 'EMPLOYEE':
                                             return 'DJELATNIK';
-                                        case 'EMPLOYEE,ADMIN':
+                                        case 'EMPLOYEE,ADMIN' || 'ADMIN,EMPLOYEE':
                                             return 'ADMINISTRATOR';
                                         case 'SUPERADMIN':
                                             return 'SUPER ADMINISTRATOR';
