@@ -56,7 +56,7 @@ function LoginForm() {
                             <img src={showPass ? hide : show} onClick={togglePass} className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
                         </div>
 
-                        <Link to="/passwordReset" className="self-start ml-[60px]"><span className="text-sky-600">Zaboravljena lozinka?</span></Link>
+                        <Link to="/passwordReset" className="self-start ml-[65px] pt-2"><span className="text-sky-600">Zaboravljena lozinka?</span></Link>
 
                         <button className="bg-sky-600 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mt-[45px]"
                                 onClick={handleSubmit}>Prijava

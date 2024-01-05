@@ -11,13 +11,11 @@ function NewTherapyPage() {
 
     let navigate = useNavigate();
     const [userTherapies, setUserTherapies] = useState([]);
-    const [doctorFullName, setDoctorFullName] = useState('');
 
     const [newTherapyData, setNewTherapyData] = useState({
         type: '',
         request: '',
-        doctorFirstName: '',
-        doctorLastName: '',
+        doctorFullName: '',
         referenceId: ''
     });
 
@@ -45,10 +43,6 @@ function NewTherapyPage() {
         setNewTherapyData({...newTherapyData, [name]: value});
     };
 
-    const handleDoctorNameChange = (e) => {
-        setDoctorFullName(e.target.value);
-    }
-
     const requestNewTherapy = async (e) => {
         e.preventDefault();
         if (newTherapyData.type.match(/^ *$/) !== null) {
@@ -60,18 +54,10 @@ function NewTherapyPage() {
             return;
         }
         const regexForTwoWords = /^\w+\s\w+$/;
-        if (doctorFullName.match(/^ *$/) !== null && !regexForTwoWords.test(doctorFullName)) {
+        if (newTherapyData.doctorFullName.match(/^ *$/) !== null && !regexForTwoWords.test(newTherapyData.doctorFullName)) {
             toast.info("Neispravno ime i prezime doktora")
             return;
         }
-        const doctorFirstName = doctorFullName.split(" ").at(0);
-        const doctorLastName = doctorFullName.split(" ").at(1);
-        setNewTherapyData(prevState => {
-            const newState = { ...prevState };
-            newState.doctorFirstName = doctorFirstName;
-            newState.doctorLastName = doctorLastName;
-            return newState;
-        });
         await api.post('/patient/therapy', newTherapyData, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -102,8 +88,8 @@ function NewTherapyPage() {
                               onChange={handleChange}/>
                     <label htmlFor={'doctorFullName'} className={'text-start p-2'}>Uputnicu izdao/la (Ime
                         prezime):</label>
-                    <input id={'doctorFullName'} name={'doctorFullName'} value={doctorFullName}
-                           onChange={handleDoctorNameChange}
+                    <input id={'doctorFullName'} name={'doctorFullName'} value={newTherapyData.doctorFullName}
+                           onChange={handleChange}
                            className={'w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2'}
                            type={'text'}/>
                     <label htmlFor={'referenceId'} className={'text-start p-2'}>Referenca na prijasnju terapiju:</label>

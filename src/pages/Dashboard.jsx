@@ -38,7 +38,6 @@ function Dashboard() {
                 {userRole === "EMPLOYEE" && <EmployeeDashMain/>}
                 {userRole === 'SUPERADMIN' && <SuperAdminDashboard/>}
                 <Footer/>
-                { /* TODO Kad se Footer koristi s UserMain-om pojavi se scroll x */}
             </PageLayout>
         </>
     );

@@ -11,14 +11,14 @@ import PasswordReset from "./pages/PasswordReset";
 import SetNewPassword from "./pages/SetNewPassword";
 import PageNotFound from "./pages/PageNotFound";
 import FAQ from "./pages/FAQ";
+import AssignAppointment from "./pages/AssignAppointment";
 import MyProfile from "./pages/MyProfile";
 import NewTherapyPage from "./pages/NewTherapyPage";
-import TherapyInfo from "./pages/TherapyInfo";
+import AppointmentResult from "./pages/AppointmentResult";
 
 
 function App() {
     return (
-
         <Router>
             <AuthProvider>
                 <Routes>
@@ -32,14 +32,14 @@ function App() {
                     <Route path="/password/reset/:tkn" element={<SetNewPassword/>}/>
                     <Route path={'/faq'} element={<FAQ />} />
                     <Route path={'*'} element={<PageNotFound/>}/>
+                    <Route path={'/appointment'} element={<AssignAppointment />} />
                     <Route path="/profile" element={<MyProfile />}/>
                     <Route path={'/dashboard/new-therapy'} element={<NewTherapyPage />} />
-                    <Route path={'/therapy/info/:id'} element={<TherapyInfo />} />
+                    <Route path={'/appointmentResult'} element={<AppointmentResult />} />
+
                 </Routes>
             </AuthProvider>
         </Router>
-
-
     );
 }
 

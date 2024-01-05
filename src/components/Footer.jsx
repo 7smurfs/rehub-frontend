@@ -2,9 +2,12 @@ import React from "react";
 import "../index.css";
 
 function Footer() {
+    const currentYear = new Date().getFullYear();
     return (
-        <footer>
-            <div className="bg-sky-600 w-full h-12 opacity-50"></div>
+        <footer className={'cursor-default'}>
+            <div className="bg-sky-200 text-sm text-sky-950 font-semibold w-full flex justify-center items-center h-12">
+                &copy; Copyright  {currentYear}, ReHub
+            </div>
         </footer>
     );
 }
