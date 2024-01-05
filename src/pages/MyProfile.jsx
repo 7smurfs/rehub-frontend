@@ -123,9 +123,9 @@ function MyProfile() {
             <Header />
             <span className="text-sky-700 font-bold text-3xl justify-self-center self-center ">Moj profil</span>
 
-            <PopupJS open={openInvalidate} closeOnDocumentClick={true} onClose={() => setOpenInvalidate(false)} modal {...{contentStyle}}>
+            <PopupJS open={openInvalidate} closeOnDocumentClick={false} onClose={() => setOpenInvalidate(false)} modal {...{contentStyle}}>
                 <div className="flex justify-center my-10">
-                    <form className="flex-1 items-center rounded-bl-[10px] rounded-br-[10px] flex flex-col">
+                    <div className="flex-1 items-center rounded-bl-[10px] rounded-br-[10px] flex flex-col">
                         <label className="font-bold text-sky-600 text-2xl mt-[30px] text-center">Želite li deaktivirati račun?</label>
 
                         <div className="flex justify-between mt-[45px]">
@@ -133,38 +133,43 @@ function MyProfile() {
 
                             <button className="bg-green-300 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] ml-7" onClick={() => { invalidatePatient().then(r => setOpenInvalidate(false)); }}>Da</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </PopupJS>
 
-            <PopupJS open={open} closeOnDocumentClick={true} onClose={() => setOpen(false)} modal {...{contentStyle}}>
-                    <div className="flex justify-center">
-                        <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
-                            <label className="font-bold text-sky-600 text-lg mt-[30px]">Nova lozinka:</label>
-                            <div className="relative">
-                                <input type={showPass ? "text" : "password"} name="newPass" id="newPass" value={data.newPass}
-                                       onChange={handleChange}
-                                       className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
-                                <img src={showPass ? hide : show} onClick={togglePass}
-                                     className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
+            <PopupJS open={open} closeOnDocumentClick={false} onClose={() => setOpen(false)} modal {...{contentStyle}}>
+                <div className="flex justify-center relative">
+                    <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
+                        <label className="font-bold text-sky-600 text-lg mt-[30px]">Nova lozinka:</label>
+                        <div className="relative">
+                            <input type={showPass ? "text" : "password"} name="newPass" id="newPass"
+                                   value={data.newPass}
+                                   onChange={handleChange}
+                                   className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
+                            <img src={showPass ? hide : show} onClick={togglePass}
+                                 className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
 
-                            </div>
+                        </div>
 
-                            <label className="font-bold text-sky-600 text-lg mt-[30px]">Potvrdite novu
-                                lozinku:</label>
-                            <div className="relative">
-                                <input type={showConfirmPass ? "text" : "password"} name="confirmPass" id="confirmPass"
-                                       value={data.confirmPass}
-                                       onChange={handleChange}
-                                       className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
+                        <label className="font-bold text-sky-600 text-lg mt-[30px]">Potvrdite novu
+                            lozinku:</label>
+                        <div className="relative">
+                            <input type={showConfirmPass ? "text" : "password"} name="confirmPass" id="confirmPass"
+                                   value={data.confirmPass}
+                                   onChange={handleChange}
+                                   className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
 
-                                <img src={showConfirmPass ? hide : show} onClick={toggleConfirmPass}
-                                     className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
-                            </div>
-                            <button className="bg-sky-600 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mt-[45px] mb-8"
-                                    onClick={handleSubmit}>Nastavi
-                            </button>
-                        </form>
+                            <img src={showConfirmPass ? hide : show} onClick={toggleConfirmPass}
+                                 className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
+                        </div>
+                        <button className="bg-sky-600 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mt-[45px] mb-8"
+                                onClick={handleSubmit}>Nastavi
+                        </button>
+
+                    </form>
+                    <button className="bg-sky-600 text-white p-1 rounded-[5px] absolute top-0 right-0 w-[32px] font-bold font-extrabold"
+                            onClick={() => setOpen(false)}>X
+                    </button>
                 </div>
             </PopupJS>
             <div>
