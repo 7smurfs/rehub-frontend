@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
 import Arrow from "../assets/right-arrow.svg";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import api from "../http/api";
 import {toast} from "react-toastify";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
 
 function EmployeeDashMain() {
 
