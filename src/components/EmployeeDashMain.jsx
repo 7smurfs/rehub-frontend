@@ -11,13 +11,12 @@ import interactionPlugin from "@fullcalendar/interaction";
 function EmployeeDashMain() {
 
     const [roomList, setRoomList] = useState([]);
-    /*const [room, setRoom] = useState('');*/
+
     const [equipmentList, setEquipmentList] = useState([]);
     const [apptsList, setApptsList] = useState([]);
     const [formatedTherapies, setFormatedTherapies] = useState([]);
     const [employeeTherapies, setEmployeeTherapies] = useState([]);
 
-    let navigate = useNavigate();
 
     const showData = async () => {
         try {
