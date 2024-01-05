@@ -52,7 +52,7 @@ function SetNewPasswordMain() {
                     <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
                         <label className="font-bold text-sky-600 text-lg mt-[30px] self-start ml-[60px]">Nova lozinka:</label>
                         <div className="relative">
-                            <input type="password" name="newPass" id="newPass" value={data.newPass}
+                            <input type={showPass ? "text" : "password"} name="newPass" id="newPass" value={data.newPass}
                                    onChange={handleChange}
                                    className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
 
@@ -63,7 +63,7 @@ function SetNewPasswordMain() {
                         <label className="font-bold text-sky-600 text-lg mt-[30px] self-start ml-[60px]">Potvrdite novu
                             lozinku:</label>
                         <div className="relative">
-                            <input type="password" name="confirmPass" id="confirmPass"
+                            <input type={showConfirmPass ? "text" : "password"} name="confirmPass" id="confirmPass"
                                    value={data.confirmPass}
                                    onChange={handleChange}
                                    className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
