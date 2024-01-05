@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
 import Popup from "react-popup";
+import PopupJS from "reactjs-popup";
 import PageLayout from "../components/PageLayout";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import api from "../http/api";
 
 import 'react-popup/style.css';
+import 'reactjs-popup/dist/index.css';
 import hide from "../assets/hide-pass.svg";
 import show from "../assets/show-pass.svg";
 import {useNavigate, useParams} from "react-router-dom";
@@ -75,36 +77,7 @@ function MyProfile() {
         fontWeight: '600',
         borderRadius: '8px'
     };
-    const openInvalidatePopup = () => {
-        Popup.close();
-        Popup.create({
-            title: 'Provjera',
-            content: 'Želite li invalidirati Vaš račun?',
-            className: 'invalidate-popup',
-            buttons: {
-                left: [
-                    {
-                        text: 'Odustani',
-                        className: 'danger',
-                        action: function () {
-                            Popup.close();
-                        },
-                    },
-                ],
-                right: [
-                    {
-                        text: 'Invalidiraj',
-                        className: 'success',
-                        action: function () {
-                            // Perform the action you want when the user confirms
-                            invalidatePatient();
-                            Popup.close();
-                        },
-                    },
-                ],
-            },
-        });
-    };
+
     const navigate = useNavigate();
     const { tkn } = useParams();
 
@@ -140,67 +113,60 @@ function MyProfile() {
         }
 
     }
-    const openPasswordResetPopup = () => {
-        console.log("click");
-        Popup.close();
-        Popup.create({
-            title: 'Promjena zaporke',
-            content: (<div className="flex justify-center">
 
-                    <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
-                        <label className="font-bold text-sky-600 text-lg mt-[30px] self-start ml-[60px]">Nova lozinka:</label>
-                        <div className="relative">
-                            <input type={showPass ? "text" : "password"} name="newPass" id="newPass" value={data.newPass}
-                                   onChange={handleChange}
-                                   className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
-                         </div>
+    const [open, setOpen] = useState(false);
+    const [openInvalidate, setOpenInvalidate] = useState(false);
+    const contentStyle = { borderRadius:'10px', width: '40%'};
 
-                        <label className="font-bold text-sky-600 text-lg mt-[30px] self-start ml-[60px]">Potvrdite novu
-                            lozinku:</label>
-                        <div className="relative">
-                            <input type={showConfirmPass ? "text" : "password"} name="confirmPass" id="confirmPass"
-                                   value={data.confirmPass}
-                                   onChange={handleChange}
-                                   className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
-
-                            <img src={showConfirmPass ? hide : show} onClick={toggleConfirmPass}
-                                 className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
-                        </div>
-
-                    </form>
-            </div>),
-            className: 'password-reset-popup',
-            buttons: {
-                left: [
-                    {
-                        text: 'Odustani',
-                        className: 'danger',
-                        action: function () {
-                            Popup.close();
-                        },
-                    },
-                ],
-                right: [
-                    {
-                        text: 'Promijeni',
-                        className: 'success',
-                        action: function () {
-                            handleSubmit();
-                            Popup.close();
-                        },
-                    },
-                ],
-            },
-        });
-        console.log("clack");
-    };
     return(
         <PageLayout>
             <Header />
-
             <span className="text-sky-700 font-bold text-3xl justify-self-center self-center ">Moj profil</span>
 
-            <Popup />
+            <PopupJS open={openInvalidate} closeOnDocumentClick={true} onClose={() => setOpenInvalidate(false)} modal {...{contentStyle}}>
+                <div className="flex justify-center my-10">
+                    <form className="flex-1 items-center rounded-bl-[10px] rounded-br-[10px] flex flex-col">
+                        <label className="font-bold text-sky-600 text-2xl mt-[30px] text-center">Želite li deaktivirati račun?</label>
+
+                        <div className="flex justify-between mt-[45px]">
+                            <button className="bg-red-400 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mr-7" onClick={() => { setOpenInvalidate(false); }}>Ne</button>
+
+                            <button className="bg-green-300 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] ml-7" onClick={() => { invalidatePatient().then(r => setOpenInvalidate(false)); }}>Da</button>
+                        </div>
+                    </form>
+                </div>
+            </PopupJS>
+
+            <PopupJS open={open} closeOnDocumentClick={true} onClose={() => setOpen(false)} modal {...{contentStyle}}>
+                    <div className="flex justify-center">
+                        <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
+                            <label className="font-bold text-sky-600 text-lg mt-[30px]">Nova lozinka:</label>
+                            <div className="relative">
+                                <input type={showPass ? "text" : "password"} name="newPass" id="newPass" value={data.newPass}
+                                       onChange={handleChange}
+                                       className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
+                                <img src={showPass ? hide : show} onClick={togglePass}
+                                     className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
+
+                            </div>
+
+                            <label className="font-bold text-sky-600 text-lg mt-[30px]">Potvrdite novu
+                                lozinku:</label>
+                            <div className="relative">
+                                <input type={showConfirmPass ? "text" : "password"} name="confirmPass" id="confirmPass"
+                                       value={data.confirmPass}
+                                       onChange={handleChange}
+                                       className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
+
+                                <img src={showConfirmPass ? hide : show} onClick={toggleConfirmPass}
+                                     className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
+                            </div>
+                            <button className="bg-sky-600 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mt-[45px] mb-8"
+                                    onClick={handleSubmit}>Nastavi
+                            </button>
+                        </form>
+                </div>
+            </PopupJS>
             <div>
                 {profileData ? (
                 <table className="flex justify-center items-center " >
@@ -224,20 +190,35 @@ function MyProfile() {
                         </tr>
                         <tr>
                             <td style={tableRowStyle} className={'font-bold text-sky-600 text-lg'}>Uloga:</td>
-                            <td style={tableRowStyle} className={'text-sky-700  text-lg'}>{profileData.roles}</td>
-                        </tr>
+                            <td style={tableRowStyle} className={'text-sky-700 text-lg'}>
+                                {(() => {
+                                    switch (profileData.roles.toString()) {
+                                        case "PATIENT":
+                                            return 'PACIJENT';
+                                        case 'EMPLOYEE':
+                                            return 'DJELATNIK';
+                                        case 'ADMIN':
+                                            return 'ADMINISTRATOR';
+                                        case 'SUPERADMIN':
+                                            return 'SUPER ADMINISTRATOR';
+                                        default:
+                                            return profileData.roles;
+                                    }
+                                })()}
+                             </td>
+                            </tr>
                         <tr>
                             {profileData.roles.includes("PATIENT")  && (
                                 <>
                                     <td style={tableRowStyle} className={' text-sky-600 text-lg'}>
-                                            <button style={buttonStyle} onClick={openInvalidatePopup}>
-                                                Invalidiraj profil
+                                            <button style={buttonStyle} onClick={() => {setOpenInvalidate(true);}}>
+                                                Deaktiviraj račun
                                             </button>
                                     </td>
                                 </>
                             )}
                             <td style={tableRowStyle} className={'text-sky-600 text-lg'}>
-                                <button style={buttonStyle} onClick={openPasswordResetPopup}>
+                                <button style={buttonStyle} onClick={() => {setOpen(true);}}>
                                     Promijeni lozinku
                                 </button>
                             </td>
