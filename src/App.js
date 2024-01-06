@@ -24,11 +24,10 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<Landing/>}/>
                     <Route path="/login" element={<Login/>}/>
-                    <Route path="/about" element={<>About smurf</>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/contact" element={<Contact/>}/>
-                    <Route path="/passwordReset" element={<PasswordReset/>}/>
+                    <Route path="/password-reset" element={<PasswordReset/>}/>
                     <Route path="/password/reset/:tkn" element={<SetNewPassword/>}/>
                     <Route path={'/faq'} element={<FAQ />} />
                     <Route path={'*'} element={<PageNotFound/>}/>
@@ -36,7 +35,6 @@ function App() {
                     <Route path="/profile" element={<MyProfile />}/>
                     <Route path={'/dashboard/new-therapy'} element={<NewTherapyPage />} />
                     <Route path={'/appointmentResult'} element={<AppointmentResult />} />
-
                 </Routes>
             </AuthProvider>
         </Router>
