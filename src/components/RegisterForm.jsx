@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, {useState} from 'react';
+import {useNavigate} from "react-router-dom";
 import api from "../http/api";
-import { toast, ToastContainer } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from "react-google-recaptcha";
 import show from "../assets/show-pass.svg";
@@ -31,8 +31,8 @@ function RegisterForm() {
     const [showRepeatPass, setShowRepeatPass] = useState(false);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setRegisterData({ ...registerData, [name]: value });
+        const {name, value} = e.target;
+        setRegisterData({...registerData, [name]: value});
     };
 
     const validateRegisterData = () => {
@@ -117,8 +117,43 @@ function RegisterForm() {
         setShowRepeatPass(prevState => !prevState);
     }
 
-    const [step, setStep] = useState(0);
+    const [passwordStrength, setPasswordStrength] = useState(0);
+    const [passwordColor, setPasswordColor] = useState('');
 
+    const handlePasswordChange = (e) => {
+        const {name, value} = e.target;
+        setRegisterData({...registerData, [name]: value});
+        if (value.length === 0) {
+            setPasswordStrength(0);
+            return;
+        }
+        if (value.length < 8 && value.length > 0) {
+            setPasswordColor("h-2 bg-red-400 transition-all duration-500");
+            setPasswordStrength(1);
+            return;
+        }
+        if (/^(?=.*[A-Za-z])(?=.*[0-9]).{8,}$/.test(value) && !/^(?=.*[A-Za-z])(?=.*[0-9]).{10,}$/.test(value)) {
+            setPasswordColor("h-2 bg-yellow-400 transition-all duration-500");
+            setPasswordStrength(2);
+            return;
+        }
+        if (/^(?=.*[A-Za-z])(?=.*[0-9]).{10,}$/.test(value)) {
+            setPasswordColor("h-2 bg-green-600 transition-all duration-500");
+            setPasswordStrength(3);
+            return;
+        }
+        if (/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{12,}$/.test(value)) {
+            setPasswordColor("h-2 bg-green-600 transition-all duration-500");
+            setPasswordStrength(3);
+            return;
+        }
+        if (value.length > 0) {
+            setPasswordStrength(1);
+            setPasswordColor("h-2 bg-red-400 transition-all duration-500");
+        }
+    };
+
+    const [step, setStep] = useState(0);
     const incrementStep = () => {
         if (step < 4) {
             setStep(tmp => tmp + 1);
@@ -137,12 +172,17 @@ function RegisterForm() {
                     className="w-full mx-6 sm:w-2/3 sm:mx-14 lg:w-1/3 bg-white [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px] mt-8 flex flex-col">
                     <div
                         className="w-full h-24 bg-sky-600 opacity-50 rounded-tl-[10px] rounded-tr-[10px] flex justify-center items-end pb-4">
-                        <img src={userIcon} alt="User icon" className="w-8 mr-1" />
+                        <img src={userIcon} alt="User icon" className="w-8 mr-1"/>
                         <span className="text-white font-bold text-3xl ml-1">Registracija</span>
                     </div>
-                    <div className="h-2 w-full bg-sky-600 opacity-50 ">
+                    <div className={step === 4 ? "h-2 w-full bg-[#80c1e3]" : "hidden"}>
+                        <div
+                            className={passwordColor}
+                            style={{width: `${(passwordStrength / 3) * 100}%`}}></div>
+                    </div>
+                    <div className="h-2 w-full bg-sky-600 opacity-50">
                         <div className="h-2 bg-sky-900 transition-all duration-500"
-                            style={{ width: `${(step / 4) * 100}%` }}></div>
+                             style={{width: `${(step / 4) * 100}%`}}></div>
                     </div>
                     <form className="flex flex-col gap-0 w-full justify-items-center p-10">
                         {step === 0 && (<section>
@@ -150,16 +190,16 @@ function RegisterForm() {
                                 <label
                                     className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Ime:</label>
                                 <input type="text" name="firstName" id="firstName" value={registerData.firstName}
-                                    onChange={handleChange}
-                                    className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2" />
+                                       onChange={handleChange}
+                                       className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
                             <div className="">
                                 <label
                                     className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Prezime:</label>
                                 <input type="text" name="lastName" id="lastName" value={registerData.lastName}
-                                    onChange={handleChange}
-                                    className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2" />
+                                       onChange={handleChange}
+                                       className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
                         </section>)}
                         {step === 1 && (<section>
@@ -167,16 +207,16 @@ function RegisterForm() {
                                 <label
                                     className="font-bold text-sky-600 text-lg mt-[15px] self-start block">E-mail:</label>
                                 <input type="email" name="username" id="username" value={registerData.username}
-                                    onChange={handleChange}
-                                    className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2" />
+                                       onChange={handleChange}
+                                       className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
                             <div className="">
                                 <label className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Broj
                                     telefona:</label>
                                 <input type="text" name="phoneNumber" id="phoneNumber" value={registerData.phoneNumber}
-                                    onChange={handleChange}
-                                    className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2" />
+                                       onChange={handleChange}
+                                       className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
                         </section>)}
 
@@ -185,15 +225,15 @@ function RegisterForm() {
                                 <label
                                     className="font-bold text-sky-600 text-lg mt-[15px] self-start block">OIB:</label>
                                 <input type="text" name="pin" id="pin" value={registerData.pin} onChange={handleChange}
-                                    className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2" />
+                                       className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
                             <div className="col-span-1">
                                 <label
                                     className="font-bold text-sky-600 text-lg mt-[15px] self-start block">MBO:</label>
                                 <input type="text" name="phin" id="phin" value={registerData.phin}
-                                    onChange={handleChange}
-                                    className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2" />
+                                       onChange={handleChange}
+                                       className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
                         </section>)}
@@ -202,15 +242,15 @@ function RegisterForm() {
                                 <label className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Datum
                                     rođenja:</label>
                                 <input type="date" name="dateOfBirth" id="dateOfBirth" value={registerData.dateOfBirth}
-                                    onChange={handleChange}
-                                    className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2" />
+                                       onChange={handleChange}
+                                       className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
                             <div className="">
                                 <label htmlFor={'gender'}
-                                    className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Spol:</label>
+                                       className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Spol:</label>
                                 <select name="gender" id="gender" value={registerData.gender} onChange={handleChange}
-                                    className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2">
+                                        className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2">
                                     <option value={""}>Odaberi spol</option>
                                     <option value={"MALE"}>Muško</option>
                                     <option value={"FEMALE"}>Žensko</option>
@@ -225,12 +265,12 @@ function RegisterForm() {
                                     className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Lozinka:</label>
                                 <div className="relative">
                                     <input type={showPass ? "text" : "password"} name="password" id="password"
-                                        value={registerData.password}
-                                        onChange={handleChange}
-                                        className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2" />
+                                           value={registerData.password}
+                                           onChange={handlePasswordChange}
+                                           className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
 
                                     <img src={showPass ? hide : show} onClick={togglePass}
-                                        className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'passEye'} />
+                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'passEye'}/>
                                 </div>
                             </div>
                             <div className="">
@@ -238,11 +278,11 @@ function RegisterForm() {
                                     lozinka:</label>
                                 <div className="relative">
                                     <input type={showRepeatPass ? "text" : "password"} name="confirmPassword"
-                                        id="confirmPassword"
-                                        value={registerData.confirmPassword} onChange={handleChange}
-                                        className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2" />
+                                           id="confirmPassword"
+                                           value={registerData.confirmPassword} onChange={handleChange}
+                                           className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
                                     <img src={showRepeatPass ? hide : show} onClick={toggleRepeatPass}
-                                        className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'eyePass'} />
+                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'eyePass'}/>
                                 </div>
 
                             </div>
@@ -267,9 +307,9 @@ function RegisterForm() {
                                 <button
                                     disabled={(/^\s*$/.test(registerData.firstName) || /^\s*$/.test(registerData.lastName))}
                                     type='button'
-                                    className= {(/^\s*$/.test(registerData.firstName) || /^\s*$/.test(registerData.lastName)) ? 
-                                                        "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                                    :   "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                    className={(/^\s*$/.test(registerData.firstName) || /^\s*$/.test(registerData.lastName)) ?
+                                        "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
+                                        : "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -277,9 +317,9 @@ function RegisterForm() {
                                 <button
                                     disabled={(/^\s*$/.test(registerData.username) || /^\s*$/.test(registerData.phoneNumber))}
                                     type='button'
-                                    className= {(/^\s*$/.test(registerData.username) || /^\s*$/.test(registerData.phoneNumber)) ? 
-                                                        "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                                    :   "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                    className={(/^\s*$/.test(registerData.username) || /^\s*$/.test(registerData.phoneNumber)) ?
+                                        "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
+                                        : "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -287,9 +327,9 @@ function RegisterForm() {
                                 <button
                                     disabled={(/^\s*$/.test(registerData.pin) || /^\s*$/.test(registerData.phin))}
                                     type='button'
-                                    className= {(/^\s*$/.test(registerData.pin) || /^\s*$/.test(registerData.phin)) ? 
-                                                        "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                                    :   "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                    className={(/^\s*$/.test(registerData.pin) || /^\s*$/.test(registerData.phin)) ?
+                                        "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
+                                        : "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -297,9 +337,9 @@ function RegisterForm() {
                                 <button
                                     disabled={(/^\s*$/.test(registerData.dateOfBirth))}
                                     type='button'
-                                    className= {(/^\s*$/.test(registerData.dateOfBirth)) ? 
-                                                        "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                                    :   "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                    className={(/^\s*$/.test(registerData.dateOfBirth)) ?
+                                        "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
+                                        : "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
