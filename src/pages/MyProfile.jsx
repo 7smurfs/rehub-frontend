@@ -112,10 +112,9 @@ const MyProfile = () => {
                     <div className="flex-1 items-center rounded-bl-[10px] rounded-br-[10px] flex flex-col">
                         <label className="font-bold text-sky-600 text-2xl mt-[30px] text-center">Želite li deaktivirati račun?</label>
 
-                        <div className="flex justify-between mt-[45px]">
-                            <button className="bg-red-400 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mr-7" onClick={() => { setOpenInvalidate(false); }}>Ne</button>
-
-                            <button className="bg-green-300 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] ml-7" onClick={() => { invalidatePatient().then(r => setOpenInvalidate(false)); }}>Da</button>
+                        <div className="w-full flex justify-around mt-[45px]">
+                            <button className="bg-red-600 text-white px-9 py-2 font-semibold rounded-[5px]" onClick={() => { setOpenInvalidate(false); }}>Ne</button>
+                            <button className="bg-green-800 text-white px-9 py-2 font-semibold rounded-[5px]" onClick={() => { invalidatePatient().then(r => setOpenInvalidate(false)); }}>Da</button>
                         </div>
                     </div>
                 </div>
@@ -157,7 +156,7 @@ const MyProfile = () => {
                             <img src={showConfirmPass ? hide : show} onClick={toggleConfirmPass}
                                  className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
                         </div>
-                        <button className="bg-sky-600 text-white pl-9 pr-9 pt-1 pb-1 rounded-[5px] mt-[45px] mb-8"
+                        <button className="bg-sky-600 text-white px-6 py-2 font-semibold rounded-[5px] mt-[45px] mb-8"
                                 onClick={handleSubmit}>Nastavi
                         </button>
 
@@ -169,28 +168,28 @@ const MyProfile = () => {
             </PopupJS>
             <div>
                 {profileData ? (
-                <table className="flex justify-center items-center " >
+                <table className="flex justify-center items-center">
 
-                    <tbody>
+                    <tbody className={'bg-sky-200 p-8 rounded-[10px]'}>
                     {!profileData.roles.includes("SUPERADMIN")  && (
                         <>
                             <tr>
-                                <td className={'font-bold text-sky-600 text-center text-2xl  pr-10'}>Ime:</td>
-                                <td className={'text-sky-700  text-center text-2xl p-5 pl-10'} >{profileData.firstName}</td>
+                                <td className={'font-bold text-sky-600 text-end text-2xl  pr-10'}>Ime:</td>
+                                <td className={'text-sky-700  text-start text-2xl p-5 pl-10'} >{profileData.firstName}</td>
                             </tr>
                             <tr>
-                                <td className={'font-bold text-sky-600 text-center text-2xl  p-5 pr-10'}>Prezime:</td>
-                                <td className={'text-sky-700  text-center text-2xl p-5 pl-10'}>{profileData.lastName}</td>
+                                <td className={'font-bold text-sky-600 text-end text-2xl  p-5 pr-10'}>Prezime:</td>
+                                <td className={'text-sky-700  text-start text-2xl p-5 pl-10'}>{profileData.lastName}</td>
                             </tr>
                         </>
                     )}
                         <tr>
-                            <td  className={'font-bold text-sky-600 text-center text-2xl p-5 pr-10'}>Email:</td>
-                            <td className={'text-sky-700 text-center text-2xl p-5 pl-10'}>{profileData.username}</td>
+                            <td  className={'font-bold text-sky-600 text-end text-2xl p-5 pr-10'}>Email:</td>
+                            <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>{profileData.username}</td>
                         </tr>
                         <tr>
-                            <td className={'font-bold text-sky-600 text-center text-2xl p-5 pr-10'}>Uloga:</td>
-                            <td  className={'text-sky-700 text-center text-2xl p-5 pl-10'}>
+                            <td className={'font-bold text-sky-600 text-end text-2xl p-5 pr-10'}>Uloga:</td>
+                            <td  className={'text-sky-700 text-start text-2xl p-5 pl-10'}>
                                 {profileData.roles.includes('ADMIN') ? 'ADMINISTRATOR' :
                                     (profileData.roles.includes('PATIENT') ? 'PACIJENT' :
                                     (profileData.roles.includes('SUPERADMIN') ? 'SUPER ADMINISTRATOR' :
@@ -202,14 +201,14 @@ const MyProfile = () => {
                             {profileData.roles.includes("PATIENT")  && (
                                 <>
                                     <td className={' text-sky-600 text-center text-2xl p-5 pr-10'}>
-                                            <button className={'bg-blue-400 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md'} onClick={() => {setOpenInvalidate(true);}}>
+                                            <button className={'bg-sky-600 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md'} onClick={() => {setOpenInvalidate(true);}}>
                                                 Deaktiviraj račun
                                             </button>
                                     </td>
                                 </>
                             )}
                             <td className={'text-sky-600 text-center text-2xl p-5 pl-10'}>
-                                <button className={'bg-blue-400 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md'} onClick={() => {setOpen(true);}}>
+                                <button className={'bg-sky-600 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md'} onClick={() => {setOpen(true);}}>
                                     Promijeni lozinku
                                 </button>
                             </td>
