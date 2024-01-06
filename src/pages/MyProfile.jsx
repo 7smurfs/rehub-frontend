@@ -178,66 +178,75 @@ const MyProfile = () => {
                     </button>
                 </div>
             </PopupJS>
+
             <div>
                 {profileData ? (
-                    <table className="flex justify-center items-center">
+                    <div>
+                        <table className="flex justify-center items-center">
 
-                        <tbody className={'bg-sky-200 p-8 rounded-[10px]'}>
-                        {!profileData.roles.includes("SUPERADMIN") && (
-                            <>
-                                <tr>
-                                    <td className={'font-bold text-sky-600 text-end text-2xl  pr-10'}>Ime:</td>
-                                    <td className={'text-sky-700  text-start text-2xl p-5 pl-10'}>{profileData.firstName}</td>
-                                </tr>
-                                <tr>
-                                    <td className={'font-bold text-sky-600 text-end text-2xl  p-5 pr-10'}>Prezime:</td>
-                                    <td className={'text-sky-700  text-start text-2xl p-5 pl-10'}>{profileData.lastName}</td>
-                                </tr>
-                            </>
-                        )}
-                        <tr>
-                            <td className={'font-bold text-sky-600 text-end text-2xl p-5 pr-10'}>Email:</td>
-                            <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>{profileData.username}</td>
-                        </tr>
-                        <tr>
-                            <td className={'font-bold text-sky-600 text-end text-2xl p-5 pr-10'}>Uloga:</td>
-                            <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>
-                                {profileData.roles.includes('ADMIN') ? 'ADMINISTRATOR' :
-                                    (profileData.roles.includes('PATIENT') ? 'PACIJENT' :
-                                        (profileData.roles.includes('SUPERADMIN') ? 'SUPER ADMINISTRATOR' :
-                                            (profileData.roles.includes('EMPLOYEE') && profileData.roles.length === 1 ? 'ZAPOSLENIK' :
-                                                'Nije poznata uloga.')))}
-                            </td>
-                        </tr>
-                        <tr>
-                            {profileData.roles.includes("PATIENT") && (
+                            <tbody className={'bg-sky-200 p-8 rounded-[10px]'}>
+                            {!profileData.roles.includes("SUPERADMIN") && (
                                 <>
-                                    <td className={' text-sky-600 text-center text-2xl p-5 pr-5'}>
+                                    <tr>
+                                        <td className={'font-bold text-sky-600 text-end text-2xl'}>Ime:</td>
+                                        <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>{profileData.firstName}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className={'font-bold text-sky-600 text-end text-2xl'}>Prezime:</td>
+                                        <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>{profileData.lastName}</td>
+                                    </tr>
+                                </>
+                            )}
+                            <tr>
+                                <td className={'font-bold text-sky-600 text-end text-2xl'}>Email:</td>
+                                <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>{profileData.username}</td>
+                            </tr>
+                            <tr>
+                                <td className={'font-bold text-sky-600 text-end text-2xl'}>Uloga:</td>
+                                <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>
+                                    {profileData.roles.includes('ADMIN') ? 'ADMINISTRATOR' :
+                                        (profileData.roles.includes('PATIENT') ? 'PACIJENT' :
+                                            (profileData.roles.includes('SUPERADMIN') ? 'SUPER ADMINISTRATOR' :
+                                                (profileData.roles.includes('EMPLOYEE') && profileData.roles.length === 1 ? 'ZAPOSLENIK' :
+                                                    'Nije poznata uloga.')))}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colSpan={2} className={'text-center'}>
+                                    {profileData.roles.includes("PATIENT") && (
                                         <button
-                                            className={'bg-sky-600 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md'}
+                                            className={'bg-sky-600 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md mx-1'}
                                             onClick={() => {
                                                 setOpenInvalidate(true);
                                             }}>
                                             Deaktiviraj račun
                                         </button>
-                                    </td>
-                                </>
-                            )}
-                            <td className={'text-sky-600 text-center text-2xl p-5 pl-5'}>
-                                <button
-                                    className={'bg-sky-600 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md'}
-                                    onClick={() => {
-                                        setOpen(true);
-                                    }}>
-                                    Promijeni lozinku
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                    )}
+                                    <button
+                                        className={'bg-sky-600 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md mt-5 mx-1'}
+                                        onClick={() => {
+                                            setOpen(true);
+                                        }}>
+                                        Promijeni lozinku
+                                    </button>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div className={'flex justify-center'}>
+
+
+
+                        </div>
+
+
+                    </div>
+
                 ) : (
                     <p>Učitavanje...</p>
-                )};
+                )}
             </div>
             <ToastContainer
                 position="bottom-right"
