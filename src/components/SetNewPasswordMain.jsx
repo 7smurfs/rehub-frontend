@@ -21,7 +21,7 @@ function SetNewPasswordMain() {
     useEffect(() => {
         if (tkn.length !== 36)
             navigate('/');
-    }, []);
+    }, [navigate, tkn.length]);
 
     const togglePass = () => {
         setShowPass(prevState => !prevState);
