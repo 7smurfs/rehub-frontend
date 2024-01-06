@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Arrow from "../assets/right-arrow.svg";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "../http/api";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -15,7 +15,6 @@ function EmployeeDashMain() {
     const [apptsList, setApptsList] = useState([]);
     const [formatedTherapies, setFormatedTherapies] = useState([]);
     const [employeeTherapies, setEmployeeTherapies] = useState([]);
-
 
     const showData = async () => {
         try {
@@ -38,6 +37,8 @@ function EmployeeDashMain() {
                     }
                 })
             ])
+
+            console.log(roomRes.data.toString());
 
             setRoomList(roomRes.data);
             setEquipmentList(equipmentRes.data);
@@ -87,8 +88,7 @@ function EmployeeDashMain() {
         })
     }*/
 
-
-    return(
+    return (
         <div className="h-[75%] grid grid-cols-4 grid-rows-3 gap-2 p-2" onLoad={showData}>
             <div className={"h-full row-span-3 col-span-2 bg-sky-100 rounded-[5px]"}>
                 <div className={'h-10 rounded-tl-[5px] rounded-tr-[5px] flex items-center justify-center'}>
@@ -143,7 +143,7 @@ function EmployeeDashMain() {
                                 </div>
                                 <div className={'w-20 flex items-center justify-center'}>
                                     <Link to={'/appointment'}>
-                                        <img src={Arrow} alt="Arrow" className={'h-10'}/>
+                                        <img src={Arrow} alt="Arrow" className={'h-10'} />
                                     </Link>
                                 </div>
                             </div>
@@ -196,7 +196,7 @@ function EmployeeDashMain() {
                                     'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
                                 <span className={'font-bold text-sm'}>{equipment.name}</span>
                                 <div className={'flex flex-row justify-center items-center'}>
-                                    <span className={'font-bold'}>Soba:</span>
+                                    <span className={'font-bold'}>Soba: {equipment.roomLabel}</span>
                                 </div>
                             </div>
                         ))}
@@ -237,7 +237,7 @@ function EmployeeDashMain() {
                         </div>
                         <div>
                             <Link to={'/appointmentResult'}>
-                                <img src={Arrow} alt="Arrow" className={'h-10'}/>
+                                <img src={Arrow} alt="Arrow" className={'h-10'} />
                             </Link>
                         </div>
                     </div>
@@ -257,7 +257,7 @@ function EmployeeDashMain() {
                         </div>
                         <div>
                             <Link to={'/appointmentResult'}>
-                                <img src={Arrow} alt="Arrow" className={'h-10'}/>
+                                <img src={Arrow} alt="Arrow" className={'h-10'} />
                             </Link>
                         </div>
                     </div>
