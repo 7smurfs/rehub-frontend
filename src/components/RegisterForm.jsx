@@ -272,7 +272,6 @@ function RegisterForm() {
                                          className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'passEye'}/>
                                 </div>
                                 <span className={'text-gray-400 ml-2'}>
-                                    { passwordStrength === 0 && <>prekratka</>}
                                     { passwordStrength === 1 && <>slaba</>}
                                     { passwordStrength === 2 && <>dobra</>}
                                     { passwordStrength === 3 && <>jaka</>}
