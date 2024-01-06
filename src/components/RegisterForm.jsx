@@ -268,10 +268,15 @@ function RegisterForm() {
                                            value={registerData.password}
                                            onChange={handlePasswordChange}
                                            className="w-full h-[40px] bg-sky-200 opacity-50 mb-[2px] rounded-[5px] p-2"/>
-
                                     <img src={showPass ? hide : show} onClick={togglePass}
                                          className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'passEye'}/>
                                 </div>
+                                <span className={'text-gray-400 ml-2'}>
+                                    { passwordStrength === 0 && <>prekratka</>}
+                                    { passwordStrength === 1 && <>slaba</>}
+                                    { passwordStrength === 2 && <>dobra</>}
+                                    { passwordStrength === 3 && <>jaka</>}
+                                </span>
                             </div>
                             <div className="">
                                 <label className="font-bold text-sky-600 text-lg mt-[15px] self-start block">Ponovljena
