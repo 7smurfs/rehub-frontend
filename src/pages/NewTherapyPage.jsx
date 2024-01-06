@@ -72,36 +72,36 @@ function NewTherapyPage() {
     return (
         <PageLayout>
             <Header/>
-            <div className={'flex flex-col h-full items-center justify-center text-sky-900 font-bold text-center'}>
+            <div className={'flex flex-col h-full items-center justify-center text-sky-900 font-bold mx-3 text-center'}>
                 <form onSubmit={requestNewTherapy}
-                      className={'flex flex-col justify-center items-center w-1/2 bg-sky-200 p-5 h-full my-5 rounded-xl'}>
+                      className={'w-full md:w-5/6 xl:w-1/2 flex flex-col justify-center items-center bg-sky-200 p-5 h-full my-5 rounded-lg'}>
                     <h1 className={'font-bold mb-8 text-3xl'}>Zahtjev za novu terapiju</h1>
                     <label htmlFor={'therapyType'} className={'text-start p-2'}>Vrsta oboljenja:</label>
                     <input id={'therapyType'} name={'type'} value={newTherapyData.type}
-                           className={'w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2'}
+                           className={'w-4/5 lg:w-1/2 h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2'}
                            onChange={handleChange}
                            type={'text'}/>
                     <label htmlFor={'therapyRequest'} className={'text-start p-2'}>Opis oboljenja:</label>
                     <textarea id={'therapyRequest'} name={'request'} value={newTherapyData.request}
-                              className={'w-[400px] h-[120px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2'}
+                              className={'w-4/5 lg:w-1/2 h-[120px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2'}
                               maxLength={255}
                               onChange={handleChange}/>
                     <label htmlFor={'doctorFullName'} className={'text-start p-2'}>Uputnicu izdao/la (Ime
                         prezime):</label>
                     <input id={'doctorFullName'} name={'doctorFullName'} value={newTherapyData.doctorFullName}
                            onChange={handleChange}
-                           className={'w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2'}
+                           className={'w-4/5 lg:w-1/2 h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2'}
                            type={'text'}/>
-                    <label htmlFor={'referenceId'} className={'text-start p-2'}>Referenca na prijasnju terapiju:</label>
+                    <label htmlFor={'referenceId'} className={'text-start p-2'}>Referenca na prijašnju terapiju:</label>
                     <select id={'referenceId'} name={'referenceId'} value={newTherapyData.referenceId}
-                            className="w-[400px] h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
+                            className="w-4/5 lg:w-1/2 h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
                             onChange={handleChange}>
-                        <option value={""}>Odaberite terapiju po potrebi</option>
+                        <option value={""}>Odaberite terapiju po potrebi...</option>
                         {userTherapies.map((therapy, key) => (
                             <option key={key} value={therapy.id}>{therapy.type}</option>
                         ))}
                     </select>
-                    <button className={'text-white p-4 bg-sky-600 rounded-xl my-4'} type={"submit"}>Zatrazi terapiju
+                    <button className={'text-white p-4 bg-sky-600 rounded-xl my-4'} type={"submit"}>Zatraži terapiju
                     </button>
                 </form>
             </div>
