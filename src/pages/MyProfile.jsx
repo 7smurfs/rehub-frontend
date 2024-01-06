@@ -31,7 +31,7 @@ const MyProfile = () => {
                 }).then( (res) => setProfileData(res.data));
         };
         fetchData().catch((error) => {
-            console.error("Error occurred:", error);
+            toast("Dogodila se greška.");
         });
 
     }, []);
@@ -43,10 +43,12 @@ const MyProfile = () => {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             });
-        } catch (error) {}
+        } catch (error) {
+            toast("Dogodila se greška.");
+        }
     };
 
-
+    const [showOldPass, setShowOldPass] = useState(false);
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
     const [data, setData] = useState({
@@ -54,11 +56,12 @@ const MyProfile = () => {
         confirmPass : '',
         oldPass : ''
     });
-
+    const toggleOldPass = () => {
+        setShowOldPass(prevState => !prevState);
+    }
     const togglePass = () => {
         setShowPass(prevState => !prevState);
     }
-
     const toggleConfirmPass = () => {
         setShowConfirmPass(prevState => !prevState);
     }
@@ -89,6 +92,9 @@ const MyProfile = () => {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
+            }).then(() => {
+                setOpen(false);
+                toast.success("Uspjesno promjenjena lozinka")
             });
         } catch (err) {
             toast("Dogodila se greška.");
@@ -105,7 +111,7 @@ const MyProfile = () => {
     return(
         <PageLayout>
             <Header />
-            <span className="text-sky-700 font-bold text-3xl justify-self-center self-center ">Moj profil</span>
+            <span className="text-sky-700 font-bold text-3xl justify-self-center self-center mt-5 mb-5 ">Moj profil</span>
 
             <PopupJS open={openInvalidate} closeOnDocumentClick={false} onClose={() => setOpenInvalidate(false)} modal {...{contentStyle}}>
                 <div className="flex justify-center my-10">
@@ -125,11 +131,11 @@ const MyProfile = () => {
                     <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
                         <label className="font-bold text-sky-600 text-lg mt-[30px]">Stara lozinka:</label>
                         <div className="relative">
-                            <input type={showPass ? "text" : "password"} name="oldPass" id="oldPass"
+                            <input type={showOldPass ? "text" : "password"} name="oldPass" id="oldPass"
                                    value={data.oldPass}
                                    onChange={handleChange}
                                    className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
-                            <img src={showPass ? hide : show} onClick={togglePass}
+                            <img src={showOldPass ? hide : show} onClick={toggleOldPass}
                                  className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
 
                         </div>
@@ -200,14 +206,14 @@ const MyProfile = () => {
                         <tr>
                             {profileData.roles.includes("PATIENT")  && (
                                 <>
-                                    <td className={' text-sky-600 text-center text-2xl p-5 pr-10'}>
+                                    <td className={' text-sky-600 text-center text-2xl p-5 pr-5'}>
                                             <button className={'bg-sky-600 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md'} onClick={() => {setOpenInvalidate(true);}}>
                                                 Deaktiviraj račun
                                             </button>
                                     </td>
                                 </>
                             )}
-                            <td className={'text-sky-600 text-center text-2xl p-5 pl-10'}>
+                            <td className={'text-sky-600 text-center text-2xl p-5 pl-5'}>
                                 <button className={'bg-sky-600 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md'} onClick={() => {setOpen(true);}}>
                                     Promijeni lozinku
                                 </button>
