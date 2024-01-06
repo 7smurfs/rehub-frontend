@@ -101,12 +101,11 @@ const MyProfile = () => {
     const [openInvalidate, setOpenInvalidate] = useState(false);
     const contentStyle = {borderRadius: '10px', width: '40%'};
 
-
     return (
         <PageLayout>
             <Header/>
             <span
-                className="text-sky-700 font-bold text-3xl justify-self-center self-center mt-5 mb-5 ">Moj profil</span>
+                className="text-sky-700 font-bold text-3xl justify-self-center self-center mt-5 mb-5">Moj profil</span>
 
             <PopupJS open={openInvalidate} closeOnDocumentClick={false} onClose={() => setOpenInvalidate(false)}
                      modal {...{contentStyle}}>
@@ -173,7 +172,7 @@ const MyProfile = () => {
 
                     </form>
                     <button
-                        className="bg-sky-600 text-white p-1 rounded-[5px] absolute top-0 right-0 w-[32px] font-bold font-extrabold"
+                        className="bg-sky-600 text-white p-1 rounded-[5px] absolute top-0 right-0 w-[32px] font-extrabold"
                         onClick={() => setOpen(false)}>X
                     </button>
                 </div>
@@ -182,28 +181,28 @@ const MyProfile = () => {
             <div>
                 {profileData ? (
                     <div>
-                        <table className="flex justify-center items-center">
+                        <table className="flex justify-center items-center mb-10">
 
-                            <tbody className={'bg-sky-200 p-8 rounded-[10px]'}>
+                            <tbody className={'bg-sky-200 p-0 py-5 min-[300px]:p-2 min-[300px]:py-5 min-[330px]:p-5 sm:p-8 rounded-[10px] overflow-x-scroll min-[330px]:overflow-x-visible'}>
                             {!profileData.roles.includes("SUPERADMIN") && (
                                 <>
                                     <tr>
-                                        <td className={'font-bold text-sky-600 text-end text-2xl'}>Ime:</td>
-                                        <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>{profileData.firstName}</td>
+                                        <td className={'font-bold text-sky-600 text-end text-lg sm:text-2xl'}>Ime:</td>
+                                        <td className={'text-sky-700 text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.firstName}</td>
                                     </tr>
                                     <tr>
-                                        <td className={'font-bold text-sky-600 text-end text-2xl'}>Prezime:</td>
-                                        <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>{profileData.lastName}</td>
+                                        <td className={'font-bold text-sky-600 text-end text-lg sm:text-2xl'}>Prezime:</td>
+                                        <td className={'text-sky-700 text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.lastName}</td>
                                     </tr>
                                 </>
                             )}
                             <tr>
-                                <td className={'font-bold text-sky-600 text-end text-2xl'}>Email:</td>
-                                <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>{profileData.username}</td>
+                                <td className={'font-bold text-sky-600 text-end text-lg sm:text-2xl'}>Email:</td>
+                                <td className={'text-sky-700 text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.username}</td>
                             </tr>
                             <tr>
-                                <td className={'font-bold text-sky-600 text-end text-2xl'}>Uloga:</td>
-                                <td className={'text-sky-700 text-start text-2xl p-5 pl-10'}>
+                                <td className={'font-bold text-sky-600 text-end text-lg sm:text-2xl'}>Uloga:</td>
+                                <td className={'text-sky-700 text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>
                                     {profileData.roles.includes('ADMIN') ? 'ADMINISTRATOR' :
                                         (profileData.roles.includes('PATIENT') ? 'PACIJENT' :
                                             (profileData.roles.includes('SUPERADMIN') ? 'SUPER ADMINISTRATOR' :

@@ -33,7 +33,7 @@ function LoginForm() {
 
     return (
         <>
-            <div className="flex justify-center">
+            <div className="flex justify-center mb-10">
                 <div
                     className="w-full mx-6 sm:w-2/3 sm:mx-14 lg:w-1/3 bg-white [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px] mt-8 flex flex-col">
                     <div
