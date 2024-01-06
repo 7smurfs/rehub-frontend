@@ -25,7 +25,7 @@ function Header() {
                 className={openHamburger ? "h-[100vh] fixed top-0 right-0 flex flex-col items-center w-full lg:hidden bg-sky-200 z-20" :
                     "bg-sky-200 h-28 flex justify-between"}>
                 <img src={LogoWText} alt="ReHub logo with text" onClick={() => navigate("/")}
-                     className="w-56 mb-2 cursor-pointer"/>
+                     className="w-40 sm:w-56 mb-2 cursor-pointer"/>
                 <div className={openHamburger ? "flex flex-col justify-around h-1/2 my-5" : "lg:flex justify-between hidden"}>
                     {isUserAuthenticated ? (location.pathname === '/profile' ? (
                         <>
@@ -77,10 +77,10 @@ function Header() {
                 </div>
                 <div className={'lg:hidden flex justify-center items-center mx-4'}>
                     {openHamburger ?
-                        <img onClick={() => setOpenHamburger(o => !o)} className={'h-8 cursor-pointer'}
+                        <img onClick={() => setOpenHamburger(o => !o)} className={'h-7 cursor-pointer'}
                              src={openedHamburger}
                              alt={'openedHamburger'}/> :
-                        <img onClick={() => setOpenHamburger(o => !o)} className={'h-8 cursor-pointer'}
+                        <img onClick={() => setOpenHamburger(o => !o)} className={'h-7 cursor-pointer'}
                              src={closedHamburger}
                              alt={'closedHamburger'}/>}
                 </div>
