@@ -72,9 +72,9 @@ function NewTherapyPage() {
     return (
         <PageLayout>
             <Header/>
-            <div className={'flex flex-col h-full items-center justify-center text-sky-900 font-bold text-center'}>
+            <div className={'flex flex-col h-full items-center justify-center text-sky-900 font-bold mx-3 text-center'}>
                 <form onSubmit={requestNewTherapy}
-                      className={'w-full md:w-5/6 xl:w-1/2 flex flex-col justify-center items-center bg-sky-200 p-5 h-full my-5 md:rounded-lg'}>
+                      className={'w-full md:w-5/6 xl:w-1/2 flex flex-col justify-center items-center bg-sky-200 p-5 h-full my-5 rounded-lg'}>
                     <h1 className={'font-bold mb-8 text-3xl'}>Zahtjev za novu terapiju</h1>
                     <label htmlFor={'therapyType'} className={'text-start p-2'}>Vrsta oboljenja:</label>
                     <input id={'therapyType'} name={'type'} value={newTherapyData.type}
