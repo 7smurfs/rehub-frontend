@@ -344,18 +344,19 @@ function SuperAdminDashboard() {
     return (
         <>
             <div className="flex flex-col h-full w-full">
-                <div className={'grid grid-cols-4 font-semibold text-2xl tracking-wider text-center text-sky-800 my-3'}>
+                <div
+                    className={'grid grid-cols-2 md:grid-cols-4 my-3 mx-3 gap-2 md:gap-8 font-semibold text-sm tracking-wide text-center text-sky-800'}>
                     <div onClick={showEmployeeComponent}
-                         className={`tab ${selected === 1 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>OSOBLJE
+                         className={`tab ${selected === 1 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg p-3 cursor-pointer`}>OSOBLJE
                     </div>
                     <div onClick={showPatientComponent}
-                         className={`tab ${selected === 2 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>PACIJENTI
+                         className={`tab ${selected === 2 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg p-3 cursor-pointer`}>PACIJENTI
                     </div>
                     <div onClick={showRoomComponent}
-                         className={`tab ${selected === 3 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>SOBE
+                         className={`tab ${selected === 3 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg p-3 cursor-pointer`}>SOBE
                     </div>
                     <div onClick={showEquipmentComponent}
-                         className={`tab ${selected === 4 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg h-full p-3 mx-3 cursor-pointer`}>OPREMA
+                         className={`tab ${selected === 4 ? 'bg-sky-600 text-white font-bold shadow-xl' : 'bg-sky-200'}  rounded-lg p-3 cursor-pointer`}>OPREMA
                     </div>
                 </div>
                 <div className={'flex justify-center h-full my-3'}>
@@ -468,9 +469,9 @@ function SuperAdminDashboard() {
                                     <div
                                         key={key}
                                         className={
-                                            'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4 w-3/4'
+                                            'bg-white p-4 text-sky-900 md:text-2xl flex flex-col sm:flex-row justify-between rounded-lg mx-4 my-2 w-3/4'
                                         }>
-                                        <span>{patient.firstName} {patient.lastName}</span>
+                                        <span className={'font-bold'}>{patient.firstName} {patient.lastName}</span>
                                         <span>Datum rođenja: {patient.dateOfBirth.split('-')[2]}.{patient.dateOfBirth.split('-')[1]}.{patient.dateOfBirth.split('-')[0]}</span>
                                     </div>
                                 ))}
@@ -560,9 +561,9 @@ function SuperAdminDashboard() {
 
                                         </div>
                                     </div>
-                            ))}
-                        </div>
-                        <div className={'bg-sky-200 h-full rounded-xl p-2 text-center'}>
+                                ))}
+                            </div>
+                            <div className={'bg-sky-200 h-full rounded-xl p-2 text-center'}>
 
                                 <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU OPREMU</span>
                                 <form className={'grid grid-cols-2'}>
@@ -577,7 +578,8 @@ function SuperAdminDashboard() {
                                     </div>
 
                                     <div className={'pl-1'}>
-                                        <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Soba:</label>
+                                        <label
+                                            className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Soba:</label>
 
                                         <select name="roomId" id="roomId" onChange={handleEquipmentChange}
                                                 value={equipmentRegisterData.roomId}
@@ -607,7 +609,7 @@ function SuperAdminDashboard() {
                     }
                     {
                         showComponent === null &&
-                        <div className={'w-1/3 flex flex-col justify-center text-2xl text-sky-900'}>
+                        <div className={'w-full sm:w-1/2 mx-5 flex flex-col justify-center text-2xl text-sky-900'}>
                             <span className={'font-bold my-3'}>Broj zaposlenika: {statistics.noOfEmployees}</span>
                             <span className={'font-bold my-3'}>Broj pacijenata: {statistics.noOfPatients}</span>
                             <span className={'font-bold my-3'}>Broj soba: {statistics.noOfRooms}</span>
