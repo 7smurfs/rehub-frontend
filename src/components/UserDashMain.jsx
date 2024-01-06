@@ -40,7 +40,8 @@ function UserDashMain() {
                 id: therapy.id,
                 title: therapy.type,
                 start: therapy.startAt,
-                end: therapy.endAt
+                end: therapy.endAt,
+                status: therapy.status
             };
         });
     }
@@ -60,14 +61,49 @@ function UserDashMain() {
         navigate('/dashboard/new-therapy');
     };
 
+    const shiftTherapyData = () => {
+        const approvedTherapies = formattedTherapies.filter(therapy => therapy.start);
+        if (approvedTherapies.length < 4) {
+            return;
+        }
+        const newArray = [...formattedTherapies];
+        const firstElement = newArray.shift();
+        newArray.push(firstElement);
+        setFormattedTherapies(newArray);
+    };
+
     return (
-        <div className="grid grid-rows-2 lg:h-4/5 lg:grid-cols-2 lg:grid-rows-1 gap-5 p-5">
+        <div className="flex flex-col lg:h-4/5 lg:grid lg:grid-cols-2 lg:grid-rows-1 gap-5 p-5">
             <div className="row-span-1 col-span-1 bg-sky-100 rounded-[5px]">
                 <div className="bg-sky-600 rounded-t-[5px] h-14">
                     <h3 className="font-bold text-lg text-white p-3">Kalendar</h3>
                 </div>
-                <div className={'h-5/6 m-2'}>
-                    <div className={'h-full w-full overflow-y-scroll'}>
+                <div className={'lg:h-5/6 m-2'}>
+                    <div className={'lg:hidden h-full flex flex-col md:flex-row items-center justify-around mx-2 my-5'}>
+                        {formattedTherapies.slice(0, 3).map((therapy, key) => (
+                            <>
+                                {therapy.start && <div key={key} className={'w-full'}>
+                                    <div
+                                        className={
+                                            therapy.status === 'PENDING_APPROVAL' ? 'md:w-[200px] h-36 p-4 flex flex-col bg-yellow-800 text-white rounded-[10px] my-3 overflow-clip' :
+                                                therapy.status === 'APPROVED' ? 'md:w-[200px] h-36 p-4 flex flex-col bg-sky-600 text-white rounded-[10px] my-3 overflow-clip' :
+                                                    'md:w-[200px] h-36 p-4 flex flex-col bg-gray-700 text-white rounded-[10px] my-3 overflow-clip'
+                                        }>
+                                        <span className={'text-ellipsis font-semibold text-lg'}>{therapy.title}</span>
+                                        <span
+                                            className={'font-semibold'}>{new Date(therapy.start).getDay().toString().padStart(2, '0')}.{(new Date(therapy.start).getMonth() + 1).toString().padStart(2, '0')}.{new Date(therapy.start).getFullYear()}</span>
+                                        <span
+                                            className={'font-semibold'}>{new Date(therapy.start).getHours().toString().padStart(2, '0')}:{new Date(therapy.start).getMinutes().toString().padStart(2, '0')} - {new Date(therapy.end).getHours().toString().padStart(2, '0')}:{new Date(therapy.end).getMinutes().toString().padStart(2, '0')}</span>
+                                    </div>
+                                </div>}
+                            </>
+                        ))}
+                        {formattedTherapies.length !== 0 &&
+                            <img className={'w-8 rotate-90 md:rotate-0 cursor-pointer'} src={arrow} alt={'arrow'}
+                                 onClick={() => shiftTherapyData()}/>
+                        }
+                    </div>
+                    <div className={'h-full hidden lg:block w-full overflow-y-scroll'}>
                         <FullCalendar
                             plugins={[dayGridPlugin, timeGridPlugin]}
                             initialView="timeGridWeek"
