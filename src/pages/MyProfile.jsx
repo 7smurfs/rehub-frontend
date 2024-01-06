@@ -8,44 +8,33 @@ import api from "../http/api";
 import 'reactjs-popup/dist/index.css';
 import hide from "../assets/hide-pass.svg";
 import show from "../assets/show-pass.svg";
-import {useNavigate, useParams} from "react-router-dom";
-import {toast} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-function MyProfile() {
+const MyProfile = () => {
 
     const [profileData, setProfileData] = useState({
         id: '',
         username: '',
         firstName: '',
         lastName: '',
-        roles: ''
+        roles: []
     });
 
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
                 await api.get('/stats/user', {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
                     }
                 }).then( (res) => setProfileData(res.data));
-               } catch (error) {}
         };
-
-        fetchData();
+        fetchData().catch((error) => {
+            console.error("Error occurred:", error);
+        });
 
     }, []);
-
-    const sendPasswordReset = async () => {
-        try {
-            await api.post('/auth/reset', {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            });
-        } catch (error) {}
-    };
 
     const invalidatePatient = async () => {
         try {
@@ -57,34 +46,13 @@ function MyProfile() {
         } catch (error) {}
     };
 
-    const tableRowStyle = {
-        textAlign: 'center',
-        fontSize: 25,
-        padding: '10px',
-        paddingRight: '20px'
-    };
-
-
-    const buttonStyle = {
-        backgroundColor: '#57b0ec',
-        color: '#fff',
-        padding: '8px 12px',
-        border: 'none',
-        cursor: 'pointer',
-        fontSize: 15,
-        fontWeight: '600',
-        borderRadius: '8px'
-    };
-
-    const navigate = useNavigate();
-    const { tkn } = useParams();
 
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
     const [data, setData] = useState({
         newPass : '',
         confirmPass : '',
-        token : tkn
+        oldPass : ''
     });
 
     const togglePass = () => {
@@ -97,17 +65,33 @@ function MyProfile() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setData({...data, [name] : value});
-        e.target.focus();
-        console.log("Name: " + name + " , value: " + value);
+    }
+
+    const validateChangingPasswordData = () => {
+        if (!/^(?=.*[A-Za-z])(?=.*[0-9]).{8,}$/.test(data.newPass)) {
+            toast.warn("Lozinka se mora sastoji od minimalno 8 brojeva i slova.")
+            return;
+        }
+        if (data.newPass !== data.confirmPass) {
+            toast.warn("Lozinke se ne podudaraju")
+            return;
+        }
+        if (!data.oldPass.length || !data.newPass.length || !data.confirmPass.length) {
+            toast.info("Popunite sva polja.")
+            return;
+        }
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.post("/auth/reset/password", data);
-            navigate("/login");
-
+            validateChangingPasswordData();
+            await api.post("/auth/change/password", data, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            });
         } catch (err) {
-            toast("An error occured.");
+            toast("Dogodila se greška.");
         }
 
     }
@@ -115,6 +99,8 @@ function MyProfile() {
     const [open, setOpen] = useState(false);
     const [openInvalidate, setOpenInvalidate] = useState(false);
     const contentStyle = { borderRadius:'10px', width: '40%'};
+
+
 
     return(
         <PageLayout>
@@ -138,6 +124,17 @@ function MyProfile() {
             <PopupJS open={open} closeOnDocumentClick={false} onClose={() => setOpen(false)} modal {...{contentStyle}}>
                 <div className="flex justify-center relative">
                     <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
+                        <label className="font-bold text-sky-600 text-lg mt-[30px]">Stara lozinka:</label>
+                        <div className="relative">
+                            <input type={showPass ? "text" : "password"} name="oldPass" id="oldPass"
+                                   value={data.oldPass}
+                                   onChange={handleChange}
+                                   className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
+                            <img src={showPass ? hide : show} onClick={togglePass}
+                                 className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
+
+                        </div>
+
                         <label className="font-bold text-sky-600 text-lg mt-[30px]">Nova lozinka:</label>
                         <div className="relative">
                             <input type={showPass ? "text" : "password"} name="newPass" id="newPass"
@@ -178,50 +175,41 @@ function MyProfile() {
                     {!profileData.roles.includes("SUPERADMIN")  && (
                         <>
                             <tr>
-                                <td style={tableRowStyle} className={'font-bold text-sky-600 text-lg '}>Ime:</td>
-                                <td style={tableRowStyle} className={'text-sky-700  text-lg'} >{profileData.firstName}</td>
+                                <td className={'font-bold text-sky-600 text-center text-2xl  pr-10'}>Ime:</td>
+                                <td className={'text-sky-700  text-center text-2xl p-5 pl-10'} >{profileData.firstName}</td>
                             </tr>
                             <tr>
-                                <td style={tableRowStyle} className={'font-bold text-sky-600 text-lg'}>Prezime:</td>
-                                <td style={tableRowStyle} className={'text-sky-700  text-lg'}>{profileData.lastName}</td>
+                                <td className={'font-bold text-sky-600 text-center text-2xl  p-5 pr-10'}>Prezime:</td>
+                                <td className={'text-sky-700  text-center text-2xl p-5 pl-10'}>{profileData.lastName}</td>
                             </tr>
                         </>
                     )}
                         <tr>
-                            <td style={tableRowStyle} className={'font-bold text-sky-600 text-lg'}>Email:</td>
-                            <td style={tableRowStyle} className={'text-sky-700  text-lg'}>{profileData.username}</td>
+                            <td  className={'font-bold text-sky-600 text-center text-2xl p-5 pr-10'}>Email:</td>
+                            <td className={'text-sky-700 text-center text-2xl p-5 pl-10'}>{profileData.username}</td>
                         </tr>
                         <tr>
-                            <td style={tableRowStyle} className={'font-bold text-sky-600 text-lg'}>Uloga:</td>
-                            <td style={tableRowStyle} className={'text-sky-700 text-lg'}>
-                                {(() => {
-                                    switch (profileData.roles.toString()) {
-                                        case "PATIENT":
-                                            return 'PACIJENT';
-                                        case 'EMPLOYEE':
-                                            return 'DJELATNIK';
-                                        case 'EMPLOYEE,ADMIN' || 'ADMIN,EMPLOYEE':
-                                            return 'ADMINISTRATOR';
-                                        case 'SUPERADMIN':
-                                            return 'SUPER ADMINISTRATOR';
-                                        default:
-                                            return profileData.roles;
-                                    }
-                                })()}
+                            <td className={'font-bold text-sky-600 text-center text-2xl p-5 pr-10'}>Uloga:</td>
+                            <td  className={'text-sky-700 text-center text-2xl p-5 pl-10'}>
+                                {profileData.roles.includes('ADMIN') ? 'ADMINISTRATOR' :
+                                    (profileData.roles.includes('PATIENT') ? 'PACIJENT' :
+                                    (profileData.roles.includes('SUPERADMIN') ? 'SUPER ADMINISTRATOR' :
+                                    (profileData.roles.includes('EMPLOYEE') && profileData.roles.length === 1 ? 'ZAPOSLENIK' :
+                                    'Nije poznata uloga.')))}
                              </td>
                             </tr>
                         <tr>
                             {profileData.roles.includes("PATIENT")  && (
                                 <>
-                                    <td style={tableRowStyle} className={' text-sky-600 text-lg'}>
-                                            <button style={buttonStyle} onClick={() => {setOpenInvalidate(true);}}>
+                                    <td className={' text-sky-600 text-center text-2xl p-5 pr-10'}>
+                                            <button className={'bg-blue-400 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md'} onClick={() => {setOpenInvalidate(true);}}>
                                                 Deaktiviraj račun
                                             </button>
                                     </td>
                                 </>
                             )}
-                            <td style={tableRowStyle} className={'text-sky-600 text-lg'}>
-                                <button style={buttonStyle} onClick={() => {setOpen(true);}}>
+                            <td className={'text-sky-600 text-center text-2xl p-5 pl-10'}>
+                                <button className={'bg-blue-400 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md'} onClick={() => {setOpen(true);}}>
                                     Promijeni lozinku
                                 </button>
                             </td>
@@ -232,9 +220,22 @@ function MyProfile() {
                     <p>Učitavanje...</p>
                 )};
             </div>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={2000}
+                limit={2}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <Footer />
         </PageLayout>
-    )
+    );
 }
 
 export default MyProfile;
