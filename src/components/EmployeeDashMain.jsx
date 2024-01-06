@@ -37,12 +37,9 @@ function EmployeeDashMain() {
                 })
             ])
 
-            console.log(roomRes.data.toString());
-
             setRoomList(roomRes.data);
             setEquipmentList(equipmentRes.data);
             setApptsList(apptsRes.data);
-            console.log(equipmentRes.data)
 
         } catch (err) {
             toast.error("Provjerite internetsku vezu.");
@@ -73,18 +70,6 @@ function EmployeeDashMain() {
             };
         });
     }
-
-    /*const getRoom = async (roomId) => {
-        await api.get('/employee/room/' + roomId, {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        }).then((res) => {
-            setRoom(res.data);
-        }).catch(() => {
-            toast.error("Provjerite internetsku vezu.");
-        })
-    }*/
 
     return (
         <div className="h-[75%] grid grid-cols-4 grid-rows-3 gap-2 p-2" onLoad={showData}>
