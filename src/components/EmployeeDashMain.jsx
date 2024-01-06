@@ -14,7 +14,6 @@ function EmployeeDashMain() {
     const [equipmentList, setEquipmentList] = useState([]);
     const [apptsList, setApptsList] = useState([]);
     const [formatedTherapies, setFormatedTherapies] = useState([]);
-    const [employeeTherapies, setEmployeeTherapies] = useState([]);
 
     const showData = async () => {
         try {
@@ -58,7 +57,6 @@ function EmployeeDashMain() {
                 }
             }).then(res => {
                 let therapies = res.data;
-                setEmployeeTherapies(therapies);
                 setFormatedTherapies(formatTherapies(therapies));
             });
         }
