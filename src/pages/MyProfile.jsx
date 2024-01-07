@@ -224,11 +224,11 @@ const MyProfile = () => {
                                 <td className={'text-sky-700 text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.username}</td>
                             </tr>
                             <tr>
-                                <td className={'font-bold text-sky-600 text-end text-lg pb-5 sm:text-2xl'}>Uloga:</td>
+                                <td className={'font-bold text-sky-600 text-end text-lg pb-4 sm:pb-0 sm:text-2xl'}>Uloga:</td>
                                 <td className={'text-sky-700 text-start text-lg sm:text-2xl p-1 pb-5 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>
-                                    {profileData.roles.includes('ADMIN') ? 'ADMINISTRATOR' :
+                                    {profileData.roles.includes('ADMIN') ? 'ADMIN' :
                                         (profileData.roles.includes('PATIENT') ? 'PACIJENT' :
-                                            (profileData.roles.includes('SUPERADMIN') ? 'SUPER ADMINISTRATOR' :
+                                            (profileData.roles.includes('SUPERADMIN') ? 'SUPER ADMIN' :
                                                 (profileData.roles.includes('EMPLOYEE') && profileData.roles.length === 1 ? 'ZAPOSLENIK' :
                                                     'Nije poznata uloga.')))}
                                 </td>
