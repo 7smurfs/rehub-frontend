@@ -1,18 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PopupJS from "reactjs-popup";
 import styled from 'styled-components';
 import PageLayout from "../components/PageLayout";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import api from "../http/api";
+import {AuthContext} from "../auth/AuthProvider";
 
 import 'reactjs-popup/dist/index.css';
 import hide from "../assets/hide-pass.svg";
 import show from "../assets/show-pass.svg";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {useNavigate} from "react-router-dom";
-
 
 const StyledPopup = styled(PopupJS)`
 
@@ -36,17 +35,16 @@ const StyledPopup = styled(PopupJS)`
     `;
 
 const MyProfile = () => {
-
-    const navigate = useNavigate();
-
+        
+    const {logout} = useContext(AuthContext); 
+        
     const [profileData, setProfileData] = useState({
         id: '',
         username: '',
         firstName: '',
         lastName: '',
         roles: []
-    });
-
+    });       
 
     useEffect(() => {
         const fetchData = async () => {
@@ -67,7 +65,7 @@ const MyProfile = () => {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
-        }).then(navigate('/')).catch(() => toast.error("Dogodila se greška."));
+        }).then(() => logout()).catch(() => toast.error("Dogodila se greška."));
     };
 
     const [showOldPass, setShowOldPass] = useState(false);
@@ -125,7 +123,7 @@ const MyProfile = () => {
 
     const [open, setOpen] = useState(false);
     const [openInvalidate, setOpenInvalidate] = useState(false);
-    const contentStyle = {borderRadius: '5px', width: '100%', overflow: 'scroll'};
+    const contentStyle = {borderRadius: '5px', width: '100%'};
 
     return (
         <PageLayout>
@@ -135,18 +133,18 @@ const MyProfile = () => {
 
             <PopupJS open={openInvalidate} closeOnDocumentClick={false} onClose={() => setOpenInvalidate(false)}
                          modal {...{contentStyle}}>
-                <div className="flex justify-center my-10">
+                <div className="flex justify-center my-10 overflow-scroll min-[230px]:overflow-visible">
                     <div className="flex-1 items-center rounded-bl-[10px] rounded-br-[10px] flex flex-col">
                         <label className="font-bold text-sky-600 text-2xl mt-[30px] text-center">Želite li deaktivirati
                             račun?</label>
 
                         <div className="w-full flex justify-center gap-5 mt-[45px]">
-                            <button className="bg-red-600 text-white px-9 py-2 font-semibold rounded-[5px]"
+                            <button className="bg-red-600 hover:bg-red-700 text-white px-9 py-2 font-semibold rounded-[5px]"
                                     onClick={() => {
                                         setOpenInvalidate(false);
                                     }}>Ne
                             </button>
-                            <button className="bg-green-800 text-white px-9 py-2 font-semibold rounded-[5px]"
+                            <button className="bg-green-600 hover:bg-green-700 text-white px-9 py-2 font-semibold rounded-[5px]"
                                     onClick={() => {
                                         invalidatePatient().then(r => setOpenInvalidate(false));
                                     }}>Da
@@ -192,13 +190,13 @@ const MyProfile = () => {
                             <img src={showConfirmPass ? hide : show} onClick={toggleConfirmPass}
                                  className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
                         </div>
-                        <button className="bg-sky-600 text-white px-6 py-2 font-semibold rounded-[5px] mt-[45px] mb-8"
+                        <button className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2 font-semibold rounded-[5px] mt-[45px] mb-8"
                                 onClick={handleSubmit}>Nastavi
                         </button>
 
                     </form>
                     <button
-                        className="bg-sky-600 text-white p-1 rounded-[5px] absolute top-0 right-0 w-[32px] font-extrabold"
+                        className="bg-sky-600 hover:bg-sky-700 text-white p-1 rounded-[5px] absolute top-0 right-0 w-[32px] font-extrabold"
                         onClick={() => setOpen(false)}>X
                     </button>
                 </div>
@@ -208,8 +206,7 @@ const MyProfile = () => {
                 {profileData ? (
                     <div>
                         <table className="flex justify-center items-center mb-10">
-
-                            <tbody className={'bg-sky-200 p-0 py-5 min-[300px]:p-2 min-[300px]:py-5 min-[330px]:p-5 sm:p-8 rounded-[10px] overflow-x-scroll min-[330px]:overflow-x-visible'}>
+                            <tbody className={'bg-sky-200 shadow-2xl p-0 py-5 min-[300px]:p-2 min-[300px]:py-5 min-[330px]:p-5 sm:p-14 rounded-[10px] overflow-x-scroll min-[330px]:overflow-x-visible'}>
                             {!profileData.roles.includes("SUPERADMIN") && (
                                 <>
                                     <tr>
@@ -227,8 +224,8 @@ const MyProfile = () => {
                                 <td className={'text-sky-700 text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.username}</td>
                             </tr>
                             <tr>
-                                <td className={'font-bold text-sky-600 text-end text-lg sm:text-2xl'}>Uloga:</td>
-                                <td className={'text-sky-700 text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>
+                                <td className={'font-bold text-sky-600 text-end text-lg pb-5 sm:text-2xl'}>Uloga:</td>
+                                <td className={'text-sky-700 text-start text-lg sm:text-2xl p-1 pb-5 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>
                                     {profileData.roles.includes('ADMIN') ? 'ADMINISTRATOR' :
                                         (profileData.roles.includes('PATIENT') ? 'PACIJENT' :
                                             (profileData.roles.includes('SUPERADMIN') ? 'SUPER ADMINISTRATOR' :
@@ -240,7 +237,7 @@ const MyProfile = () => {
                                 <td colSpan={2} className={'text-center'}>
                                     {profileData.roles.includes("PATIENT") && (
                                         <button
-                                            className={'bg-sky-600 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md mx-1'}
+                                            className={'bg-sky-600 hover:bg-sky-700 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md mx-1'}
                                             onClick={() => {
                                                 setOpenInvalidate(true);
                                             }}>
@@ -248,7 +245,7 @@ const MyProfile = () => {
                                         </button>
                                     )}
                                     <button
-                                        className={'bg-sky-600 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md mt-5 mx-1'}
+                                        className={'bg-sky-600 hover:bg-sky-700 text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md mt-2 sm:mt-5 mx-1'}
                                         onClick={() => {
                                             setOpen(true);
                                         }}>
@@ -259,14 +256,6 @@ const MyProfile = () => {
                             </tr>
                             </tbody>
                         </table>
-
-                        <div className={'flex justify-center'}>
-
-
-
-                        </div>
-
-
                     </div>
 
                 ) : (
