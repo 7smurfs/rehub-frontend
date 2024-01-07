@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import api from "../http/api";
 import InOperable from '../assets/inoperable_room.svg';
@@ -71,7 +71,6 @@ export default function SuperAdminDashboard() {
 function Personel({ props }) {
 
     const [employees, setEmployees] = useState([]);
-    const [reducerValue, forceChange] = useReducer(x => x + 1, 0);
 
     const [registerData, setRegisterData] = useState({
         firstName: '',
@@ -133,7 +132,6 @@ function Personel({ props }) {
             }
         }).then((res) => {
             setEmployees(res.data)
-            forceChange();
         }).catch((err) => {
             console.log(err);
             toast.error("Provjerite internetsku vezu.");
@@ -147,7 +145,7 @@ function Personel({ props }) {
             }
         }).then(() => {
             toast.success('Uspješno data admin prava zaposleniku');
-            forceChange();
+            getEmployees();
         })
             .catch(() => toast.error('Dogodila se pogreška.'))
     };
@@ -159,7 +157,7 @@ function Personel({ props }) {
             }
         }).then(() => {
             toast.success('Uspješno izbrisan zaposlenik');
-            forceChange();
+            getEmployees();
         })
             .catch(() => toast.error('Dogodila se pogreška.'))
     };
@@ -183,7 +181,7 @@ function Personel({ props }) {
                 gender: '',
                 dateOfBirth: ''
             });
-            forceChange();
+            getEmployees();
         }).catch((err) => {
             if (err.code === "ERR_NETWORK") {
                 toast.error("Greška. Provjerite internet vezu ili kontaktirajte podršku.")
@@ -195,11 +193,10 @@ function Personel({ props }) {
 
     useEffect(() => {
         getEmployees();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [reducerValue]);
+    }, []);
 
 
-    return (<div className='mx-2 w-full grid grid-cols-2 gap-2'>
+    return (<div className='mx-2 w-full grid md:grid-cols-2 gap-2 grid-cols-1'>
         <div className={'bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'}>
             {employees.map((employee, key) => (
                 <div
@@ -302,24 +299,21 @@ function Personel({ props }) {
 function Patients({ props }) {
 
     const [patientsList, setPatientsList] = useState([]);
-    const [reducerValue, forceChange] = useReducer(x => x + 1, 0);
-
-    const getPatients = async () => {
-        await api.get('/patient', {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }}).then((res) => {
-            setPatientsList(res.data)
-            forceChange();
-        }).catch(() => {
-            toast.error("Provjerite internetsku vezu.");
-        });
-    }
 
     useEffect(() => {
+        const getPatients = async () => {
+            await api.get('/patient', {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then((res) => {
+                setPatientsList(res.data)
+            }).catch(() => {
+                toast.error("Provjerite internetsku vezu.");
+            });
+        }
         getPatients();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [reducerValue]);
+    }, []);
 
     return (<div className='mx-2 w-[90vw] h-full'>
         <div
@@ -341,13 +335,24 @@ function Patients({ props }) {
 function Rooms({ props }) {
 
     const [rooms, setRooms] = useState([]);
-    const [reducerValue, forceChange] = useReducer(x => x + 1, 0);
 
     const [roomRegisterData, setRoomRegisterData] = useState({
         label: '',
         capacity: '',
         specialMessage: ''
     });
+
+    const getRooms = async () => {
+        await api.get('/employee/room', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then((res) => {
+            setRooms(res.data);
+        }).catch((err) => {
+            toast.error("Provjerite internetsku vezu.");
+        });
+    };
 
     const handleRoomChange = (e) => {
         const { name, value } = e.target;
@@ -373,7 +378,7 @@ function Rooms({ props }) {
             }
         }).then(() => {
             toast.success("Uspješno unesena nova soba");
-            forceChange();
+            getRooms();
             setRoomRegisterData({
                 label: '',
                 capacity: '',
@@ -395,7 +400,7 @@ function Rooms({ props }) {
             }
         }).then(() => {
             toast.success('Uspješno izbrisana soba');
-            forceChange();
+            getRooms();
         })
             .catch(() => toast.error('Dogodila se pogreška.'))
     };
@@ -407,7 +412,7 @@ function Rooms({ props }) {
             }
         }).then(() => {
             toast.success("Soba je postavljena kao operabilna");
-            forceChange();
+            getRooms();
         }).catch(() => {
             toast.error("Dogodila se pogreška");
         })
@@ -420,30 +425,17 @@ function Rooms({ props }) {
             }
         }).then(() => {
             toast.success("Soba je postavljena kao inoperabilna");
-            forceChange();
+            getRooms();
         }).catch(() => {
             toast.error("Dogodila se pogreška");
         })
     };
 
-    const getRooms = async () => {
-        await api.get('/employee/room', {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        }).then((res) => {
-            setRooms(res.data);
-        }).catch((err) => {
-            toast.error("Provjerite internetsku vezu.");
-        });
-    };
-
     useEffect(() => {
         getRooms();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [reducerValue]);
+    }, []);
 
-    return (<div className='mx-2 w-full grid grid-cols-2 gap-2'>
+    return (<div className='mx-2 w-full grid md:grid-cols-2 grid-cols-1 gap-2'>
         <div className='bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'>
             {rooms.map((room, key) => (
                 <div
@@ -506,7 +498,7 @@ function Rooms({ props }) {
 
 function Equipment({ props }) {
 
-    const [reducerValue, forceChange] = useReducer(x => x + 1, 0);
+
     const [equipmentList, setEquipmentList] = useState([]);
     const [roomList, setRoomList] = useState([]);
     const [equipmentRegisterData, setEquipmentRegisterData] = useState({
@@ -514,7 +506,6 @@ function Equipment({ props }) {
         specialMessage: '',
         roomId: 0
     });
-
 
     const getEquipment = async () => {
         try {
@@ -530,10 +521,8 @@ function Equipment({ props }) {
                     }
                 })
             ])
-
             setEquipmentList(equipmentRes.data);
             setRoomList(roomRes.data);
-            forceChange();
 
         } catch (err) {
             toast.error("Provjerite internetsku vezu.");
@@ -547,7 +536,7 @@ function Equipment({ props }) {
             }
         }).then(() => {
             toast.success('Uspješno izbrisana oprema.');
-            forceChange();
+            getEquipment();
         })
             .catch(() => toast.error('Dogodila se pogreška.'))
     };
@@ -559,7 +548,7 @@ function Equipment({ props }) {
             }
         }).then(() => {
             toast.success("Oprema je postavljena kao inoperabilna.");
-            forceChange();
+            getEquipment();
         }).catch(() => {
             toast.error("Dogodila se pogreška.");
         })
@@ -572,7 +561,7 @@ function Equipment({ props }) {
             }
         }).then(() => {
             toast.success("Oprema je postavljena kao operabilna.");
-            forceChange();
+            getEquipment();
         }).catch(() => {
             toast.error("Dogodila se pogreška.");
         })
@@ -598,7 +587,7 @@ function Equipment({ props }) {
             }
         }).then(() => {
             toast.success("Uspješno unesena nova oprema");
-            forceChange();
+            getEquipment();
             setEquipmentRegisterData({
                 name: '',
                 specialMessage: ''
@@ -614,10 +603,9 @@ function Equipment({ props }) {
 
     useEffect(() => {
         getEquipment();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [reducerValue]);
+    }, []);
 
-    return (<div className='mx-2 w-full grid grid-cols-2 gap-2'>
+    return (<div className='mx-2 w-full grid grid-cols-1 md:grid-cols-2 gap-2'>
         <div className={'bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'}>
             {equipmentList.map((equipment, key) => (
                 <div key={key}
