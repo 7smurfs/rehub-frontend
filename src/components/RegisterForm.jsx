@@ -38,12 +38,12 @@ function RegisterForm() {
     const validateRegisterData = () => {
         if (registerData.firstName.match(/^ *$/) !== null) {
             toast.info("Unesite ime")
-            setStep(tmp => 0)
+            setStep(() => 0)
             return;
         }
         if (registerData.lastName.match(/^ *$/) !== null) {
             toast.info("Unesite prezime")
-            setStep(tmp => 0)
+            setStep(() => 0)
             return;
         }
         if (!registerData.username.toLowerCase()
@@ -51,30 +51,34 @@ function RegisterForm() {
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             )) {
             toast.info("Unesite valjanu e-mail adresu")
-            setStep(tmp => 1)
+            setStep(() => 1)
             return;
         }
         if (!/^\+3859(1|2|5|8|9|76|77)\d{6,7}$/.test(registerData.phoneNumber)) {
             toast.info("Neispravan format broja. Koristite predbroj +385.")
-            setStep(tmp => 1)
+            setStep(() => 1)
             return;
         }
         if (/^\d+$/.test(registerData.pin)) {
-            if (registerData.pin.length !== 11)
+            if (registerData.pin.length !== 11) {
                 toast.info("OIB nije ispravne duljine")
-            setStep(tmp => 2)
+                setStep(() => 2)
+                return;
+            }
         } else {
             toast.info("OIB mora sadržavati 11 brojki.")
-            setStep(tmp => 2)
+            setStep(() => 2)
             return;
         }
         if (/^\d+$/.test(registerData.phin)) {
-            if (registerData.phin.length !== 9)
+            if (registerData.phin.length !== 9) {
                 toast.info("MBO nije ispravne duljine")
-            setStep(tmp => 2)
+                setStep(() => 2)
+                return;
+            }
         } else {
             toast.info("MBO mora sadržavati 9 brojki.")
-            setStep(tmp => 2)
+            setStep(() => 2)
             return;
         }
         if (!/^(?=.*[A-Za-z])(?=.*[0-9]).{8,}$/.test(registerData.password)) {
@@ -96,17 +100,16 @@ function RegisterForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            validateRegisterData();
-            await api.post('/patient/register', registerData);
-            navigate('/login');
-        } catch (err) {
-            if (err.code === "ERR_NETWORK") {
-                toast.error("Greška. Provjerite internet vezu ili kontaktirajte podršku.")
-            } else {
-                toast.warn("Podaci nisu valjani. Provjerite svoje osobne podatke.");
-            }
-        }
+        validateRegisterData();
+        await api.post('/patient/register', registerData)
+            .then(() => navigate('/login'))
+            .catch((err) => {
+                if (err.code === "ERR_NETWORK") {
+                    toast.error("Greška. Provjerite internet vezu ili kontaktirajte podršku.")
+                } else {
+                    toast.warn("Podaci nisu valjani. Provjerite svoje osobne podatke.");
+                }
+            });
     };
 
     const togglePass = () => {
@@ -272,9 +275,9 @@ function RegisterForm() {
                                          className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'passEye'}/>
                                 </div>
                                 <span className={'text-gray-400 ml-2'}>
-                                    { passwordStrength === 1 && <>slaba</>}
-                                    { passwordStrength === 2 && <>dobra</>}
-                                    { passwordStrength === 3 && <>jaka</>}
+                                    {passwordStrength === 1 && <>slaba</>}
+                                    {passwordStrength === 2 && <>dobra</>}
+                                    {passwordStrength === 3 && <>jaka</>}
                                 </span>
                             </div>
                             <div className="">
