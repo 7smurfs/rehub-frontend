@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PopupJS from "reactjs-popup";
+import styled from 'styled-components';
 import PageLayout from "../components/PageLayout";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -10,8 +11,33 @@ import hide from "../assets/hide-pass.svg";
 import show from "../assets/show-pass.svg";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {useNavigate} from "react-router-dom";
+
+
+const StyledPopup = styled(PopupJS)`
+
+        &-content {
+            border-radius: 10px;
+            width: 100%;
+        }
+        @media (min-width: 770px) {
+            &-content {
+                border-radius: 10px;
+                width: 60%;
+            }
+        }
+        
+        @media (min-width: 1180px) {
+            &-content {
+                border-radius: 10px;
+                width: 40%;
+            }
+        }
+    `;
 
 const MyProfile = () => {
+
+    const navigate = useNavigate();
 
     const [profileData, setProfileData] = useState({
         id: '',
@@ -37,11 +63,11 @@ const MyProfile = () => {
     }, []);
 
     const invalidatePatient = async () => {
-        await api.delete('/patient/' + profileData.id, {
+        await api.delete('/patient', {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
-        }).catch(() => toast.error("Dogodila se greška."));
+        }).then(navigate('/')).catch(() => toast.error("Dogodila se greška."));
     };
 
     const [showOldPass, setShowOldPass] = useState(false);
@@ -75,7 +101,7 @@ const MyProfile = () => {
             toast.warn("Lozinke se ne podudaraju")
             return;
         }
-        if (!data.oldPass.length || !data.newPass.length || !data.confirmPass.length) {
+        if (data.oldPass.length === 0 || data.newPass.length === 0 || data.confirmPass.length === 0) {
             toast.info("Popunite sva polja.")
             return;
         }
@@ -99,7 +125,7 @@ const MyProfile = () => {
 
     const [open, setOpen] = useState(false);
     const [openInvalidate, setOpenInvalidate] = useState(false);
-    const contentStyle = {borderRadius: '10px', width: '40%'};
+    const contentStyle = {borderRadius: '5px', width: '100%', overflow: 'scroll'};
 
     return (
         <PageLayout>
@@ -108,13 +134,13 @@ const MyProfile = () => {
                 className="text-sky-700 font-bold text-3xl justify-self-center self-center mt-5 mb-5">Moj profil</span>
 
             <PopupJS open={openInvalidate} closeOnDocumentClick={false} onClose={() => setOpenInvalidate(false)}
-                     modal {...{contentStyle}}>
+                         modal {...{contentStyle}}>
                 <div className="flex justify-center my-10">
                     <div className="flex-1 items-center rounded-bl-[10px] rounded-br-[10px] flex flex-col">
                         <label className="font-bold text-sky-600 text-2xl mt-[30px] text-center">Želite li deaktivirati
                             račun?</label>
 
-                        <div className="w-full flex justify-around mt-[45px]">
+                        <div className="w-full flex justify-center gap-5 mt-[45px]">
                             <button className="bg-red-600 text-white px-9 py-2 font-semibold rounded-[5px]"
                                     onClick={() => {
                                         setOpenInvalidate(false);
@@ -130,26 +156,26 @@ const MyProfile = () => {
                 </div>
             </PopupJS>
 
-            <PopupJS open={open} closeOnDocumentClick={false} onClose={() => setOpen(false)} modal {...{contentStyle}}>
+            <StyledPopup open={open} closeOnDocumentClick={false} onClose={() => setOpen(false)} modal>
                 <div className="flex justify-center relative">
                     <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
                         <label className="font-bold text-sky-600 text-lg mt-[30px]">Stara lozinka:</label>
-                        <div className="relative">
+                        <div className="relative w-full min-[360px]:w-auto">
                             <input type={showOldPass ? "text" : "password"} name="oldPass" id="oldPass"
                                    value={data.oldPass}
                                    onChange={handleChange}
-                                   className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
+                                   className="w-full min-[360px]:w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
                             <img src={showOldPass ? hide : show} onClick={toggleOldPass}
                                  className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
 
                         </div>
 
                         <label className="font-bold text-sky-600 text-lg mt-[30px]">Nova lozinka:</label>
-                        <div className="relative">
+                        <div className="relative w-full min-[360px]:w-auto">
                             <input type={showPass ? "text" : "password"} name="newPass" id="newPass"
                                    value={data.newPass}
                                    onChange={handleChange}
-                                   className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
+                                   className="w-full min-[360px]:w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
                             <img src={showPass ? hide : show} onClick={togglePass}
                                  className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
 
@@ -157,11 +183,11 @@ const MyProfile = () => {
 
                         <label className="font-bold text-sky-600 text-lg mt-[30px]">Potvrdite novu
                             lozinku:</label>
-                        <div className="relative">
+                        <div className="relative w-full min-[360px]:w-auto">
                             <input type={showConfirmPass ? "text" : "password"} name="confirmPass" id="confirmPass"
                                    value={data.confirmPass}
                                    onChange={handleChange}
-                                   className="w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
+                                   className="w-full min-[360px]:w-[300px] h-[40px] bg-sky-200 opacity-50 rounded-[5px] p-2"/>
 
                             <img src={showConfirmPass ? hide : show} onClick={toggleConfirmPass}
                                  className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
@@ -176,7 +202,7 @@ const MyProfile = () => {
                         onClick={() => setOpen(false)}>X
                     </button>
                 </div>
-            </PopupJS>
+            </StyledPopup>
 
             <div>
                 {profileData ? (
