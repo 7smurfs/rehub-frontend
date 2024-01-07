@@ -12,6 +12,15 @@ export default function SuperAdminDashboard() {
 
     const [selected, setSelected] = useState(0);
     const props = { selected, setSelected };
+    const [statistics, setStatistics] = useState({});
+
+    useEffect(() => {
+        setStatistics(api.get('/stats', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then((res) => setStatistics(res.data)));
+    }, []);
 
     return (
         <>
@@ -27,6 +36,15 @@ export default function SuperAdminDashboard() {
                     </div>
                 </div>
                 <div className={'flex justify-center h-full my-3'}>
+                    {selected === 0 && <div className={'w-full sm:w-1/2 mx-5 flex flex-col justify-center text-2xl text-sky-900'}>
+                        <span className={'font-bold my-3'}>Broj zaposlenika: {statistics.noOfEmployees}</span>
+                        <span className={'font-bold my-3'}>Broj pacijenata: {statistics.noOfPatients}</span>
+                        <span className={'font-bold my-3'}>Broj soba: {statistics.noOfRooms}</span>
+                        <span className={'font-bold my-3'}>Količina opreme: {statistics.noOfEquipment}</span>
+                        <span className={'font-bold my-3'}>Aktivne terapije: {statistics.noOfActiveTherapies}</span>
+                        <span
+                            className={'font-bold my-3'}>Broj novih korisnika u mjesecu: {statistics.noOfNewUsersForThisMonth}</span>
+                    </div>}
                     {selected === 1 && <Personel props={props} />}
                     {selected === 2 && <Patients props={props} />}
                     {selected === 3 && <Rooms props={props} />}
@@ -187,7 +205,7 @@ function Personel({ props }) {
                 <div
                     key={key}
                     className={
-                        'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4'
+                        'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'
                     }>
                     <span>{employee.firstName} {employee.lastName} {employee.user.roles.includes('ADMIN') &&
                         <span
@@ -282,8 +300,42 @@ function Personel({ props }) {
 }
 
 function Patients({ props }) {
-    return (<div className='mx-2 w-[90vw] h-full'>
 
+    const [patientsList, setPatientsList] = useState([]);
+    const [reducerValue, forceChange] = useReducer(x => x + 1, 0);
+
+    const getPatients = async () => {
+        await api.get('/patient', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }}).then((res) => {
+            setPatientsList(res.data)
+            forceChange();
+        }).catch((err) => {
+            console.log(err);
+            toast.error("Provjerite internetsku vezu.");
+        });
+    }
+
+    useEffect(() => {
+        getPatients();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [reducerValue]);
+
+    return (<div className='mx-2 w-[90vw] h-full'>
+        <div
+            className={'bg-sky-200 flex flex-col h-full items-center rounded-xl overflow-y-scroll p-2'}>
+            {patientsList.map((patient, key) => (
+                <div
+                    key={key}
+                    className={
+                        'bg-white p-4 text-sky-900 md:text-2xl flex flex-col sm:flex-row justify-between rounded-lg mx-4 my-2 w-3/4'
+                    }>
+                    <span className={'font-bold'}>{patient.firstName} {patient.lastName}</span>
+                    <span>Datum rođenja: {patient.dateOfBirth.split('-')[2]}.{patient.dateOfBirth.split('-')[1]}.{patient.dateOfBirth.split('-')[0]}</span>
+                </div>
+            ))}
+        </div>
     </div>);
 }
 
@@ -456,7 +508,181 @@ function Rooms({ props }) {
 }
 
 function Equipment({ props }) {
-    return (<div className='mx-2 w-full grid grid-cols-2 gap-2'>
 
+    const [reducerValue, forceChange] = useReducer(x => x + 1, 0);
+    const [equipmentList, setEquipmentList] = useState([]);
+    const [roomList, setRoomList] = useState([]);
+    const [equipmentRegisterData, setEquipmentRegisterData] = useState({
+        name: '',
+        specialMessage: '',
+        roomId: 0
+    });
+
+
+    const getEquipment = async () => {
+        try {
+            const [roomRes, equipmentRes] = await Promise.all([
+                api.get('/employee/room', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }),
+                api.get('/employee/equipment', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
+            ])
+
+            setEquipmentList(equipmentRes.data);
+            setRoomList(roomRes.data);
+            forceChange();
+
+        } catch (err) {
+            toast.error("Provjerite internetsku vezu.");
+        }
+    }
+
+    const invalidateEquipment = async (equipmentId) => {
+        await api.delete('/employee/equipment/' + equipmentId, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => {
+            toast.success('Uspješno izbrisana oprema.');
+            forceChange();
+        })
+            .catch(() => toast.error('Dogodila se pogreška.'))
+    };
+
+    const setEquipmentAsOutOfService = async (equipmentId) => {
+        await api.post('/employee/equipment/inoperable/' + equipmentId, null, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => {
+            toast.success("Oprema je postavljena kao inoperabilna.");
+            forceChange();
+        }).catch(() => {
+            toast.error("Dogodila se pogreška.");
+        })
+    };
+
+    const setEquipmentAsOperable = async (equipmentId) => {
+        await api.post('/employee/equipment/operable/' + equipmentId, null, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => {
+            toast.success("Oprema je postavljena kao operabilna.");
+            forceChange();
+        }).catch(() => {
+            toast.error("Dogodila se pogreška.");
+        })
+    };
+
+    const handleEquipmentChange = (e) => {
+        const { name, value } = e.target;
+        setEquipmentRegisterData({ ...equipmentRegisterData, [name]: value });
+    }
+
+    const validateEquipmentRegisterData = () => {
+        if (equipmentRegisterData.name.match(/^ *$/) !== null) {
+            toast.info("Unesite naziv opreme");
+        }
+    };
+
+    const registerNewEquipment = async (e) => {
+        e.preventDefault();
+        validateEquipmentRegisterData();
+        await api.post('/employee/equipment', equipmentRegisterData, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(() => {
+            toast.success("Uspješno unesena nova oprema");
+            forceChange();
+            setEquipmentRegisterData({
+                name: '',
+                specialMessage: ''
+            });
+        }).catch((err) => {
+            if (err.code === "ERR_NETWORK") {
+                toast.error("Greška. Provjerite internet vezu ili kontaktirajte podršku.")
+            } else {
+                toast.warn("Podaci nisu valjani. Provjerite podatke opreme.");
+            }
+        });
+    };
+
+    useEffect(() => {
+        getEquipment();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [reducerValue]);
+
+    return (<div className='mx-2 w-full grid grid-cols-2 gap-2'>
+        <div className={'bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'}>
+            {equipmentList.map((equipment, key) => (
+                <div key={key}
+                    className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' : 'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
+                    <span className={'font-bold'}>{equipment.name}</span>
+                    <div className={'flex flex-row justify-center items-center'}>
+                        <img src={Cross} alt={'cross'}
+                            onClick={() => invalidateEquipment(equipment.id)}
+                            className={'h-7 mx-2 cursor-pointer'} />
+                        {
+                            equipment.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'}
+                                onClick={() => setEquipmentAsOutOfService(equipment.id)}
+                                className={'h-7 mx-2 cursor-pointer'} /> :
+                                <img src={Operable} alt={'operable'}
+                                    onClick={() => setEquipmentAsOperable(equipment.id)}
+                                    className={'h-7 mx-2 cursor-pointer'} />
+                        }
+
+                    </div>
+                </div>
+            ))}
+        </div>
+        <div className={'bg-sky-200 h-full rounded-xl p-2 text-center'}>
+            <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU OPREMU</span>
+            <form className={'grid grid-cols-2'}>
+                <div className={'pr-1'}>
+                    <label
+                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Naziv
+                        opreme:</label>
+                    <input type="text" name="name" id="name"
+                        value={equipmentRegisterData.name}
+                        onChange={handleEquipmentChange}
+                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                </div>
+
+                <div className={'pl-1'}>
+                    <label
+                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Soba:</label>
+
+                    <select name="roomId" id="roomId" onChange={handleEquipmentChange}
+                        value={equipmentRegisterData.roomId}
+                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
+                        <option value={""}>Odaberite sobu...</option>
+                        {roomList.map((room, key) => (
+                            <option key={key} value={room.id}>{room.label}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className={'col-span-2'}>
+                    <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Dodatne
+                        informacije:</label>
+                    <textarea name={'specialMessage'} id={'specialMessage'} maxLength={255}
+                        className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
+                        onChange={handleEquipmentChange}
+                        value={equipmentRegisterData.specialMessage} />
+                </div>
+            </form>
+            <button onClick={registerNewEquipment}
+                className={'bg-sky-950 font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                OPREMU
+            </button>
+        </div>
     </div>);
 }
