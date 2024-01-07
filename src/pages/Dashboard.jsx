@@ -13,6 +13,10 @@ function Dashboard() {
 
     useEffect(() => {
         let roles = localStorage.getItem('roles');
+        if (roles == null) {
+            navigate('/');
+            return;
+        }
         if (roles.includes('SUPERADMIN')) {
             setUserRole('SUPERADMIN');
             return;
