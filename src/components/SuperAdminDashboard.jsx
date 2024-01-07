@@ -311,8 +311,7 @@ function Patients({ props }) {
         }}).then((res) => {
             setPatientsList(res.data)
             forceChange();
-        }).catch((err) => {
-            console.log(err);
+        }).catch(() => {
             toast.error("Provjerite internetsku vezu.");
         });
     }
@@ -434,9 +433,7 @@ function Rooms({ props }) {
             }
         }).then((res) => {
             setRooms(res.data);
-            console.log(rooms)
         }).catch((err) => {
-            console.log(err);
             toast.error("Provjerite internetsku vezu.");
         });
     };
