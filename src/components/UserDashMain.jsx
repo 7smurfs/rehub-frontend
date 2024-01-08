@@ -103,8 +103,9 @@ function UserDashMain() {
                                  onClick={() => shiftTherapyData()}/>
                         }
                     </div>
-                    <div className={'h-full hidden lg:block w-full overflow-y-scroll'}>
+                    <div className={'h-full hidden lg:block w-full'}>
                         <FullCalendar
+                            height={"100%"}
                             plugins={[dayGridPlugin, timeGridPlugin]}
                             initialView="timeGridWeek"
                             businessHours={{
