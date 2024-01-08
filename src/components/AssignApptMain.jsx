@@ -1,15 +1,10 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AppointmentPopup from "./AppointmentPopup";
 
 function AssignApptMain() {
 
     const navigate = useNavigate();
-
-    // TODO: 
-
-    let { state } = useLocation();
-    console.log(state);
 
     return(
         <div className={'h-full flex flex-col'}>
