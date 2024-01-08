@@ -126,7 +126,7 @@ function EmployeeDashMain() {
                                         className={'text-sky-800 font-bold'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
                                 </div>
                                 <div className={'w-20 flex items-center justify-center'}>
-                                    <Link to={'/appointment'}>
+                                    <Link to={'/appointment'} state={appt}>
                                         <img src={Arrow} alt="Arrow" className={'h-10'} />
                                     </Link>
                                 </div>
