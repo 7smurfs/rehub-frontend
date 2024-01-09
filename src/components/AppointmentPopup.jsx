@@ -13,24 +13,16 @@ function AppointmentPopup({ data }) {
 
     const [room, setRoom] = useState('');
 
-
-
-
-    useEffect(() => {
-            async function getRoom(){
-                await api.get('/employee/room/' + data.roomId, {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
-                }).then((res) => {
-                    setRoom(res.data);
-                })
+    async function getRoom(){
+        await api.get('/employee/room/' + data.roomId, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
+        }).then((res) => {
+            setRoom(res.data);
+        })
+    }
 
-            getRoom().catch((err) => console.log(err));
-        }
-
-    )
     const handleSubmit = async (e) => {
         e.preventDefault();
         await api.post('/employee/therapy', data)
@@ -74,9 +66,15 @@ function AppointmentPopup({ data }) {
         const sd = new Date(start);
         const ed = new Date(end);
 
-        const diffMs = ed - sd;
+        const diffS = (ed - sd) / 1000;
 
-        return diffMs / 3600000;
+        const hs = Math.floor(diffS / 3600);
+        const mins = Math.floor((diffS % 3600) / 60);
+
+        return {
+            hours: hs,
+            minutes: mins
+        };
     }
 
 
@@ -101,7 +99,11 @@ function AppointmentPopup({ data }) {
     return(
         <>
             <button onClick={() => {
-                validateData() && setOpen(o => !o);
+                if(validateData()) {
+                    getRoom().catch((err) => toast.error("Došlo je do greške."));
+                    setOpen(o => !o);
+                }
+
             }} className={'bg-sky-800 w-24 p-2 rounded-[5px] text-white font-semibold'}>
                 Nastavi
             </button>
@@ -117,7 +119,7 @@ function AppointmentPopup({ data }) {
                         </div>
                         <div className={'flex'}>
                             <span className={'w-28 font-semibold'}>VRIJEME:</span>
-                            <span>{formatDateTime(data.startAt, data.endAt).start} - {formatDateTime(data.startAt, data.endAt).end} h (Trajanje {timeDiff(data.startAt, data.endAt)} h)</span>
+                            <span>{formatDateTime(data.startAt, data.endAt).start} - {formatDateTime(data.startAt, data.endAt).end} h (Trajanje {timeDiff(data.startAt, data.endAt).hours} h {timeDiff(data.startAt, data.endAt).minutes} min)</span>
                         </div>
                         <div className={'flex'}>
                             <span className={'w-28 font-semibold'}>LIJEČNIK:</span>

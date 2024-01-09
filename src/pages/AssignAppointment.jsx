@@ -20,7 +20,7 @@ function AssignAppointment() {
     const [apptData, setApptData] = useState({
         startAt: '',
         endAt: '',
-        therapyId: -1,
+        therapyId: state.id,
         roomId: -1
     });
 
