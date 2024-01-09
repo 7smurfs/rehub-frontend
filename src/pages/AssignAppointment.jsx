@@ -1,13 +1,35 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PageLayout from "../components/PageLayout";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import AppointmentPopup from "../components/AppointmentPopup";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
+import api from "../http/api";
+import {toast} from "react-toastify";
 
 function AssignAppointment() {
 
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const [employeeTherapies, setEmployeeTherapies] = useState([]);
+
+    useEffect(() => {
+        async function getEmployeeTherapies() {
+            await api.get('/employee/accountable/therapies', {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(res => {
+                setEmployeeTherapies(res.data);
+            });
+        }
+
+        getEmployeeTherapies().catch(() => toast.error('Dogodila se pogreška.'));
+    }, []);
+
+
+    let ct = 1;
 
     return(
       <PageLayout>
@@ -53,9 +75,26 @@ function AssignAppointment() {
                   </div>
                   <div className={'bg-sky-100 col-span-2 row-span-2 w-1/2 justify-self-center'}>
                       <div className={'h-8 flex items-center pl-2'}>
-                          <h3 className={'text-sky-800 font-semibold text-lg'}>Kalendar</h3>
+                          <h3 className={'text-sky-800 font-semibold text-lg'}>Moji termini</h3>
                       </div>
-                      <div></div>
+
+                      {employeeTherapies.length === 0 ? (
+                          <div className={'h-5/6 flex flex-col justify-center items-center p-3'}>
+                              <span className={'text-gray-500'}>Trenutno nema terapija.</span>
+                          </div>
+                      ) : (
+                          employeeTherapies.map((therapy, key) => (
+                              <div key={key} className={'h-5/6 flex flex-col items-center p-3 overflow-y-scroll'}>
+                                  <div className={'bg-sky-500 w-full h-auto p-2 text-sky-950 rounded-[5px]'}>
+                                      <h1 className={'font-bold'}>{therapy.patientResponse.firstName} {therapy.patientResponse.lastName}</h1>
+                                      <span className={'block'}>{therapy.type}</span>
+                                      <span className={'block'}>{therapy.roomLabel}</span>
+                                      <span className={'block'}>{therapy.startAt} - {therapy.endAt}</span>
+                                  </div>
+                              </div>
+                          ))
+                      )}
+
                   </div>
                   <div className={'bg-sky-100 col-span-1 row-span-1 px-3'}>
                       <div className={'h-8 flex items-center'}>
