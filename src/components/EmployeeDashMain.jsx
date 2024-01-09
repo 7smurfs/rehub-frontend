@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import Arrow from "../assets/right-arrow.svg";
 import {Link, useNavigate} from "react-router-dom";
 import api from "../http/api";
@@ -16,8 +16,6 @@ function EmployeeDashMain() {
     const [formatedTherapies, setFormatedTherapies] = useState([]);
 
     const navigate = useNavigate();
-
-
     const showData = async () => {
         try {
             const [roomRes, equipmentRes, apptsRes] = await Promise.all([
@@ -128,11 +126,9 @@ function EmployeeDashMain() {
                                         className={'text-sky-800 font-bold'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
                                 </div>
                                 <div className={'w-20 flex items-center justify-center'}>
-                                    <div>
-                                        <img src={Arrow} alt="Arrow" className={'h-10'} onClick={() => {
-                                            navigate('/appointment', {state: appt})
-                                        }}/>
-                                    </div>
+                                    <Link to={'/appointment'}>
+                                        <img src={Arrow} alt="Arrow" className={'h-10'} />
+                                    </Link>
                                 </div>
                             </div>
                         ))}
@@ -216,21 +212,30 @@ function EmployeeDashMain() {
                 <div className={'h-10 flex justify-center items-center'}>
                     <span className={'text-sky-600 font-bold text-2xl'}>Rezultati terapija</span>
                 </div>
-                <div className={'h-4/6 bg-sky-50 mx-2 overflow-y-scroll p-3'}>
-
-                    <div className={'bg-sky-200 flex justify-between items-center p-3'}>
-                        <div>
-                            <span className={'font-bold text-sky-900'}>Iva Ivić</span>
-                            <p className={'text-sky-800 text-sm'}>Vježbe nogu</p>
-                        </div>
-                        <div>
-                            <Link to={'/appointmentResult'}>
-                                <img src={Arrow} alt="Arrow" className={'h-10'} />
-                            </Link>
-                        </div>
+                {apptsList.length === 0 ? (
+                    <div className={'bg-sky-50 h-5/6 mx-2 flex items-center justify-center'}>
+                        <span className={'text-gray-500 text-lg'}>Trenutno nema aktivnih prijava.</span>
                     </div>
-
-                </div>
+                ) : (
+                    <div className={'h-5/6 overflow-y-scroll bg-sky-50 mx-2 p-3 flex flex-col gap-3'}>
+                        {apptsList.map((appt, key) => (
+                            <div key={key} className={'bg-sky-200 w-full flex justify-between py-3 pl-3'}>
+                                <div className={'h-full flex items-center'}>
+                                    <span
+                                        className={'text-sky-800 font-bold'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
+                                </div>
+                                <div className={'w-20 flex items-center justify-center'}>
+                                    <img
+                                        src={Arrow}
+                                        alt="Arrow"
+                                        className={'h-10'}
+                                        onClick={() => navigate('/appointmentResult', { state: { appointmentInfo: appt , patientResponse: appt.patientResponse} })}
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
             <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[5px]"}>
                 <div className={'h-10 flex justify-center items-center'}>
