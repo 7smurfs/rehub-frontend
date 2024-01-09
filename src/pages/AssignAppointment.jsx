@@ -6,7 +6,7 @@ import AppointmentPopup from "../components/AppointmentPopup";
 import {useNavigate, useLocation} from "react-router-dom";
 import api from "../http/api";
 import {toast} from "react-toastify";
-import arrowDown from "../assets/arrow-down.svg";
+import CollapsibleRoomTab from "../components/CollapsibleRoomTab";
 
 function AssignAppointment() {
 
@@ -40,11 +40,9 @@ function AssignAppointment() {
         }
 
         getEmployeeTherapies().catch(() => toast.error('Dogodila se pogreška.'));
-        getRooms().catch((err) => toast.error("Dogodila se pogreška."));
+        getRooms().catch(() => toast.error("Dogodila se pogreška."));
     }, []);
 
-
-    let ct = 1;
 
     return(
       <PageLayout>
@@ -76,7 +74,7 @@ function AssignAppointment() {
                           <span>Vježbe za poboljšanje mobilnosti, vježbe za vraćanje snage mišića</span>
                       </div>
                   </div>
-                  <div className={'bg-sky-100 col-span-1 row-span-2 px-3'}>
+                  <div className={'bg-sky-200 col-span-1 row-span-2 px-3'}>
                       <div className={'h-8 flex items-center'}>
                           <h3 className={'text-sky-800 font-semibold text-lg'}>Slobodne sobe</h3>
                       </div>
@@ -85,27 +83,29 @@ function AssignAppointment() {
                               <span className={'text-gray-500'}>Trenutno nema slobodnih soba.</span>
                           </div>
                       ) : (
-                          <div className={'h-5/6 bg-sky-50 overflow-y-scroll'}>
+                          <div className={'h-5/6 bg-white flex flex-col gap-3 p-3 overflow-y-scroll'}>
                               {rooms.map((room, key) => (
                                   room.status === 'OPERABLE' && (
-                                      <div key={key} className={'bg-white p-4 text-sky-900 rounded-lg flex justify-between items-center m-4 transition-all duration-500'}>
-                                          <div>
+                                      <CollapsibleRoomTab key={key} title={(
+                                          <>
                                               <span className={'font-bold block text-xl'}>{room.label}</span>
                                               <span className={'font-semibold text-md'}>Kapacitet: {room.capacity}</span>
-                                          </div>
-                                          <div>
-                                              <img src={arrowDown} alt="arrow down" className={'w-8'} />
-                                          </div>
+                                          </>
 
-                                      </div>
-                                  )
-                              ))}
+                                          )} content={(
+                                              <div>
+                                                  Stetoskop <br/>
+                                                  Kolica <br/>
+                                                  Blabla
+                                              </div>
+                                      )}/>
+                                  )))}
                           </div>
                       )}
 
 
                   </div>
-                  <div className={'bg-sky-100 col-span-1 row-span-1 px-3'}>
+                  <div className={'bg-sky-200 col-span-1 row-span-1 px-3'}>
                       <div className={'h-8 flex items-center'}>
                           <h3 className={'text-sky-800 font-semibold text-lg'}>Dostupni djelatnici</h3>
                       </div>
@@ -134,7 +134,7 @@ function AssignAppointment() {
                       )}
 
                   </div>
-                  <div className={'bg-sky-100 col-span-1 row-span-1 px-3'}>
+                  <div className={'bg-sky-200 col-span-1 row-span-1 px-3'}>
                       <div className={'h-8 flex items-center'}>
                           <h3 className={'text-sky-800 font-semibold text-lg'}>Trajanje zahvata</h3>
                       </div>
