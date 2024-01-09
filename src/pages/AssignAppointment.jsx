@@ -6,6 +6,7 @@ import AppointmentPopup from "../components/AppointmentPopup";
 import {useNavigate, useLocation} from "react-router-dom";
 import api from "../http/api";
 import {toast} from "react-toastify";
+import arrowDown from "../assets/arrow-down.svg";
 
 function AssignAppointment() {
 
@@ -13,6 +14,9 @@ function AssignAppointment() {
     const location = useLocation();
 
     const [employeeTherapies, setEmployeeTherapies] = useState([]);
+    const [rooms, setRooms] = useState([]);
+
+
 
     useEffect(() => {
         async function getEmployeeTherapies() {
@@ -25,7 +29,18 @@ function AssignAppointment() {
             });
         }
 
+        async function getRooms(){
+            await api.get('/employee/room', {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then((res) => {
+                setRooms(res.data);
+            })
+        }
+
         getEmployeeTherapies().catch(() => toast.error('Dogodila se pogreška.'));
+        getRooms().catch((err) => toast.error("Dogodila se pogreška."));
     }, []);
 
 
@@ -65,7 +80,30 @@ function AssignAppointment() {
                       <div className={'h-8 flex items-center'}>
                           <h3 className={'text-sky-800 font-semibold text-lg'}>Slobodne sobe</h3>
                       </div>
-                      <div className={'h-5/6 bg-sky-50'}></div>
+                      {rooms.length === 0 ? (
+                          <div className={'h-5/6 flex flex-col justify-center items-center p-3'}>
+                              <span className={'text-gray-500'}>Trenutno nema slobodnih soba.</span>
+                          </div>
+                      ) : (
+                          <div className={'h-5/6 bg-sky-50 overflow-y-scroll'}>
+                              {rooms.map((room, key) => (
+                                  room.status === 'OPERABLE' && (
+                                      <div key={key} className={'bg-white p-4 text-sky-900 rounded-lg flex justify-between items-center m-4 transition-all duration-500'}>
+                                          <div>
+                                              <span className={'font-bold block text-xl'}>{room.label}</span>
+                                              <span className={'font-semibold text-md'}>Kapacitet: {room.capacity}</span>
+                                          </div>
+                                          <div>
+                                              <img src={arrowDown} alt="arrow down" className={'w-8'} />
+                                          </div>
+
+                                      </div>
+                                  )
+                              ))}
+                          </div>
+                      )}
+
+
                   </div>
                   <div className={'bg-sky-100 col-span-1 row-span-1 px-3'}>
                       <div className={'h-8 flex items-center'}>
