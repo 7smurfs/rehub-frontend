@@ -51,9 +51,11 @@ function UserDashMain() {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
-        }).then(() => toast.success("Uspješno otkazana terapija."))
+        }).then(() => {
+            toast.success("Uspješno otkazana terapija.");
+            navigate('/');
+        })
             .catch(() => toast.error("Dogodila se pogreska"));
-        navigate('/');
     };
 
     const goToNewTherapy = (e) => {
