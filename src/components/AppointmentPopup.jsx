@@ -79,9 +79,30 @@ function AppointmentPopup({ data }) {
         return diffMs / 3600000;
     }
 
+
+    const validateData = () => {
+        if (data.roomId === -1) {
+            toast.info("Unesite sobu.");
+            return false;
+        }
+        if (data.startAt === '') {
+            toast.info("Unesite početak terapije.");
+            return false;
+        }
+        if (data.endAt === '') {
+            toast.info("Unesite kraj terapije.");
+            return false;
+        }
+
+        return true;
+    }
+
+
     return(
         <>
-            <button onClick={() => setOpen(o => !o)} className={'bg-sky-800 w-24 p-2 rounded-[5px] text-white font-semibold'}>
+            <button onClick={() => {
+                validateData() && setOpen(o => !o);
+            }} className={'bg-sky-800 w-24 p-2 rounded-[5px] text-white font-semibold'}>
                 Nastavi
             </button>
             <Popup open={open} closeOnDocumentClick={false} onClose={close} modal>
@@ -108,7 +129,7 @@ function AppointmentPopup({ data }) {
                         </div>
                     </div>
                     <div className={'h-1/6 flex justify-center items-center gap-3'}>
-                        <button className={'w-24 bg-sky-800 text-white rounded-[5px] p-1 font-semibold'}>
+                        <button onClick={handleSubmit} className={'w-24 bg-sky-800 text-white rounded-[5px] p-1 font-semibold'}>
                             Potvrdi
                         </button>
                         <button onClick={close} className={'w-24 bg-sky-800 text-white rounded-[5px] p-1 font-semibold'}>

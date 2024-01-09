@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import AppointmentPopup from "../components/AppointmentPopup";
 import {useNavigate, useLocation} from "react-router-dom";
 import api from "../http/api";
-import {toast} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import CollapsibleRoomTab from "../components/CollapsibleRoomTab";
 
 function AssignAppointment() {
@@ -20,8 +20,8 @@ function AssignAppointment() {
     const [apptData, setApptData] = useState({
         startAt: '',
         endAt: '',
-        therapyId: 0,
-        roomId: 0
+        therapyId: -1,
+        roomId: -1
     });
 
     const handleChange = (e) => {
@@ -206,6 +206,20 @@ function AssignAppointment() {
               </div>
 
           </div>
+
+          <ToastContainer
+              position="bottom-right"
+              autoClose={2000}
+              limit={2}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+          />
           <Footer/>
       </PageLayout>
     );
