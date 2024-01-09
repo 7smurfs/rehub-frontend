@@ -1,10 +1,83 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import api from "../http/api";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
-function AppointmentPopup() {
+function AppointmentPopup({ data }) {
     const [open, setOpen] = useState(false);
     const close = () => setOpen(false);
+
+    const navigate = useNavigate();
+
+    const [room, setRoom] = useState('');
+
+
+
+
+    useEffect(() => {
+            async function getRoom(){
+                await api.get('/employee/room/' + data.roomId, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then((res) => {
+                    setRoom(res.data);
+                })
+            }
+
+            getRoom().catch((err) => console.log(err));
+        }
+
+    )
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await api.post('/employee/therapy', data)
+            .then(() => navigate('/'))
+            .catch((err) => {
+                if (err.code === "ERR_NETWORK") {
+                    toast.error("Greška. Provjerite internet vezu ili kontaktirajte podršku.")
+                } else {
+                    toast.warn("Podaci nisu valjani. Provjerite unesene podatke.");
+                }
+            });
+    }
+
+    function formatDateTime(datetimeStart, datetimeEnd) {
+        let splitStart = datetimeStart.split('T');
+        let dateStart = splitStart[0];
+        let start = splitStart[1];
+        let splitEnd = datetimeEnd.split('T');
+        let dateEnd = splitEnd[0];
+        let end = splitEnd[1];
+
+        let ymd, dd, mm, yyyy;
+
+        ymd = dateStart.split('-');
+        dd = ymd[2];
+        mm = ymd[1];
+        yyyy = ymd[0];
+
+        let dmy = dd + '.' + mm + '.' + yyyy + '.';
+
+
+        return {
+            dateStart: dmy,
+            start: start,
+            dateEnd: dateEnd,
+            end: end
+        };
+    }
+
+    function timeDiff(start, end) {
+        const sd = new Date(start);
+        const ed = new Date(end);
+
+        const diffMs = ed - sd;
+
+        return diffMs / 3600000;
+    }
 
     return(
         <>
@@ -19,11 +92,11 @@ function AppointmentPopup() {
                     <div className={'bg-sky-50 h-4/6 px-2 flex flex-col gap-2 py-2'}>
                         <div className={'flex'}>
                             <span className={'w-28 font-semibold'}>DATUM:</span>
-                            <span>23.01.2024.</span>
+                            <span>{formatDateTime(data.startAt, data.endAt).dateStart}</span>
                         </div>
                         <div className={'flex'}>
                             <span className={'w-28 font-semibold'}>VRIJEME:</span>
-                            <span>08:00 - 10:00 h (Trajanje 2 h)</span>
+                            <span>{formatDateTime(data.startAt, data.endAt).start} - {formatDateTime(data.startAt, data.endAt).end} h (Trajanje {timeDiff(data.startAt, data.endAt)} h)</span>
                         </div>
                         <div className={'flex'}>
                             <span className={'w-28 font-semibold'}>LIJEČNIK:</span>
@@ -31,7 +104,7 @@ function AppointmentPopup() {
                         </div>
                         <div className={'flex'}>
                             <span className={'w-28 font-semibold'}>LOKACIJA:</span>
-                            <span>Ordinacija 202, prizemlje</span>
+                            <span>{room.label}</span>
                         </div>
                     </div>
                     <div className={'h-1/6 flex justify-center items-center gap-3'}>

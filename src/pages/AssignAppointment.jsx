@@ -11,12 +11,23 @@ import CollapsibleRoomTab from "../components/CollapsibleRoomTab";
 function AssignAppointment() {
 
     const navigate = useNavigate();
-    const location = useLocation();
+    let { state } = useLocation();
 
     const [employeeTherapies, setEmployeeTherapies] = useState([]);
     const [rooms, setRooms] = useState([]);
     const [equipment, setEquipment] = useState([]);
 
+    const [apptData, setApptData] = useState({
+        startAt: '',
+        endAt: '',
+        therapyId: 0,
+        roomId: 0
+    });
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setApptData({...apptData, [name]: value});
+    };
 
 
     useEffect(() => {
@@ -57,26 +68,38 @@ function AssignAppointment() {
     }, []);
 
 
+    const handleOptionChange = (e) => {
+        const  { name, value } = e.target;
+
+        setApptData({
+            ...apptData,
+            [name]: value
+        });
+    }
+
+
     return(
       <PageLayout>
           <Header />
           <div className={'h-full flex flex-col'}>
               <div className={'h-14 flex items-center pl-5'}>
-                  <h1 className={'text-sky-800 font-bold text-2xl underline'}>Pacijent Luka Lukić</h1>
+                  <h1 className={'text-sky-800 font-bold text-2xl underline'}>Pacijent {state.patientResponse.firstName} {state.patientResponse.lastName}</h1>
               </div>
               <div className={'h-full grid grid-cols-4 grid-rows-2 gap-3 pl-3 pr-3 pb-3'}>
                   <div className={'col-span-2 row-span-1 py-2'}>
-                      <div className={'h-8 flex items-center pl-3'}>
+                      {/*<div className={'h-8 flex items-center pl-3'}>
                           <span className={'w-52 font-bold text-sky-600'}>Dolazak:</span>
-                          <span>Prvi</span>
-                      </div>
+                          <span>
+                              {state.referenceTherapyId ? 'Prvi' : 'Ponovni'}
+                          </span>
+                      </div>*/}
                       <div className={'h-8 flex items-center pl-3'}>
                           <span className={'w-52 font-bold text-sky-600'}>Vrsta oboljenja:</span>
-                          <span>Prijelom potkoljenice</span>
+                          <span>{state.type}</span>
                       </div>
                       <div className={'h-8 flex items-center pl-3'}>
                           <span className={'w-52 font-bold text-sky-600'}>Opis oboljenja:</span>
-                          <span>Potrebna rehabilitacija nakon skidanja gipsa</span>
+                          <span>{state.request}</span>
                       </div>
                       <div className={'h-8 flex items-center pl-3'}>
                           <span className={'w-52 font-bold text-sky-600'}>Uputnicu izdao/la:</span>
@@ -98,24 +121,32 @@ function AssignAppointment() {
                       ) : (
                           <div className={'h-5/6 bg-white flex flex-col gap-3 p-3 overflow-y-scroll'}>
                               {rooms.map((room, key) => (
-                                  room.status === 'OPERABLE' && (
+                                  <div key={key} className={'flex'}>
+                                      <input type="radio" value={room.id} name={'roomId'} id={`room${room.id}`} onChange={handleOptionChange}/>
+                                      {room.status === 'OPERABLE' && (
                                       <CollapsibleRoomTab key={key} title={(
                                           <>
                                               <span className={'font-bold block text-xl'}>{room.label}</span>
-                                              <span className={'font-semibold text-md'}>Kapacitet: {room.capacity}</span>
+                                              <span
+                                                  className={'font-semibold text-md'}>Kapacitet: {room.capacity}</span>
                                           </>
 
-                                          )} content={(
-                                              <div>
-                                                  {equipment.map((eq, key) => (
-                                                      eq.status === 'OPERABLE' && eq.roomId === room.id &&
-                                                      <div>
-                                                          {eq.name}
-                                                      </div>
-                                                  ))}
-                                              </div>
+                                      )} content={(
+                                          <div>
+                                              {equipment.map((eq, key) => (
+                                                  eq.status === 'OPERABLE' && eq.roomId === room.id &&
+                                                  <div key={key}>
+                                                      <span className={'text-sky-950'}>{eq.name}</span>
+                                                  </div>
+                                              ))}
+                                          </div>
                                       )}/>
-                                  )))}
+                                      )}
+                                  </div>
+
+                              ))}
+
+
                           </div>
                       )}
 
@@ -123,10 +154,25 @@ function AssignAppointment() {
                   </div>
                   <div className={'bg-sky-200 col-span-1 row-span-1 px-3'}>
                       <div className={'h-8 flex items-center'}>
+                          <h3 className={'text-sky-800 font-semibold text-lg'}>Trajanje zahvata</h3>
+                      </div>
+                      <div className={'h-3/5 bg-sky-50 flex flex-col gap-2 px-3 py-1'}>
+                          <div className={'flex'}>
+                              <label className={'w-20'}>Početak: </label>
+                              <input type="datetime-local" name={'startAt'} id={'startAt'} onChange={handleChange}/>
+                          </div>
+                          <div className={'flex'}>
+                              <label className={'w-20'}>Kraj: </label>
+                              <input type="datetime-local" name={'endAt'} id={'endAt'} onChange={handleChange}/>
+                          </div>
+                      </div>
+                  </div>
+                  {/*<div className={'bg-sky-200 col-span-1 row-span-1 px-3'}>
+                      <div className={'h-8 flex items-center'}>
                           <h3 className={'text-sky-800 font-semibold text-lg'}>Dostupni djelatnici</h3>
                       </div>
                       <div className={'h-3/5 bg-sky-50'}></div>
-                  </div>
+                  </div>*/}
                   <div className={'bg-sky-100 col-span-2 row-span-2 w-1/2 justify-self-center'}>
                       <div className={'h-8 flex items-center pl-2'}>
                           <h3 className={'text-sky-800 font-semibold text-lg'}>Moji termini</h3>
@@ -150,15 +196,10 @@ function AssignAppointment() {
                       )}
 
                   </div>
-                  <div className={'bg-sky-200 col-span-1 row-span-1 px-3'}>
-                      <div className={'h-8 flex items-center'}>
-                          <h3 className={'text-sky-800 font-semibold text-lg'}>Trajanje zahvata</h3>
-                      </div>
-                      <div className={'h-3/5 bg-sky-50'}></div>
-                  </div>
+
               </div>
               <div className={'w-full flex justify-center pb-3 gap-3'}>
-                  <AppointmentPopup/>
+                  <AppointmentPopup data={apptData}/>
                   <button onClick={() => navigate('/dashboard')}
                           className={'bg-sky-800 w-24 p-2 rounded-[5px] text-white font-semibold'}>Odustani
                   </button>
