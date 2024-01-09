@@ -77,6 +77,32 @@ function AssignAppointment() {
         });
     }
 
+    function formatDateTime(datetimeStart, datetimeEnd) {
+        let splitStart = datetimeStart.split('T');
+        let dateStart = splitStart[0];
+        let start = splitStart[1];
+        let splitEnd = datetimeEnd.split('T');
+        let dateEnd = splitEnd[0];
+        let end = splitEnd[1];
+
+        let ymd, dd, mm, yyyy;
+
+        ymd = dateStart.split('-');
+        dd = ymd[2];
+        mm = ymd[1];
+        yyyy = ymd[0];
+
+        let dmy = dd + '.' + mm + '.' + yyyy + '.';
+
+
+        return {
+            dateStart: dmy,
+            start: start,
+            dateEnd: dateEnd,
+            end: end
+        };
+    }
+
 
     return(
       <PageLayout>
@@ -103,12 +129,12 @@ function AssignAppointment() {
                       </div>
                       <div className={'h-8 flex items-center pl-3'}>
                           <span className={'w-52 font-bold text-sky-600'}>Uputnicu izdao/la:</span>
-                          <span>Iva Ivanić dr. med.</span>
+                          <span>{state.doctorName}</span>
                       </div>
-                      <div className={'h-8 flex items-center pl-3'}>
+                      {/*<div className={'h-8 flex items-center pl-3'}>
                           <span className={'w-52 font-bold text-sky-600'}>Postupak liječenja:</span>
                           <span>Vježbe za poboljšanje mobilnosti, vježbe za vraćanje snage mišića</span>
-                      </div>
+                      </div>*/}
                   </div>
                   <div className={'bg-sky-200 col-span-1 row-span-2 px-3'}>
                       <div className={'h-8 flex items-center'}>
@@ -189,7 +215,7 @@ function AssignAppointment() {
                                       <h1 className={'font-bold'}>{therapy.patientResponse.firstName} {therapy.patientResponse.lastName}</h1>
                                       <span className={'block'}>{therapy.type}</span>
                                       <span className={'block'}>{therapy.roomLabel}</span>
-                                      <span className={'block'}>{therapy.startAt} - {therapy.endAt}</span>
+                                      <span className={'block font-semibold'}>{formatDateTime(therapy.startAt, therapy.endAt).dateStart} {formatDateTime(therapy.startAt, therapy.endAt).start} - {formatDateTime(therapy.startAt, therapy.endAt).end}</span>
                                   </div>
                               </div>
                           ))
