@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import PageLayout from "../components/PageLayout";
 import api from "../http/api";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
 
 function AppointmentResultMain() {
 
     const location = useLocation();
-
+    const navigate = useNavigate();
     const [patientData , setPatientData] = useState({
         id: '',
         firstName: '',
@@ -15,44 +15,70 @@ function AppointmentResultMain() {
         gender: '',
         dateOfBirth: '',
     });
-    const [therapyResultData, setTherapyResultData] = useState({
+    const [therapyData, setTherapyData] = useState({
         id: '',
         type: '',
         request: '',
         result: '',
         status: '',
-        patientResponse: ''
+        patientResponse: []
+    });
+
+    const [therapyResultData, setTherapyResultData] = useState({
+        therapyId: '',
+        result: '',
+        status: ''
     });
 
     useEffect(() => {
-        // Check if location state and appointmentInfo exist
-        console.log("State: " + console.log(JSON.stringify(location.state.appointmentInfo, null, 2)));
+
         if (location.state && location.state.appointmentInfo) {
-            const { status } = location.state.appointmentInfo;
             setPatientData(location.state.patientResponse)
-            setTherapyResultData(location.state.appointmentInfo)
-
-
+            setTherapyData(location.state.appointmentInfo)
         }
-    }, [location.state]);
+
+        setTherapyResultData((prevData) => ({
+            ...prevData,
+            therapyId: location.state.appointmentInfo.id
+        }));
+    }, [location.state, patientData, therapyData]);
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setTherapyResultData({...therapyResultData, [name]: value});
+        const { name, value } = e.target;
+        setTherapyResultData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
     }
 
     const [selectedOption, setSelectedOption] = useState(null);
     const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
+        const value = event.target.value;
+        setSelectedOption(value);
+        setTherapyResultData((prevData) => ({
+            ...prevData,
+            status: value
+        }));
     };
+
+    const validateChangingPasswordData = () => {
+        if (!therapyResultData.status || !therapyResultData.result) {
+            toast.info("Popunite sva polja.")
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        validateChangingPasswordData();
         await api.post("/therapy/result", therapyResultData, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         }).then(() => {
             toast.success("Uspjesno unesen rezultat terapije")
+            setTimeout(() => {
+                navigate('/dashboard');
+            }, 2000);
         }).catch(() => toast.error("Dogodila se greška."));
     }
 
@@ -68,27 +94,13 @@ function AppointmentResultMain() {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <label className={'text-start p-2 mr-10'}>
-                            Zahtjev:
+                            Terapija:
                         </label>
                         <textarea
-                            id={'therapyRequest'}
-                            name={'status'}
-                            value={therapyResultData.type}
+                            id={'therapyType'}
+                            name={'type'}
+                            value={therapyData.type}
                             className={'w-4/5 lg:w-1/2 h-[40px] bg-white opacity-40 mb-[5px] rounded-[5px] p-2'}
-                            maxLength={255}
-                            readOnly
-                            style={{ resize: 'none' }}
-                        />
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <label className={'text-start p-2 mr-10'}>
-                            Status:
-                        </label>
-                        <textarea
-                            id={'therapyStatus'}
-                            name={'status'}
-                            value={therapyResultData.status}
-                            className={'w-4/5 lg:w-1/2 h-[40px] bg-white opacity-40 mb-[2px] rounded-[5px] p-2'}
                             maxLength={255}
                             readOnly
                             style={{ resize: 'none' }}
@@ -99,8 +111,8 @@ function AppointmentResultMain() {
                         <label className={'mr-10 p-2'}>
                             <input
                                 type="radio"
-                                value="option1"
-                                checked={selectedOption === 'option1'}
+                                value="neuspjesno"
+                                checked={selectedOption === 'neuspjesno'}
                                 onChange={handleOptionChange}
                             />
                             Da
@@ -109,8 +121,8 @@ function AppointmentResultMain() {
                         <label className={'mr-10 p-2'}>
                             <input
                                 type="radio"
-                                value="option2"
-                                checked={selectedOption === 'option2'}
+                                value="uspjesno"
+                                checked={selectedOption === 'uspjesno'}
                                 onChange={handleOptionChange}
                             />
                             Ne
