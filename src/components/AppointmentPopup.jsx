@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import api from "../http/api";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../auth/AuthProvider";
 
-function AppointmentPopup({ data }) {
+function AppointmentPopup({ data, name }) {
     const [open, setOpen] = useState(false);
+
+    const {userInfo} = useContext(AuthContext);
     const close = () => setOpen(false);
 
     const navigate = useNavigate();
@@ -25,7 +28,11 @@ function AppointmentPopup({ data }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await api.post('/employee/therapy', data)
+        await api.post('/employee/therapy', data, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
             .then(() => navigate('/'))
             .catch((err) => {
                 if (err.code === "ERR_NETWORK") {
@@ -110,7 +117,7 @@ function AppointmentPopup({ data }) {
             <Popup open={open} closeOnDocumentClick={false} onClose={close} modal>
                 <div className={'bg-white h-80 p-3'}>
                     <div className={'h-1/6 pb-3'}>
-                        <h2 className={'font-semibold text-lg'}>Termin pacijenta Luka Lukić</h2>
+                        <h2 className={'font-semibold text-lg'}>Termin pacijenta {name.fname} {name.lname}</h2>
                     </div>
                     <div className={'bg-sky-50 h-4/6 px-2 flex flex-col gap-2 py-2'}>
                         <div className={'flex'}>
@@ -123,7 +130,7 @@ function AppointmentPopup({ data }) {
                         </div>
                         <div className={'flex'}>
                             <span className={'w-28 font-semibold'}>LIJEČNIK:</span>
-                            <span>Ivan Horvat dr. med.</span>
+                            <span>{userInfo.firstName} {userInfo.lastName}</span>
                         </div>
                         <div className={'flex'}>
                             <span className={'w-28 font-semibold'}>LOKACIJA:</span>

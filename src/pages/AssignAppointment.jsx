@@ -73,7 +73,7 @@ function AssignAppointment() {
 
         setApptData({
             ...apptData,
-            [name]: value
+            [name]: parseInt(value)
         });
     }
 
@@ -122,7 +122,7 @@ function AssignAppointment() {
                           <div className={'h-5/6 bg-white flex flex-col gap-3 p-3 overflow-y-scroll'}>
                               {rooms.map((room, key) => (
                                   <div key={key} className={'flex'}>
-                                      <input type="radio" value={room.id} name={'roomId'} id={`room${room.id}`} onChange={handleOptionChange}/>
+                                      <input type="radio" value={room.id} name="roomId" id={`room${room.id}`} onChange={handleOptionChange}/>
                                       {room.status === 'OPERABLE' && (
                                       <CollapsibleRoomTab key={key} title={(
                                           <>
@@ -199,7 +199,7 @@ function AssignAppointment() {
 
               </div>
               <div className={'w-full flex justify-center pb-3 gap-3'}>
-                  <AppointmentPopup data={apptData}/>
+                  <AppointmentPopup data={apptData} name={{fname: state.patientResponse.firstName, lname: state.patientResponse.lastName}}/>
                   <button onClick={() => navigate('/dashboard')}
                           className={'bg-sky-800 w-24 p-2 rounded-[5px] text-white font-semibold'}>Odustani
                   </button>
