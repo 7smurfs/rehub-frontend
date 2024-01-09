@@ -15,6 +15,7 @@ function AssignAppointment() {
 
     const [employeeTherapies, setEmployeeTherapies] = useState([]);
     const [rooms, setRooms] = useState([]);
+    const [equipment, setEquipment] = useState([]);
 
 
 
@@ -39,8 +40,20 @@ function AssignAppointment() {
             })
         }
 
+        async function getEquipment(){
+            await api.get('/employee/equipment', {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then((res) => {
+                setEquipment(res.data);
+            })
+        }
+
         getEmployeeTherapies().catch(() => toast.error('Dogodila se pogreška.'));
         getRooms().catch(() => toast.error("Dogodila se pogreška."));
+        getEquipment().catch(() => toast.error("Provjerite internetsku vezu."));
+
     }, []);
 
 
@@ -94,9 +107,12 @@ function AssignAppointment() {
 
                                           )} content={(
                                               <div>
-                                                  Stetoskop <br/>
-                                                  Kolica <br/>
-                                                  Blabla
+                                                  {equipment.map((eq, key) => (
+                                                      eq.status === 'OPERABLE' && eq.roomId === room.id &&
+                                                      <div>
+                                                          {eq.name}
+                                                      </div>
+                                                  ))}
                                               </div>
                                       )}/>
                                   )))}
