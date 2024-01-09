@@ -22,12 +22,13 @@ function Landing() {
         }
         const delayedAction = setTimeout(() => {
             setIsLoading(false);
-        }, 2000);
+        }, 1333);
         return () => clearTimeout(delayedAction);
     }, [isUserAuthenticated, isAuthenticated, navigate]);
 
     return (
         <PageLayout>
+            <div className="bg-landing-bg" style={{ width: 0, height: 0 }}></div>
             {
                 isLoading ?
                     <div className={'h-[100vh] bg-sky-950 flex items-center justify-center z-30'}>
