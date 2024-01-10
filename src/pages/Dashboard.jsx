@@ -12,7 +12,7 @@ function Dashboard() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        let roles = localStorage.getItem('roles');
+        let roles = sessionStorage.getItem('roles');
         if (roles == null) {
             navigate('/');
             return;

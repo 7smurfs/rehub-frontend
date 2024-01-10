@@ -12,8 +12,8 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const storedUserInfo = localStorage.getItem('userInfo');
+        const token = sessionStorage.getItem('access-token');
+        const storedUserInfo = sessionStorage.getItem('userInfo');
 
         if (token && !isAuthenticated) {
             setIsAuthenticated(true);
@@ -42,9 +42,9 @@ export const AuthProvider = ({ children }) => {
                 firstName: response.data.firstName,
                 lastName: response.data.lastName
             });
-            localStorage.setItem('token', response.data.accessToken);
-            localStorage.setItem('roles', JSON.stringify(response.data.roles));
-            localStorage.setItem('userInfo', JSON.stringify({
+            sessionStorage.setItem('access-token', response.data.accessToken);
+            sessionStorage.setItem('roles', JSON.stringify(response.data.roles));
+            sessionStorage.setItem('userInfo', JSON.stringify({
                 firstName: response.data.firstName,
                 lastName: response.data.lastName
             }));
@@ -57,9 +57,9 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         // Clear user data from local storage to log the user out
-        localStorage.removeItem('token');
-        localStorage.removeItem('roles');
-        localStorage.removeItem('userInfo');
+        sessionStorage.removeItem('access-token');
+        sessionStorage.removeItem('roles');
+        sessionStorage.removeItem('userInfo');
         setIsAuthenticated(false);
         setUserInfo({
             firstName: "",

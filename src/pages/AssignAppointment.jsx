@@ -36,7 +36,7 @@ function AssignAppointment() {
         async function getEmployeeTherapies() {
             await api.get('/employee/accountable/therapies', {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
                 }
             }).then(res => {
                 setEmployeeTherapies(res.data);
@@ -46,7 +46,7 @@ function AssignAppointment() {
         async function getRooms() {
             await api.get('/employee/room', {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
                 }
             }).then((res) => {
                 setRooms(res.data);
@@ -56,7 +56,7 @@ function AssignAppointment() {
         async function getEquipment() {
             await api.get('/employee/equipment', {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
                 }
             }).then((res) => {
                 setEquipment(res.data);
@@ -109,7 +109,7 @@ function AssignAppointment() {
         await api.get('/employee/therapy/scan/' + therapyId, {
             responseType: 'blob',
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then((res) => {
             const pdfUrl = URL.createObjectURL(new Blob([res.data], {type: 'application/pdf'}));
@@ -123,44 +123,44 @@ function AssignAppointment() {
                 <div className={'h-full flex flex-col'}>
                     <div className={'h-min grid grid-cols-4 grid-rows-3 gap-3 p-3'}>
                         <div
-                            className={'p-2 h-full row-span-4/5 col-span-2 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
+                            className={'p-2 h-full row-span-4/5 col-span-2 bg-lighterSky rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
                             <div className={'h-14 flex items-center pl-5'}>
-                                <h1 className={'text-sky-800 font-bold text-2xl underline'}>Pacijent {state.patientResponse.firstName} {state.patientResponse.lastName}</h1>
+                                <h1 className={'text-darkSky font-bold text-2xl underline'}>Pacijent {state.patientResponse.firstName} {state.patientResponse.lastName}</h1>
                             </div>
                             <div className={'h-8 flex items-center pl-3'}>
-                                <span className={'w-52 font-bold text-sky-600'}>Vrsta oboljenja:</span>
+                                <span className={'w-52 font-bold text-mediumSky'}>Vrsta oboljenja:</span>
                                 <span>{state.type}</span>
                             </div>
                             <div className={'h-8 flex items-center pl-3'}>
-                                <span className={'w-52 font-bold text-sky-600'}>Opis oboljenja:</span>
+                                <span className={'w-52 font-bold text-mediumSky'}>Opis oboljenja:</span>
                                 <span>{state.request}</span>
                             </div>
                             <div className={'h-8 flex items-center pl-3'}>
-                                <span className={'w-52 font-bold text-sky-600'}>Uputnicu izdao/la:</span>
+                                <span className={'w-52 font-bold text-mediumSky'}>Uputnicu izdao/la:</span>
                                 <span>{state.doctorName}</span>
                             </div>
                             <div className={'h-8 flex items-center pl-3'}>
-                                <span className={'w-52 font-bold text-sky-600'}>Skenirana uputnica:</span>
+                                <span className={'w-52 font-bold text-mediumSky'}>Skenirana uputnica:</span>
                                 <button
                                     onClick={() => fetchTherapyScan(state.id)}
-                                    className={'bg-sky-950 font-semibold text-white rounded-[5px] px-3 py-1'}>PRIKAŽI
+                                    className={'bg-darkestSky font-semibold text-white rounded-[5px] px-3 py-1'}>PRIKAŽI
                                 </button>
                             </div>
                         </div>
                         <div
-                            className={'bg-sky-100 col-span-2 p-3 row-span-2 h-full rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
+                            className={'bg-lighterSky col-span-2 p-3 row-span-2 h-full rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
                             <div className={'h-8 flex items-center'}>
-                                <h3 className={'text-sky-800 font-semibold text-lg'}>Slobodne sobe</h3>
+                                <h3 className={'text-darkSky font-semibold text-lg'}>Slobodne sobe</h3>
                             </div>
                             {rooms.length === 0 ? (
                                 <div className={'h-5/6 flex flex-col justify-center items-center p-3'}>
-                                    <span className={'text-gray-500'}>Trenutno nema slobodnih soba.</span>
+                                    <span className={'text-gray'}>Trenutno nema slobodnih soba.</span>
                                 </div>
                             ) : (
                                 <div
                                     className={'h-5/6 bg-white flex flex-col gap-3 p-3 rounded-[5px] overflow-y-scroll'}>
                                     {rooms.map((room, key) => (
-                                        <div key={key} className="bg-sky-100 pl-3 rounded-[5px]">
+                                        <div key={key} className="bg-lighterSky pl-3 rounded-[5px]">
                                             <div className={'flex w-full'}>
                                                 <input type="radio" value={room.id} name="roomId" id={`room${room.id}`}
                                                        onChange={handleOptionChange}/>
@@ -178,7 +178,7 @@ function AssignAppointment() {
                                                             {equipment.map((eq, key) => (
                                                                 eq.status === 'OPERABLE' && eq.roomId === room.id &&
                                                                 <div key={key}>
-                                                                    <span className={'text-sky-950'}>{eq.name}</span>
+                                                                    <span className={'text-darkestSky'}>{eq.name}</span>
                                                                 </div>
                                                             ))}
                                                         </div>
@@ -193,19 +193,19 @@ function AssignAppointment() {
 
                         </div>
                         <div
-                            className={'bg-sky-100 col-span-2  p-2 row-span-2 h-full w-full h-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] overflow-y-scroll'}>
+                            className={'bg-lighterSky col-span-2  p-2 row-span-2 h-full w-full h-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] overflow-y-scroll'}>
                             <div className={'h-8 flex items-center pl-2'}>
-                                <h3 className={'text-sky-800 font-semibold text-lg'}>Moji termini</h3>
+                                <h3 className={'text-darkSky font-semibold text-lg'}>Moji termini</h3>
                             </div>
 
                             {employeeTherapies.length === 0 ? (
                                 <div className={'h-5/6 flex flex-col justify-center items-center p-3'}>
-                                    <span className={'text-gray-500'}>Trenutno nema terapija.</span>
+                                    <span className={'text-gray'}>Trenutno nema terapija.</span>
                                 </div>
                             ) : (
                                 employeeTherapies.map((therapy, key) => (
                                     <div key={key} className={'h-min flex flex-col items-center p-3 '}>
-                                        <div className={'bg-sky-600 w-full h-min p-2 text-sky-950 rounded-[5px]'}>
+                                        <div className={'bg-mediumSky w-full h-min p-2 text-darkestSky rounded-[5px]'}>
                                             <h1 className={'font-bold text-white'}>{therapy.patientResponse.firstName} {therapy.patientResponse.lastName}</h1>
                                             <span className={'block text-white'}>{therapy.type}</span>
                                             <span className={'block text-white'}>{therapy.roomLabel}</span>
@@ -218,9 +218,9 @@ function AssignAppointment() {
                         </div>
 
                         <div
-                            className={'bg-sky-100 col-span-1 h-full row-span-1 px-3 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px]'}>
+                            className={'bg-lighterSky col-span-1 h-full row-span-1 px-3 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px]'}>
                             <div className={'h-8 flex items-center'}>
-                                <h3 className={'text-sky-800 font-semibold text-lg'}>Trajanje zahvata</h3>
+                                <h3 className={'text-darkSky font-semibold text-lg'}>Trajanje zahvata</h3>
                             </div>
                             <div className={'h-3/5 bg-white flex flex-col gap-2 px-3 py-1 rounded-[5px]'}>
                                 <div className={'flex'}>
@@ -234,7 +234,7 @@ function AssignAppointment() {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
+                        <div className="bg-lighterSky rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
 
                         </div>
 
@@ -245,7 +245,7 @@ function AssignAppointment() {
                             lname: state.patientResponse.lastName
                         }}/>
                         <button onClick={() => navigate('/dashboard')}
-                                className={'bg-sky-800 w-24 p-2 rounded-[5px] text-white font-semibold'}>Odustani
+                                className={'bg-darkSky w-24 p-2 rounded-[5px] text-white font-semibold'}>Odustani
                         </button>
                     </div>
 

@@ -21,7 +21,7 @@ function NewTherapyPage() {
 
 
     useEffect(() => {
-        let roles = localStorage.getItem('roles');
+        let roles = sessionStorage.getItem('roles');
         if (!roles.includes('PATIENT')) {
             navigate('/');
         }
@@ -29,7 +29,7 @@ function NewTherapyPage() {
         async function getUserTherapies() {
             await api.get('/patient/therapies', {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
                 }
             }).then(res => {
                 setUserTherapies(res.data);
@@ -72,7 +72,7 @@ function NewTherapyPage() {
 
         await api.post('/patient/therapy', formData, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             navigate('/');
@@ -97,9 +97,9 @@ function NewTherapyPage() {
     return (
         <PageLayout>
             <Header/>
-            <div className={'flex flex-col h-full items-center justify-center text-sky-900 font-bold mx-3 text-center'}>
+            <div className={'flex flex-col h-full items-center justify-center text-darkerSky font-bold mx-3 text-center'}>
                 <form onSubmit={requestNewTherapy}
-                      className={'w-full md:w-5/6 xl:w-1/2 flex flex-col justify-center items-center bg-sky-200 p-5 h-full my-5 rounded-lg'}>
+                      className={'w-full md:w-5/6 xl:w-1/2 flex flex-col justify-center items-center bg-lightSky p-5 h-full my-5 rounded-lg'}>
                     <h1 className={'font-bold mb-8 text-3xl'}>Zahtjev za novu terapiju</h1>
                     <label htmlFor={'therapyType'} className={'text-start p-2'}>Vrsta oboljenja:</label>
                     <input id={'therapyType'} name={'type'} value={newTherapyData.type}
@@ -130,9 +130,9 @@ function NewTherapyPage() {
                     <input type='file'
                            accept='application/pdf'
                            onChange={onPdfChange}
-                           className='rounded-[10px] text-sky-950 outline-dashed outline-2 p-2 w-4/5 lg:w-1/2 my-2 outline-sky-950 cursor-pointer'>
+                           className='rounded-[10px] text-darkestSky outline-dashed outline-2 p-2 w-4/5 lg:w-1/2 my-2 outline-darkestSky cursor-pointer'>
                     </input>
-                    <button className={'text-white p-4 bg-sky-600 rounded-xl my-4'} type={"submit"}>Zatraži terapiju
+                    <button className={'text-white p-4 bg-mediumSky rounded-xl my-4'} type={"submit"}>Zatraži terapiju
                     </button>
                 </form>
             </div>

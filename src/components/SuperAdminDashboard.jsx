@@ -17,26 +17,27 @@ export default function SuperAdminDashboard() {
     useEffect(() => {
         setStatistics(api.get('/stats', {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then((res) => setStatistics(res.data)));
     }, []);
 
+
     return (
         <>
             <div className="flex flex-col h-full w-full">
-                <div className='grid grid-cols-2 md:grid-cols-4 my-3 mx-3 gap-2 md:gap-8 font-semibold text-sm tracking-wide text-center text-sky-800'>
-                    <div onClick={() => setSelected(1)} className={`tab ${selected === 1 ? 'bg-sky-600 text-white font-bold shadow-xl hover:bg-sky-700' : 'bg-sky-200'}  rounded-lg p-3 cursor-pointer  hover:bg-sky-300 transition-all duration-300`}>OSOBLJE
+                <div className='grid grid-cols-2 md:grid-cols-4 my-3 mx-3 gap-2 md:gap-8 font-semibold text-sm tracking-wide text-center text-darkSky'>
+                    <div onClick={() => setSelected(1)} className={`tab ${selected === 1 ? 'bg-mediumSky text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OSOBLJE
                     </div>
-                    <div onClick={() => setSelected(2)} className={`tab ${selected === 2 ? 'bg-sky-600 text-white font-bold shadow-xl hover:bg-sky-700' : 'bg-sky-200'}  rounded-lg p-3 cursor-pointer  hover:bg-sky-300 transition-all duration-300`}>PACIJENTI
+                    <div onClick={() => setSelected(2)} className={`tab ${selected === 2 ? 'bg-mediumSky text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>PACIJENTI
                     </div>
-                    <div onClick={() => setSelected(3)} className={`tab ${selected === 3 ? 'bg-sky-600 text-white font-bold shadow-xl hover:bg-sky-700' : 'bg-sky-200'}  rounded-lg p-3 cursor-pointer hover:bg-sky-300 transition-all duration-300`}>SOBE
+                    <div onClick={() => setSelected(3)} className={`tab ${selected === 3 ? 'bg-mediumSky text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer hover:bg-lightSky transition-all duration-300`}>SOBE
                     </div>
-                    <div onClick={() => setSelected(4)} className={`tab ${selected === 4 ? 'bg-sky-600 text-white font-bold shadow-xl hover:bg-sky-700' : 'bg-sky-200'}  rounded-lg p-3 cursor-pointer  hover:bg-sky-300 transition-all duration-300`}>OPREMA
+                    <div onClick={() => setSelected(4)} className={`tab ${selected === 4 ? 'bg-mediumSky text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OPREMA
                     </div>
                 </div>
                 <div className={'flex justify-center h-full my-3'}>
-                    {selected === 0 && <div className={'w-full sm:w-1/2 mx-5 flex flex-col justify-center text-2xl text-sky-900'}>
+                    {selected === 0 && <div className={'w-full sm:w-1/2 mx-5 flex flex-col justify-center text-2xl text-darkerSky'}>
                         <span className={'font-bold my-3'}>Broj zaposlenika: {statistics.noOfEmployees}</span>
                         <span className={'font-bold my-3'}>Broj pacijenata: {statistics.noOfPatients}</span>
                         <span className={'font-bold my-3'}>Broj soba: {statistics.noOfRooms}</span>
@@ -128,7 +129,7 @@ function Personel({ props }) {
     const getEmployees = async () => {
         await api.get('/employee', {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then((res) => {
             setEmployees(res.data.sort((a, b) => a.lastName.localeCompare(b.lastName)))
@@ -141,7 +142,7 @@ function Personel({ props }) {
     const setEmployeeAsAdmin = async (employeeId) => {
         await api.post('/employee/' + employeeId, null, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success('Uspješno data admin prava zaposleniku');
@@ -153,7 +154,7 @@ function Personel({ props }) {
     const invalidateEmployee = async (employeeId) => {
         await api.delete('/employee/' + employeeId, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success('Uspješno izbrisan zaposlenik');
@@ -167,7 +168,7 @@ function Personel({ props }) {
         validateRegisterData();
         await api.post('/employee', registerData, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success("Uspješno unesen novi zaposlenik");
@@ -197,16 +198,16 @@ function Personel({ props }) {
 
 
     return (<div className='mx-2 w-full grid md:grid-cols-2 gap-2 grid-cols-1'>
-        <div className={'bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'}>
+        <div className={'bg-lightSky h-full rounded-xl overflow-y-scroll p-2'}>
             {employees.map((employee, key) => (
                 <div
                     key={key}
                     className={
-                        'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'
+                        'bg-white p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'
                     }>
                     <span>{employee.firstName} {employee.lastName} {employee.user.roles.includes('ADMIN') &&
                         <span
-                            className={'text-green-900 font-bold text-base align-middle'}>ADMIN</span>}</span>
+                            className={'text-greenHeavy font-bold text-base align-middle'}>ADMIN</span>}</span>
                     <div className={'flex flex-row justify-center items-center'}>
                         <span>{employee.profession}</span>
                         <img src={Cross} alt={'cross'}
@@ -220,12 +221,12 @@ function Personel({ props }) {
                 </div>
             ))}
         </div>
-        <div className={'bg-sky-200 h-full rounded-xl p-2 text-center'}>
-            <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVOG ZAPOSLENIKA</span>
+        <div className={'bg-lightSky h-full rounded-xl p-2 text-center'}>
+            <span className={'font-bold text-2xl text-darkerSky'}>UNESI NOVOG ZAPOSLENIKA</span>
             <form className={'grid grid-cols-2'}>
                 <div className={'pr-1'}>
                     <label
-                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Ime:</label>
+                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Ime:</label>
                     <input type="text" name="firstName" id="firstName"
                         value={registerData.firstName}
                         onChange={handleChange}
@@ -233,27 +234,27 @@ function Personel({ props }) {
                 </div>
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Prezime:</label>
+                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Prezime:</label>
                     <input type="text" name="lastName" id="lastName" value={registerData.lastName}
                         onChange={handleChange}
                         className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
                 </div>
                 <div className={'pr-1'}>
                     <label
-                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>E-mail:</label>
+                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>E-mail:</label>
                     <input type="email" name="username" id="username" value={registerData.username}
                         onChange={handleChange}
                         className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
                 </div>
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>OIB:</label>
+                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>OIB:</label>
                     <input type="text" name="pin" id="pin" value={registerData.pin}
                         onChange={handleChange}
                         className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
                 </div>
                 <div className={'pr-1'}>
-                    <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Datum
+                    <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Datum
                         rođenja:</label>
                     <input type="date" name="dateOfBirth" id="dateOfBirth"
                         value={registerData.dateOfBirth}
@@ -262,13 +263,13 @@ function Personel({ props }) {
                 </div>
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Profesija:</label>
+                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Profesija:</label>
                     <input type="text" name="profession" id="profession" onChange={handleChange}
                         value={registerData.profession}
                         className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
                 </div>
                 <div className={'pr-1'}>
-                    <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Broj
+                    <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Broj
                         mobitela:</label>
                     <input type="text" name="phoneNumber" id="phoneNumber"
                         value={registerData.phoneNumber}
@@ -277,7 +278,7 @@ function Personel({ props }) {
                 </div>
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Spol:</label>
+                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Spol:</label>
                     <select name="gender" id="gender" onChange={handleChange}
                         value={registerData.gender}
                         className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
@@ -289,7 +290,7 @@ function Personel({ props }) {
                 </div>
             </form>
             <button onClick={registerNewEmployee}
-                className={'bg-sky-950 font-bold text-white p-3 rounded-xl my-3'}>UNESI
+                className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-3'}>UNESI
                 ZAPOSLENIKA
             </button>
         </div>
@@ -304,7 +305,7 @@ function Patients({ props }) {
         const getPatients = async () => {
             await api.get('/patient', {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
                 }
             }).then((res) => {
                 setPatientsList(res.data)
@@ -317,12 +318,12 @@ function Patients({ props }) {
 
     return (<div className='mx-2 w-[90vw] h-full'>
         <div
-            className={'bg-sky-200 flex flex-col h-full items-center rounded-xl overflow-y-scroll p-2'}>
+            className={'bg-lightSky flex flex-col h-full items-center rounded-xl overflow-y-scroll p-2'}>
             {patientsList.map((patient, key) => (
                 <div
                     key={key}
                     className={
-                        'bg-white p-4 text-sky-900 md:text-2xl flex flex-col sm:flex-row justify-between rounded-lg mx-4 my-2 w-3/4'
+                        'bg-white p-4 text-darkerSky md:text-2xl flex flex-col sm:flex-row justify-between rounded-lg mx-4 my-2 w-3/4'
                     }>
                     <span className={'font-bold'}>{patient.firstName} {patient.lastName}</span>
                     <span>Datum rođenja: {patient.dateOfBirth.split('-')[2]}.{patient.dateOfBirth.split('-')[1]}.{patient.dateOfBirth.split('-')[0]}</span>
@@ -345,7 +346,7 @@ function Rooms({ props }) {
     const getRooms = async () => {
         await api.get('/employee/room', {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then((res) => {
             setRooms(res.data.sort((a, b) => a.id - b.id));
@@ -374,7 +375,7 @@ function Rooms({ props }) {
         validateRoomRegisterData();
         await api.post('/employee/room', roomRegisterData, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success("Uspješno unesena nova soba");
@@ -396,7 +397,7 @@ function Rooms({ props }) {
     const invalidateRoom = async (roomId) => {
         await api.delete('/employee/room/' + roomId, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success('Uspješno izbrisana soba');
@@ -408,7 +409,7 @@ function Rooms({ props }) {
     const setRoomAsOperable = async (roomId) => {
         await api.post('/employee/room/operable/' + roomId, null, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success("Soba je postavljena kao operabilna");
@@ -421,7 +422,7 @@ function Rooms({ props }) {
     const setRoomAsInOperable = async (roomId) => {
         await api.post('/employee/room/inoperable/' + roomId, null, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success("Soba je postavljena kao inoperabilna");
@@ -436,13 +437,13 @@ function Rooms({ props }) {
     }, []);
 
     return (<div className='mx-2 w-full grid md:grid-cols-2 grid-cols-1 gap-2'>
-        <div className='bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'>
+        <div className='bg-lightSky h-full rounded-xl overflow-y-scroll p-2'>
             {rooms.map((room, key) => (
                 <div
                     key={key}
                     className={room.status === 'OPERABLE' ?
-                        'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' :
-                        'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
+                        'bg-white p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' :
+                        'bg-lightGray p-4 text-gray flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
                     <span className={'font-bold'}>{room.label}</span>
                     <div className={'flex flex-row justify-center items-center'}>
                         <span className={'font-bold'}>Kapacitet: {room.capacity}</span>
@@ -461,12 +462,12 @@ function Rooms({ props }) {
             ))}
 
         </div>
-        <div className={'bg-sky-200 h-full rounded-xl p-2 text-center'}>
-            <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU SOBU</span>
+        <div className={'bg-lightSky h-full rounded-xl p-2 text-center'}>
+            <span className={'font-bold text-2xl text-darkerSky'}>UNESI NOVU SOBU</span>
             <form className={'grid grid-cols-2'}>
                 <div className={'pr-1'}>
                     <label
-                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Oznaka
+                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Oznaka
                         sobe:</label>
                     <input type="text" name="label" id="label"
                         value={roomRegisterData.label}
@@ -475,13 +476,13 @@ function Rooms({ props }) {
                 </div>
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Kapacitet:</label>
+                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Kapacitet:</label>
                     <input type="text" name="capacity" id="capacity" value={roomRegisterData.capacity}
                         onChange={handleRoomChange}
                         className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
                 </div>
                 <div className={'col-span-2'}>
-                    <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Dodatne
+                    <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Dodatne
                         informacije:</label>
                     <textarea name={'specialMessage'} id={'specialMessage'} maxLength={255}
                         className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
@@ -489,7 +490,7 @@ function Rooms({ props }) {
                 </div>
             </form>
             <button onClick={registerNewRoom}
-                className={'bg-sky-950 font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
                 SOBU
             </button>
         </div>
@@ -512,12 +513,12 @@ function Equipment({ props }) {
             const [roomRes, equipmentRes] = await Promise.all([
                 api.get('/employee/room', {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
                     }
                 }),
                 api.get('/employee/equipment', {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
                     }
                 })
             ])
@@ -532,7 +533,7 @@ function Equipment({ props }) {
     const invalidateEquipment = async (equipmentId) => {
         await api.delete('/employee/equipment/' + equipmentId, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success('Uspješno izbrisana oprema.');
@@ -544,7 +545,7 @@ function Equipment({ props }) {
     const setEquipmentAsOutOfService = async (equipmentId) => {
         await api.post('/employee/equipment/inoperable/' + equipmentId, null, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success("Oprema je postavljena kao inoperabilna.");
@@ -557,7 +558,7 @@ function Equipment({ props }) {
     const setEquipmentAsOperable = async (equipmentId) => {
         await api.post('/employee/equipment/operable/' + equipmentId, null, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success("Oprema je postavljena kao operabilna.");
@@ -583,7 +584,7 @@ function Equipment({ props }) {
         validateEquipmentRegisterData();
         await api.post('/employee/equipment', equipmentRegisterData, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success("Uspješno unesena nova oprema");
@@ -606,10 +607,10 @@ function Equipment({ props }) {
     }, []);
 
     return (<div className='mx-2 w-full grid grid-cols-1 md:grid-cols-2 gap-2'>
-        <div className={'bg-sky-200 h-full rounded-xl overflow-y-scroll p-2'}>
+        <div className={'bg-lightSky h-full rounded-xl overflow-y-scroll p-2'}>
             {equipmentList.map((equipment, key) => (
                 <div key={key}
-                    className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-sky-900 flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' : 'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
+                    className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' : 'bg-lightGray p-4 text-gray flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
                     <span className={'font-bold'}>{equipment.name}</span>
                     <div className={'flex flex-row justify-center items-center'}>
                         <img src={Cross} alt={'cross'}
@@ -628,12 +629,12 @@ function Equipment({ props }) {
                 </div>
             ))}
         </div>
-        <div className={'bg-sky-200 h-full rounded-xl p-2 text-center'}>
-            <span className={'font-bold text-2xl text-sky-900'}>UNESI NOVU OPREMU</span>
+        <div className={'bg-lightSky h-full rounded-xl p-2 text-center'}>
+            <span className={'font-bold text-2xl text-darkerSky'}>UNESI NOVU OPREMU</span>
             <form className={'grid grid-cols-2'}>
                 <div className={'pr-1'}>
                     <label
-                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Naziv
+                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Naziv
                         opreme:</label>
                     <input type="text" name="name" id="name"
                         value={equipmentRegisterData.name}
@@ -643,7 +644,7 @@ function Equipment({ props }) {
 
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Soba:</label>
+                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Soba:</label>
 
                     <select name="roomId" id="roomId" onChange={handleEquipmentChange}
                         value={equipmentRegisterData.roomId}
@@ -656,7 +657,7 @@ function Equipment({ props }) {
                 </div>
 
                 <div className={'col-span-2'}>
-                    <label className={'font-bold text-sky-600 text-lg mt-[15px] self-start block'}>Dodatne
+                    <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Dodatne
                         informacije:</label>
                     <textarea name={'specialMessage'} id={'specialMessage'} maxLength={255}
                         className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
@@ -665,7 +666,7 @@ function Equipment({ props }) {
                 </div>
             </form>
             <button onClick={registerNewEquipment}
-                className={'bg-sky-950 font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
                 OPREMU
             </button>
         </div>

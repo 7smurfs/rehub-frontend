@@ -31,17 +31,17 @@ function Landing() {
             <div className="bg-landing-bg" style={{ width: 0, height: 0 }}></div>
             {
                 isLoading ?
-                    <div className={'h-[100vh] bg-sky-950 flex items-center justify-center z-30'}>
+                    <div className={'h-[100vh] bg-darkestSky flex items-center justify-center z-30'}>
                         <img className={'w-1/2 sm:w-1/3 lg:w-1/5 xl:w-1/6 animate-bounce'} src={logo} alt={'logo-pulse'}/>
                     </div> :
                     <>
                         <Header/>
                         <div className="w-full h-full bg-landing-bg bg-cover bg-center pt-28">
-                            <h1 className="whitespace-pre-line sm:text-8xl text-5xl font-bold text-sky-700 ml-10">Mi
+                            <h1 className="whitespace-pre-line sm:text-8xl text-5xl font-bold text-darkerSky ml-10">Mi
                                 brinemo{'\n'} o
                                 Vašem{'\n'} oporavku</h1>
                             <button
-                                className="ml-10 bg-sky-600 hover:bg-sky-800 transition-all duration-300 sm:p-5 p-2 text-white font-bold rounded-[5px] lg:mt-12 mt-5 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"
+                                className="ml-10 bg-mediumSky hover:bg-darkSky transition-all duration-300 sm:p-5 p-2 text-white font-bold rounded-[5px] lg:mt-12 mt-5 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"
                                 onClick={() => navigate('/login')} role='link'> PRIJAVI SE
                             </button>
                         </div>

@@ -72,7 +72,7 @@ function AppointmentResultMain() {
         validateChangingPasswordData();
         await api.post("/therapy/result", therapyResultData, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(() => {
             toast.success("Uspjesno unesen rezultat terapije")
@@ -84,9 +84,9 @@ function AppointmentResultMain() {
 
     return (
         <PageLayout>
-            <div className={'flex flex-col h-full items-center justify-center text-sky-900 font-bold mx-3 text-center'}>
+            <div className={'flex flex-col h-full items-center justify-center text-darkerSky font-bold mx-3 text-center'}>
                 <form onSubmit={handleSubmit}
-                      className={'w-full md:w-5/6 xl:w-1/2 flex flex-col justify-center bg-sky-200 p-10 h-full my-5 rounded-lg'}>
+                      className={'w-full md:w-5/6 xl:w-1/2 flex flex-col justify-center bg-lightSky p-10 h-full my-5 rounded-lg'}>
                     <h1 className={'font-bold mb-8 text-3xl'}>Rezultati ciklusa terapije</h1>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <label className={'text-start p-2 mr-10'}>Ime i prezime pacijenta: </label>
@@ -134,7 +134,7 @@ function AppointmentResultMain() {
                               maxLength={255}
                               onChange={handleChange}/>
 
-                    <button className={'text-white p-4 bg-sky-600 rounded-xl my-4 w-1/6'} type={"submit"}>Unesi
+                    <button className={'text-white p-4 bg-mediumSky rounded-xl my-4 w-1/6'} type={"submit"}>Unesi
                     </button>
                 </form>
             </div>

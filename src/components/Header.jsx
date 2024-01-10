@@ -22,54 +22,54 @@ function Header() {
     return (
         <div>
             <header
-                className={openHamburger ? "h-[100vh] fixed top-0 right-0 flex flex-col items-center w-full lg:hidden bg-sky-200 z-20" :
-                    "bg-sky-200 h-28 flex justify-between"}>
+                className={openHamburger ? "h-[100vh] fixed top-0 right-0 flex flex-col items-center w-full lg:hidden bg-lightSky z-20" :
+                    "bg-lightSky h-28 flex justify-between"}>
                 <img src={LogoWText} alt="ReHub logo with text" onClick={() => navigate("/")}
                      className="w-40 sm:w-56 mb-2 cursor-pointer"/>
                 <div className={openHamburger ? "flex flex-col justify-around h-1/2 my-5" : "lg:flex justify-between hidden"}>
                     {isUserAuthenticated ? (location.pathname === '/profile' ? (
                         <>
                             <button onClick={() => navigate("/contact")}
-                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-darkSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Kontakt</span>
                             </button>
                             <button onClick={logout}
-                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-darkSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Odjava</span>
                             </button>
                         </>
                     ) : (
                         <>
                             <button onClick={() => navigate("/profile")}
-                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-darkSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span
                                     className="text-white font-bold p-5 self-end">{`${userInfo.firstName} ${userInfo.lastName}`}</span>
                             </button>
                             <button onClick={() => navigate("/contact")}
-                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-darkSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Kontakt</span>
                             </button>
                             <button onClick={logout}
-                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-darkSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Odjava</span>
                             </button>
                         </>
                     )) : (
                         <>
                             <button onClick={() => navigate("/faq")}
-                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-darkSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">FAQ</span>
                             </button>
                             <button onClick={() => navigate("/contact")}
-                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-darkSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Kontakt</span>
                             </button>
                             <button onClick={() => navigate("/register")}
-                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-darkSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Registracija</span>
                             </button>
                             <button onClick={() => navigate("/login")}
-                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-darkSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Prijava</span>
                             </button>
                         </>
@@ -86,7 +86,7 @@ function Header() {
                 </div>
 
             </header>
-            <div className="bg-sky-600 w-full h-9 opacity-50"></div>
+            <div className="bg-mediumSky w-full h-9 opacity-50"></div>
         </div>
     );
 }

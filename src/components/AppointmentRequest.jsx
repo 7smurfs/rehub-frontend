@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 
 function AppointmentRequest() {
     return(
-      <div className={'bg-sky-200 w-full flex justify-between py-3 pl-3'}>
+      <div className={'bg-lightSky w-full flex justify-between py-3 pl-3'}>
           <div className={'h-full flex items-center'}>
-              <span className={'text-sky-800 font-bold'}>Luka Lukić</span>
+              <span className={'text-darkSky font-bold'}>Luka Lukić</span>
           </div>
           <div className={'w-20 flex items-center justify-center'}>
               <Link to={'/appointment'}>
