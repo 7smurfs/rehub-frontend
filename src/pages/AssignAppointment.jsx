@@ -11,7 +11,9 @@ import CollapsibleRoomTab from "../components/CollapsibleRoomTab";
 function AssignAppointment() {
 
     const navigate = useNavigate();
-    let { state } = useLocation();
+    const location = useLocation();
+
+    const state = location.state;
 
     const [employeeTherapies, setEmployeeTherapies] = useState([]);
     const [rooms, setRooms] = useState([]);

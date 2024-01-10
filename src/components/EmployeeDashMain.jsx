@@ -1,6 +1,6 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Arrow from "../assets/right-arrow.svg";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../http/api";
 import { toast } from "react-toastify";
 import FullCalendar from "@fullcalendar/react";
@@ -126,7 +126,7 @@ function EmployeeDashMain() {
                                         className={'text-sky-800 font-bold'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
                                 </div>
                                 <div className={'w-20 flex items-center justify-center'}>
-                                    <Link to={'/appointment'}>
+                                    <Link to={'/appointment'} state={appt} >
                                         <img src={Arrow} alt="Arrow" className={'h-10'} />
                                     </Link>
                                 </div>
@@ -229,7 +229,7 @@ function EmployeeDashMain() {
                                         src={Arrow}
                                         alt="Arrow"
                                         className={'h-10'}
-                                        onClick={() => navigate('/appointmentResult', { state: { appointmentInfo: appt , patientResponse: appt.patientResponse} })}
+                                        onClick={() => navigate('/appointmentResult', { state: { appointmentInfo: appt, patientResponse: appt.patientResponse } })}
                                     />
                                 </div>
                             </div>
