@@ -73,13 +73,12 @@ function EmployeeDashMain() {
     }
 
     return (
-        <div className="h-[75%] grid grid-cols-4 grid-rows-3 gap-2 p-2" onLoad={showData}>
-            <div className={"h-full row-span-3 col-span-2 bg-sky-100 rounded-[5px]"}>
+        <div className="h-[75%] grid grid-cols-4 grid-rows-3 gap-3 p-2" onLoad={showData}>
+            <div className={"h-full row-span-3 col-span-2 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
                 <div className={'h-10 rounded-tl-[5px] rounded-tr-[5px] flex items-center justify-center'}>
                     <span className={'text-sky-600 font-bold text-2xl'}>Kalendar</span>
                 </div>
-                <div className={'h-4/5 w-full'}>
-                    <div className={'h-full w-full'}>
+                <div className={'h-4/5 w-full p-2'}>
                         <FullCalendar
                             height={"100%"}
                             text
@@ -106,10 +105,9 @@ function EmployeeDashMain() {
                             weekends={false}
                             events={formatedTherapies}
                         />
-                    </div>
                 </div>
             </div>
-            <div className={"h-full row-span-1 col-span-1 bg-sky-100 rounded-[5px]"}>
+            <div className={"h-full row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
                 <div className={'h-10 flex justify-center items-center'}>
                     <span className={'text-sky-600 font-bold text-2xl'}>Pregled prijava</span>
                 </div>
@@ -136,7 +134,7 @@ function EmployeeDashMain() {
                 )}
 
             </div>
-            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[5px]"}>
+            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
                 <div className={'h-10 flex justify-center items-center'}>
                     <span className={'text-sky-600 font-bold text-2xl'}>Sobe/Ordinacije</span>
                 </div>
@@ -162,7 +160,7 @@ function EmployeeDashMain() {
                 )}
 
             </div>
-            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[5px]"}>
+            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
                 <div className={'h-10 flex justify-center items-center'}>
                     <span className={'text-sky-600 font-bold text-2xl'}>Oprema</span>
                 </div>
@@ -188,7 +186,7 @@ function EmployeeDashMain() {
                 )}
 
             </div>
-            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[5px]"}>
+            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
                 <div className={'h-10 flex justify-center items-center'}>
                     <span className={'text-sky-600 font-bold text-2xl'}>Dodijeljeni termini</span>
                 </div>
@@ -208,7 +206,7 @@ function EmployeeDashMain() {
 
                 </div>
             </div>
-            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[5px]"}>
+            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
                 <div className={'h-10 flex justify-center items-center'}>
                     <span className={'text-sky-600 font-bold text-2xl'}>Rezultati terapija</span>
                 </div>
@@ -237,7 +235,7 @@ function EmployeeDashMain() {
                     </div>
                 )}
             </div>
-            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[5px]"}>
+            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
                 <div className={'h-10 flex justify-center items-center'}>
                     <span className={'text-sky-600 font-bold text-2xl'}>Pacijenti i terapije</span>
                 </div>
