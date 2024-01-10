@@ -30,46 +30,46 @@ function Header() {
                     {isUserAuthenticated ? (location.pathname === '/profile' ? (
                         <>
                             <button onClick={() => navigate("/contact")}
-                                    className="bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Kontakt</span>
                             </button>
                             <button onClick={logout}
-                                    className="bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Odjava</span>
                             </button>
                         </>
                     ) : (
                         <>
                             <button onClick={() => navigate("/profile")}
-                                    className="bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span
                                     className="text-white font-bold p-5 self-end">{`${userInfo.firstName} ${userInfo.lastName}`}</span>
                             </button>
                             <button onClick={() => navigate("/contact")}
-                                    className="bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Kontakt</span>
                             </button>
                             <button onClick={logout}
-                                    className="bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Odjava</span>
                             </button>
                         </>
                     )) : (
                         <>
                             <button onClick={() => navigate("/faq")}
-                                    className="bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">FAQ</span>
                             </button>
                             <button onClick={() => navigate("/contact")}
-                                    className="bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Kontakt</span>
                             </button>
                             <button onClick={() => navigate("/register")}
-                                    className="bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Registracija</span>
                             </button>
                             <button onClick={() => navigate("/login")}
-                                    className="bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
+                                    className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:[box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.4)] justify-center">
                                 <span className="text-white font-bold p-5 self-end">Prijava</span>
                             </button>
                         </>
