@@ -1,51 +1,29 @@
 import React, { useEffect, useState } from "react";
 import Arrow from "../assets/right-arrow.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "../http/api";
 import { toast } from "react-toastify";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-function EmployeeDashMain() {
+export default function EmployeeDashMain() {
+    return (<>
+        <div className="h-[75%] grid grid-cols-4 grid-rows-3 gap-2 p-2" >
+            <AppointmentCalendar />
+            <AppointmentList />
+            <RoomList />
+            <EquipmentList />
+            <AssignedApptList />
+            <ResultList />
+            <PatientAndTherapyList />
+        </div>
+    </>)
+}
 
-    const [roomList, setRoomList] = useState([]);
+function AppointmentCalendar() {
 
-    const [equipmentList, setEquipmentList] = useState([]);
-    const [apptsList, setApptsList] = useState([]);
     const [formatedTherapies, setFormatedTherapies] = useState([]);
-
-    const navigate = useNavigate();
-    const showData = async () => {
-        try {
-            const [roomRes, equipmentRes, apptsRes] = await Promise.all([
-                api.get('/employee/room', {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
-                }),
-
-                api.get('/employee/equipment', {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
-                }),
-
-                api.get('/employee/therapies', {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
-                })
-            ])
-
-            setRoomList(roomRes.data);
-            setEquipmentList(equipmentRes.data);
-            setApptsList(apptsRes.data);
-
-        } catch (err) {
-            toast.error("Provjerite internetsku vezu.");
-        }
-    };
 
     useEffect(() => {
         async function getEmployeeTherapies() {
@@ -71,193 +49,298 @@ function EmployeeDashMain() {
             };
         });
     }
-
-    return (
-        <div className="h-[75%] grid grid-cols-4 grid-rows-3 gap-3 p-2" onLoad={showData}>
-            <div className={"h-full row-span-3 col-span-2 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
-                <div className={'h-10 rounded-tl-[5px] rounded-tr-[5px] flex items-center justify-center'}>
-                    <span className={'text-sky-600 font-bold text-2xl'}>Kalendar</span>
-                </div>
-                <div className={'h-4/5 w-full p-2'}>
-                        <FullCalendar
-                            height={"100%"}
-                            text
-                            plugins={[dayGridPlugin, timeGridPlugin]}
-                            initialView="timeGridWeek"
-                            businessHours={{
-                                daysOfWeek: [1, 2, 3, 4, 5],
-                                startTime: '08:00',
-                                endTime: '20:00'
-                            }}
-                            displayEventEnd={true}
-                            editable={false}
-                            eventTimeFormat={{
-                                hour: 'numeric',
-                                minute: '2-digit',
-                                meridiem: 'short'
-                            }}
-                            headerToolbar={{
-                                left: 'prev,next',
-                                center: 'title',
-                                right: 'dayGridMonth,timeGridWeek'
-                            }}
-                            slotEventOverlap={true}
-                            weekends={false}
-                            events={formatedTherapies}
-                        />
-                </div>
+    return (<div className={"h-full row-span-3 p-2 col-span-2 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
+        <div className={'h-10 rounded-tl-[5px] rounded-tr-[5px] flex items-center justify-center'}>
+            <span className={'text-sky-600 font-bold text-2xl'}>Kalendar</span>
+        </div>
+        <div className={'h-4/5 w-full'}>
+            <div className={'h-full w-full'}>
+                <FullCalendar
+                    height={"100%"}
+                    plugins={[dayGridPlugin, timeGridPlugin]}
+                    initialView="timeGridWeek"
+                    businessHours={{
+                        daysOfWeek: [1, 2, 3, 4, 5],
+                        startTime: '08:00',
+                        endTime: '20:00'
+                    }}
+                    displayEventEnd={true}
+                    editable={false}
+                    eventTimeFormat={{
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        meridiem: 'short'
+                    }}
+                    headerToolbar={{
+                        left: 'prev,next',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek'
+                    }}
+                    slotEventOverlap={true}
+                    weekends={false}
+                    events={formatedTherapies}
+                />
             </div>
-            <div className={"h-full row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
-                <div className={'h-10 flex justify-center items-center'}>
-                    <span className={'text-sky-600 font-bold text-2xl'}>Pregled prijava</span>
-                </div>
-                {apptsList.length === 0 ? (
-                    <div className={'bg-sky-50 h-5/6 mx-2 flex items-center justify-center'}>
-                        <span className={'text-gray-500 text-lg'}>Trenutno nema aktivnih prijava.</span>
-                    </div>
-                ) : (
-                    <div className={'h-5/6 overflow-y-scroll bg-sky-50 mx-2 p-3 flex flex-col gap-3'}>
-                        {apptsList.map((appt, key) => (
-                            <div key={key} className={'bg-sky-200 w-full flex justify-between py-3 pl-3'}>
-                                <div className={'h-full flex items-center'}>
-                                    <span
-                                        className={'text-sky-800 font-bold'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
-                                </div>
-                                <div className={'w-20 flex items-center justify-center'}>
-                                    <Link to={'/appointment'} state={appt} >
-                                        <img src={Arrow} alt="Arrow" className={'h-10'} />
-                                    </Link>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
+        </div>
+    </div>)
+}
 
+function AppointmentList() {
+
+    const [apptsList, setApptsList] = useState([]);
+
+    useEffect(() => {
+        api.get('/employee/therapies', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(res => {
+            setApptsList(res.data);
+        }).catch(() => toast.error('Dogodila se pogreška.'));
+    }, []);
+
+
+    return (<div className={"h-full row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
+        <div className={'h-10 flex justify-center items-center'}>
+            <span className={'text-sky-600 font-bold text-2xl'}>Pregled prijava</span>
+        </div>
+        {apptsList.length === 0 ? (
+            <div className={'bg-sky-50 h-5/6 mx-2 flex items-center justify-center'}>
+                <span className={'text-gray-500 text-lg'}>Trenutno nema aktivnih prijava.</span>
             </div>
-            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
-                <div className={'h-10 flex justify-center items-center'}>
-                    <span className={'text-sky-600 font-bold text-2xl'}>Sobe/Ordinacije</span>
-                </div>
-                {roomList.length === 0 ? (
-                    <div className={'h-4/6 bg-sky-50 mx-2 flex justify-center items-center'}>
-                        <span className={'text-gray-500 text-lg'}>Nema dostupnih soba.</span>
-                    </div>
-                ) : (
-                    <div className={'h-3/5 bg-sky-50 mx-2 overflow-y-scroll'}>
-                        {roomList.map((room, key) => (
-                            <div
-                                key={key}
-                                className={room.status === 'OPERABLE' ?
-                                    'bg-white p-4 text-sky-900 flex flex-row justify-between text-sm m-4' :
-                                    'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
-                                <span className={'font-bold text-sm'}>{room.label}</span>
-                                <div className={'flex flex-row justify-center items-center'}>
-                                    <span className={'font-bold'}>Kapacitet: {room.capacity}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-
-            </div>
-            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
-                <div className={'h-10 flex justify-center items-center'}>
-                    <span className={'text-sky-600 font-bold text-2xl'}>Oprema</span>
-                </div>
-                {equipmentList.length === 0 ? (
-                    <div className={'h-4/6 bg-sky-50 mx-2 flex justify-center items-center'}>
-                        <span className={'text-gray-500 text-lg'}>Nema dostupne opreme.</span>
-                    </div>
-                ) : (
-                    <div className={'h-3/5 bg-sky-50 mx-2 overflow-y-scroll'}>
-                        {equipmentList.map((equipment, key) => (
-                            <div
-                                key={key}
-                                className={equipment.status === 'OPERABLE' ?
-                                    'bg-white p-4 text-sky-900 flex flex-row justify-between text-sm m-4' :
-                                    'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
-                                <span className={'font-bold text-sm'}>{equipment.name}</span>
-                                <div className={'flex flex-row justify-center items-center'}>
-                                    <span className={'font-bold'}>Soba: {equipment.roomLabel}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-
-            </div>
-            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
-                <div className={'h-10 flex justify-center items-center'}>
-                    <span className={'text-sky-600 font-bold text-2xl'}>Dodijeljeni termini</span>
-                </div>
-                <div className={'h-4/6 bg-sky-50 mx-2 overflow-y-scroll p-3'}>
-
-                    <div className={'bg-sky-200 flex justify-between items-center p-3'}>
-                        <div>
-                            <span className={'font-bold text-sky-900'}>Iva Ivić</span>
-                            <p className={'text-sky-800 text-sm'}>Vježbe nogu</p>
+        ) : (
+            <div className={'h-5/6 overflow-y-scroll bg-sky-50 mx-2 p-3 flex flex-col gap-3'}>
+                {apptsList.map((appt, key) => (
+                    <div key={key} className={'bg-sky-200 w-full flex justify-between py-3 pl-3'}>
+                        <div className={'h-full flex items-center'}>
+                            <span
+                                className={'text-sky-800 font-bold'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
                         </div>
-                        <div>
-                            <Link to={'/'}>
-
-                            </Link>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
-                <div className={'h-10 flex justify-center items-center'}>
-                    <span className={'text-sky-600 font-bold text-2xl'}>Rezultati terapija</span>
-                </div>
-                {apptsList.length === 0 ? (
-                    <div className={'bg-sky-50 h-5/6 mx-2 flex items-center justify-center'}>
-                        <span className={'text-gray-500 text-lg'}>Trenutno nema aktivnih prijava.</span>
-                    </div>
-                ) : (
-                    <div className={'h-5/6 overflow-y-scroll bg-sky-50 mx-2 p-3 flex flex-col gap-3'}>
-                        {apptsList.map((appt, key) => (
-                            <div key={key} className={'bg-sky-200 w-full flex justify-between py-3 pl-3'}>
-                                <div className={'h-full flex items-center'}>
-                                    <span
-                                        className={'text-sky-800 font-bold'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
-                                </div>
-                                <div className={'w-20 flex items-center justify-center'}>
-                                    <img
-                                        src={Arrow}
-                                        alt="Arrow"
-                                        className={'h-10'}
-                                        onClick={() => navigate('/appointmentResult', { state: { appointmentInfo: appt, patientResponse: appt.patientResponse } })}
-                                    />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-            <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
-                <div className={'h-10 flex justify-center items-center'}>
-                    <span className={'text-sky-600 font-bold text-2xl'}>Pacijenti i terapije</span>
-                </div>
-                <div className={'h-4/6 bg-sky-50 mx-2 overflow-y-scroll p-3'}>
-
-                    <div className={'bg-sky-200 flex justify-between items-center p-3'}>
-                        <div>
-                            <span className={'font-bold text-sky-900'}>Iva Ivić</span>
-                            <p className={'text-sky-800 text-sm'}>Vježbe nogu</p>
-                        </div>
-                        <div>
-                            <Link to={'/appointmentResult'}>
+                        <div className={'w-20 flex items-center justify-center'}>
+                            <Link to={'/appointment'} state={appt}>
                                 <img src={Arrow} alt="Arrow" className={'h-10'} />
                             </Link>
                         </div>
                     </div>
-
-                </div>
+                ))}
             </div>
-
-        </div>
-    );
+        )}
+    </div>)
 }
 
-export default EmployeeDashMain;
+function RoomList() {
+
+    const [roomList, setRoomList] = useState([]);
+
+    useEffect(() => {
+        api.get('/employee/room', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(res => {
+            setRoomList(res.data);
+        }).catch(() => toast.error('Dogodila se pogreška.'));
+    }, []);
+
+    return (<div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
+        <div className={'h-10 flex justify-center items-center'}>
+            <span className={'text-sky-600 font-bold text-2xl'}>Sobe/Ordinacije</span>
+        </div>
+        {roomList.length === 0 ? (
+            <div className={'h-4/6 bg-sky-50 mx-2 flex justify-center items-center'}>
+                <span className={'text-gray-500 text-lg'}>Nema dostupnih soba.</span>
+            </div>
+        ) : (
+            <div className={'h-3/5 bg-sky-50 mx-2 overflow-y-scroll'}>
+                {roomList.map((room, key) => (
+                    <div
+                        key={key}
+                        className={room.status === 'OPERABLE' ?
+                            'bg-white p-4 text-sky-900 flex flex-row justify-between text-sm m-4' :
+                            'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
+                        <span className={'font-bold text-sm'}>{room.label}</span>
+                        <div className={'flex flex-row justify-center items-center'}>
+                            <span className={'font-bold'}>Kapacitet: {room.capacity}</span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )}
+
+    </div>
+    )
+}
+
+function EquipmentList() {
+
+    const [equipmentList, setEquipmentList] = useState([]);
+
+    useEffect(() => {
+        api.get('/employee/equipment', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(res => {
+            setEquipmentList(res.data);
+        }).catch(() => toast.error('Dogodila se pogreška.'));
+    }, []);
+
+    return (
+        <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
+            <div className={'h-10 flex justify-center items-center'}>
+                <span className={'text-sky-600 font-bold text-2xl'}>Oprema</span>
+            </div>
+            {equipmentList.length === 0 ? (
+                <div className={'h-4/6 bg-sky-50 mx-2 flex justify-center items-center'}>
+                    <span className={'text-gray-500 text-lg'}>Nema dostupne opreme.</span>
+                </div>
+            ) : (
+                <div className={'h-3/5 bg-sky-50 mx-2 overflow-y-scroll'}>
+                    {equipmentList.map((equipment, key) => (
+                        <div
+                            key={key}
+                            className={equipment.status === 'OPERABLE' ?
+                                'bg-white p-4 text-sky-900 flex flex-row justify-between text-sm m-4' :
+                                'bg-gray-300 p-4 text-gray-500 flex flex-row justify-between rounded-lg text-2xl m-4'}>
+                            <span className={'font-bold text-sm'}>{equipment.name}</span>
+                            <div className={'flex flex-row justify-center items-center'}>
+                                <span className={'font-bold'}>Soba: {equipment.roomLabel}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}
+
+function AssignedApptList() {
+
+    const [assignedApptList, setAssignedApptList] = useState([]);
+
+    useEffect(() => {
+        api.get('/employee/accountable/therapies', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(res => {
+            let therapies = res.data;
+            setAssignedApptList(therapies);
+        }).catch(() => toast.error('Dogodila se pogreška.'));
+    }, []);
+
+    return (
+        <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
+            <div className={'h-10 flex justify-center items-center'}>
+                <span className={'text-sky-600 font-bold text-2xl'}>Dodijeljeni termini</span>
+            </div>
+            {assignedApptList.length === 0 ? (
+                <div className={'h-4/6 bg-sky-50 mx-2 flex justify-center items-center'}>
+                    <span className={'text-gray-500 text-lg'}>Nema dostupne opreme.</span>
+                </div>
+            ) : (
+                <div className={'h-4/6 bg-sky-50 mx-2 overflow-y-scroll p-3'}>
+                    {assignedApptList.map((appt, key) => (
+                        <div className={'bg-sky-200 flex justify-between items-center p-3'}>
+                            <div>
+                                <span className={'font-bold text-sky-900'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
+                                <p className={'text-sky-800 text-sm'}>{appt.type}</p>
+                            </div>
+                            <div>
+                                <Link to={null}>
+                                    <img src={Arrow} alt="Arrow" className={'h-10'} />
+                                </Link>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}
+
+function ResultList() {
+
+    const [resultList, setResultList] = useState([]);
+
+    useEffect(() => {
+        api.get('/therapy/result', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(res => {
+            setResultList(res.data);
+        }).catch(() => toast.error('Dogodila se pogreška.'));
+    }, []);
+
+
+
+    return (
+        <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
+            <div className={'h-10 flex justify-center items-center'}>
+                <span className={'text-sky-600 font-bold text-2xl'}>Rezultati terapija</span>
+            </div>
+            {resultList.length === 0 ? (
+                <div className={'h-4/6 bg-sky-50 mx-2 flex justify-center items-center'}>
+                    <span className={'text-gray-500 text-lg'}>Nema dostupnih rezultata</span>
+                </div>
+            ) : (
+                <div className={'h-4/6 bg-sky-50 mx-2 overflow-y-scroll p-3'}>
+                    {resultList.map((appt, key) => (
+                        <div className={'bg-sky-200 flex justify-between items-center p-3'}>
+                            <div>
+                                <span className={'font-bold text-sky-900'}>{}</span>
+                                <p className={'text-sky-800 text-sm'}>{"TODO"}</p>
+                            </div>
+                            <div>
+                                <Link to={'/appointmentResult'}>
+                                    <img src={Arrow} alt="Arrow" className={'h-10'} />
+                                </Link>
+                            </div>
+                        </div>
+
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}
+
+function PatientAndTherapyList() {
+
+    const [patientAndTherapyList, setPatientAndTherapyList] = useState([]);
+
+    useEffect(() => {
+        setPatientAndTherapyList([]);
+    }, []);
+
+    return (
+        <div className={"row-span-1 col-span-1 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
+            <div className={'h-10 flex justify-center items-center'}>
+                <span className={'text-sky-600 font-bold text-2xl'}>Pacijenti i terapije</span>
+            </div>
+            {patientAndTherapyList.length === 0 ? (
+                <div className={'h-4/6 bg-sky-50 mx-2 flex justify-center items-center'}>
+                    <span className={'text-gray-500 text-lg'}>Nema dostupnih informacija.</span>
+                </div>
+            ) : (
+                <div className={'h-4/6 bg-sky-50 mx-2 overflow-y-scroll p-3'}>
+                    {patientAndTherapyList.map((appt, key) => (
+                        <div className={'bg-sky-200 flex justify-between items-center p-3'}>
+                            <div>
+                                <span className={'font-bold text-sky-900'}>{"TODO"}</span>
+                                <p className={'text-sky-800 text-sm'}>{"TODO"}</p>
+                            </div>
+                            <div>
+                                <Link to={'/appointmentResult'}>
+                                    <img src={Arrow} alt="Arrow" className={'h-10'} />
+                                </Link>
+                            </div>
+                        </div>
+
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}
