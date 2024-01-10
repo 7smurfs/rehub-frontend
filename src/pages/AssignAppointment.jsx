@@ -111,7 +111,7 @@ function AssignAppointment() {
             <Header />
             <div className={'h-full flex flex-col'}>
                 <div className={'h-min grid grid-cols-4 grid-rows-3 gap-3 p-3'}>
-                    <div className={'p-2 h-full row-span-3/5 col-span-2 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
+                    <div className={'p-2 h-full row-span-4/5 col-span-2 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
                         <div className={'h-14 flex items-center pl-5'}>
                             <h1 className={'text-sky-800 font-bold text-2xl underline'}>Pacijent {state.patientResponse.firstName} {state.patientResponse.lastName}</h1>
                         </div>
@@ -138,7 +138,7 @@ function AssignAppointment() {
                           <span>Vježbe za poboljšanje mobilnosti, vježbe za vraćanje snage mišića</span>
                       </div>*/}
                     </div>
-                    <div className={'bg-sky-100 col-span-2 p-3 row-span-2 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
+                    <div className={'bg-sky-100 col-span-2 p-3 row-span-2 h-full rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
                         <div className={'h-8 flex items-center'}>
                             <h3 className={'text-sky-800 font-semibold text-lg'}>Slobodne sobe</h3>
                         </div>
@@ -179,14 +179,7 @@ function AssignAppointment() {
 
 
                     </div>
-
-                    {/*<div className={'bg-sky-200 col-span-1 row-span-1 px-3'}>
-                      <div className={'h-8 flex items-center'}>
-                          <h3 className={'text-sky-800 font-semibold text-lg'}>Dostupni djelatnici</h3>
-                      </div>
-                      <div className={'h-3/5 bg-sky-50'}></div>
-                  </div>*/}
-                    <div className={'bg-sky-100 col-span-2  p-2 row-span-2 w-full h-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]  overflow-y-scroll'}>
+                    <div className={'bg-sky-100 col-span-2  p-2 row-span-2 h-full w-full h-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] overflow-y-scroll'}>
                         <div className={'h-8 flex items-center pl-2'}>
                             <h3 className={'text-sky-800 font-semibold text-lg'}>Moji termini</h3>
                         </div>
@@ -209,7 +202,7 @@ function AssignAppointment() {
                         )}
                     </div>
 
-                    <div className={'bg-sky-100 col-span-1 row-span-1 px-3 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px]'}>
+                    <div className={'bg-sky-100 col-span-1 h-full row-span-1 px-3 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px]'}>
                         <div className={'h-8 flex items-center'}>
                             <h3 className={'text-sky-800 font-semibold text-lg'}>Trajanje zahvata</h3>
                         </div>
