@@ -57,7 +57,7 @@ function LoginForm() {
                                  className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
                         </div>
                         <Link to="/passwordReset" className="self-start ml-2 pt-2"><span className="text-sky-600">Zaboravljena lozinka?</span></Link>
-                        <button className="sm:w-1/2 mx-auto bg-sky-600 text-white font-semibold px-5 py-3 my-10 rounded-[5px]"
+                        <button className="hover:bg-sky-800 transition-all duration-300 sm:w-1/2 mx-auto bg-sky-600 text-white font-semibold px-5 py-3 my-10 rounded-[5px]"
                                 onClick={handleSubmit}>Prijava
                         </button>
                     </form>

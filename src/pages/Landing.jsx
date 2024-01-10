@@ -41,7 +41,7 @@ function Landing() {
                                 brinemo{'\n'} o
                                 Vašem{'\n'} oporavku</h1>
                             <button
-                                className="ml-10 bg-sky-600 sm:p-5 p-2 text-white font-bold rounded-[5px] lg:mt-12 mt-5"
+                                className="ml-10 bg-sky-600 hover:bg-sky-800 transition-all duration-300 sm:p-5 p-2 text-white font-bold rounded-[5px] lg:mt-12 mt-5 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"
                                 onClick={() => navigate('/login')} role='link'> PRIJAVI SE
                             </button>
                         </div>

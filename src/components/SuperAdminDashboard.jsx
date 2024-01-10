@@ -131,7 +131,7 @@ function Personel({ props }) {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         }).then((res) => {
-            setEmployees(res.data)
+            setEmployees(res.data.sort((a, b) => a.lastName.localeCompare(b.lastName)))
         }).catch((err) => {
             console.log(err);
             toast.error("Provjerite internetsku vezu.");
@@ -348,7 +348,7 @@ function Rooms({ props }) {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         }).then((res) => {
-            setRooms(res.data);
+            setRooms(res.data.sort((a, b) => a.id - b.id));
         }).catch((err) => {
             toast.error("Provjerite internetsku vezu.");
         });
@@ -521,7 +521,7 @@ function Equipment({ props }) {
                     }
                 })
             ])
-            setEquipmentList(equipmentRes.data);
+            setEquipmentList(equipmentRes.data.sort((a, b) => a.id - b.id));
             setRoomList(roomRes.data);
 
         } catch (err) {
