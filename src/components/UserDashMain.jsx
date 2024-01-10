@@ -74,6 +74,18 @@ function UserDashMain() {
         setFormattedTherapies(newArray);
     };
 
+    const fetchTherapyScan = async (therapyId) => {
+        await api.get('/patient/therapy/scan/' + therapyId, {
+            responseType: 'blob',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then((res) => {
+            const pdfUrl = URL.createObjectURL(new Blob([res.data], {type: 'application/pdf'}));
+            window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+        });
+    };
+
     return (
         <div className="flex flex-col lg:h-4/5 lg:grid lg:grid-cols-2 lg:grid-rows-1 gap-5 p-5">
             <div className="row-span-1 col-span-1 bg-sky-100 rounded-[5px]">
@@ -177,6 +189,7 @@ function UserDashMain() {
                                                      onClick={() => {
                                                          setPopupTherapy(therapy);
                                                          setOpen(true);
+                                                         fetchTherapyScan(therapy.id).catch(() => toast.error("Dogodila se pogreška."));
                                                      }}
                                                      className="h-8 cursor-pointer"/>
                                             </div>
@@ -238,7 +251,20 @@ function UserDashMain() {
 
                                 </div>
                             }
+                            {
+                                popupTherapy !== null &&
+                                <div className={'flex'}>
+                                    {
+                                        popupTherapy.scan &&
+                                        <>
+                                            <button className={'font-semibold p-2 text-white bg-sky-950 rounded-lg'}
+                                                    onClick={() => fetchTherapyScan(popupTherapy.id).catch(() => toast.error("Dogodila se greska."))}>UPUTNICA
+                                            </button>
+                                        </>
+                                    }
 
+                                </div>
+                            }
                         </div>
                         <div className={'flex justify-around items-center'}>
                             <button onClick={() => setOpen(false)}

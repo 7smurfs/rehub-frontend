@@ -11,13 +11,14 @@ function NewTherapyPage() {
 
     let navigate = useNavigate();
     const [userTherapies, setUserTherapies] = useState([]);
-
     const [newTherapyData, setNewTherapyData] = useState({
         type: '',
         request: '',
         doctorFullName: '',
         referenceId: ''
     });
+    const [therapyScan, setTherapyScan] = useState(null);
+
 
     useEffect(() => {
         let roles = localStorage.getItem('roles');
@@ -58,7 +59,18 @@ function NewTherapyPage() {
             toast.info("Neispravno ime i prezime doktora")
             return;
         }
-        await api.post('/patient/therapy', newTherapyData, {
+        if (therapyScan == null) {
+            toast.warn('Priložite sken uputnice.')
+            return;
+        }
+        const formData = new FormData();
+        formData.append('type', newTherapyData.type);
+        formData.append('request', newTherapyData.request);
+        formData.append('doctorFullName', newTherapyData.doctorFullName);
+        formData.append('referenceId', newTherapyData.referenceId);
+        formData.append('therapyScan', therapyScan);
+
+        await api.post('/patient/therapy', formData, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
@@ -68,6 +80,19 @@ function NewTherapyPage() {
             toast.error('Nemoguce zatraziti terapiju. Dogodila se pogreska.');
         })
     };
+
+    const onPdfChange = (e) => {
+        if (e.target.files) {
+            if ((e.target.files[0].size / (1024 * 1024)) > 2) {
+                toast.error('Najveća dozvoljena veličina je 2 MB.');
+                return;
+            }
+            setTherapyScan(e.target.files[0]);
+        } else {
+            toast.error('Dogodila se greška.');
+        }
+
+    }
 
     return (
         <PageLayout>
@@ -101,6 +126,12 @@ function NewTherapyPage() {
                             <option key={key} value={therapy.id}>{therapy.type}</option>
                         ))}
                     </select>
+                    <label>Priložite sken uputnice:</label>
+                    <input type='file'
+                           accept='application/pdf'
+                           onChange={onPdfChange}
+                           className='rounded-[10px] text-sky-950 outline-dashed outline-2 p-2 w-4/5 lg:w-1/2 my-2 outline-sky-950 cursor-pointer'>
+                    </input>
                     <button className={'text-white p-4 bg-sky-600 rounded-xl my-4'} type={"submit"}>Zatraži terapiju
                     </button>
                 </form>
