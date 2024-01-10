@@ -306,7 +306,7 @@ function RegisterForm() {
                             <button
                                 disabled={step < 1}
                                 type='button'
-                                className="bg-sky-600 text-white font-semibold px-6 py-3 my-10 rounded-[5px]"
+                                className="hover:bg-sky-800 transition-all duration-300 bg-sky-600 text-white font-semibold px-6 py-3 my-10 rounded-[5px]"
                                 onClick={decrementStep}>Natrag
                             </button>
 
@@ -316,7 +316,7 @@ function RegisterForm() {
                                     type='button'
                                     className={(/^\s*$/.test(registerData.firstName) || /^\s*$/.test(registerData.lastName)) ?
                                         "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                        : "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                        : " hover:bg-sky-800 transition-all duration-300 bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -326,7 +326,7 @@ function RegisterForm() {
                                     type='button'
                                     className={(/^\s*$/.test(registerData.username) || /^\s*$/.test(registerData.phoneNumber)) ?
                                         "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                        : "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                        : "hover:bg-sky-800 transition-all duration-300 bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -336,7 +336,7 @@ function RegisterForm() {
                                     type='button'
                                     className={(/^\s*$/.test(registerData.pin) || /^\s*$/.test(registerData.phin)) ?
                                         "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                        : "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                        : "hover:bg-sky-800 transition-all duration-300 bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -346,7 +346,7 @@ function RegisterForm() {
                                     type='button'
                                     className={(/^\s*$/.test(registerData.dateOfBirth)) ?
                                         "bg-gray-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                        : "bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                        : "hover:bg-sky-800 transition-all duration-300 bg-sky-600 text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -354,7 +354,7 @@ function RegisterForm() {
                                 <button
                                     disabled={!captchaValid}
                                     className={captchaValid ?
-                                        "bg-sky-600 text-white font-semibold px-6 py-3 my-10 rounded-[5px]"
+                                        "hover:bg-sky-800 transition-all duration-300 bg-sky-600 text-white font-semibold px-6 py-3 my-10 rounded-[5px]"
                                         :
                                         "bg-gray-600 text-white font-semibold px-6 py-3 my-10 rounded-[5px]"
                                     }
