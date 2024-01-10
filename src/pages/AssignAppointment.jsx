@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import PageLayout from "../components/PageLayout";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import AppointmentPopup from "../components/AppointmentPopup";
-import { useNavigate, useLocation } from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import api from "../http/api";
-import { toast, ToastContainer } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import CollapsibleRoomTab from "../components/CollapsibleRoomTab";
 
 function AssignAppointment() {
@@ -27,8 +27,8 @@ function AssignAppointment() {
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setApptData({ ...apptData, [name]: value });
+        const {name, value} = e.target;
+        setApptData({...apptData, [name]: value});
     };
 
 
@@ -71,7 +71,7 @@ function AssignAppointment() {
 
 
     const handleOptionChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
 
         setApptData({
             ...apptData,
@@ -105,148 +105,168 @@ function AssignAppointment() {
         };
     }
 
+    const fetchTherapyScan = async (therapyId) => {
+        await api.get('/employee/therapy/scan/' + therapyId, {
+            responseType: 'blob',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then((res) => {
+            const pdfUrl = URL.createObjectURL(new Blob([res.data], {type: 'application/pdf'}));
+            window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+        }).catch(() => toast.error("Dogodila se pogreška."));
+    };
 
     return (<>
-        <PageLayout>
-            <Header />
-            <div className={'h-full flex flex-col'}>
-                <div className={'h-min grid grid-cols-4 grid-rows-3 gap-3 p-3'}>
-                    <div className={'p-2 h-full row-span-4/5 col-span-2 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
-                        <div className={'h-14 flex items-center pl-5'}>
-                            <h1 className={'text-sky-800 font-bold text-2xl underline'}>Pacijent {state.patientResponse.firstName} {state.patientResponse.lastName}</h1>
-                        </div>
-                        {/*<div className={'h-8 flex items-center pl-3'}>
-                          <span className={'w-52 font-bold text-sky-600'}>Dolazak:</span>
-                          <span>
-                              {state.referenceTherapyId ? 'Prvi' : 'Ponovni'}
-                          </span>
-                      </div>*/}
-                        <div className={'h-8 flex items-center pl-3'}>
-                            <span className={'w-52 font-bold text-sky-600'}>Vrsta oboljenja:</span>
-                            <span>{state.type}</span>
-                        </div>
-                        <div className={'h-8 flex items-center pl-3'}>
-                            <span className={'w-52 font-bold text-sky-600'}>Opis oboljenja:</span>
-                            <span>{state.request}</span>
-                        </div>
-                        <div className={'h-8 flex items-center pl-3'}>
-                            <span className={'w-52 font-bold text-sky-600'}>Uputnicu izdao/la:</span>
-                            <span>{state.doctorName}</span>
-                        </div>
-                        {/*<div className={'h-8 flex items-center pl-3'}>
-                          <span className={'w-52 font-bold text-sky-600'}>Postupak liječenja:</span>
-                          <span>Vježbe za poboljšanje mobilnosti, vježbe za vraćanje snage mišića</span>
-                      </div>*/}
-                    </div>
-                    <div className={'bg-sky-100 col-span-2 p-3 row-span-2 h-full rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
-                        <div className={'h-8 flex items-center'}>
-                            <h3 className={'text-sky-800 font-semibold text-lg'}>Slobodne sobe</h3>
-                        </div>
-                        {rooms.length === 0 ? (
-                            <div className={'h-5/6 flex flex-col justify-center items-center p-3'}>
-                                <span className={'text-gray-500'}>Trenutno nema slobodnih soba.</span>
+            <PageLayout>
+                <Header/>
+                <div className={'h-full flex flex-col'}>
+                    <div className={'h-min grid grid-cols-4 grid-rows-3 gap-3 p-3'}>
+                        <div
+                            className={'p-2 h-full row-span-4/5 col-span-2 bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
+                            <div className={'h-14 flex items-center pl-5'}>
+                                <h1 className={'text-sky-800 font-bold text-2xl underline'}>Pacijent {state.patientResponse.firstName} {state.patientResponse.lastName}</h1>
                             </div>
-                        ) : (
-                            <div className={'h-5/6 bg-white flex flex-col gap-3 p-3 rounded-[5px] overflow-y-scroll'}>
-                                {rooms.map((room, key) => (
-                                    <div key={key} className="bg-sky-100 pl-3 rounded-[5px]">
-                                        <div className={'flex w-full'}>
-                                            <input type="radio" value={room.id} name="roomId" id={`room${room.id}`} onChange={handleOptionChange} />
-                                            {room.status === 'OPERABLE' && (
-                                                <CollapsibleRoomTab key={key} title={(
-                                                    <>
-                                                        <span className={'font-bold block text-xl'}>{room.label}</span>
-                                                        <span
-                                                            className={'font-semibold text-md'}>Kapacitet: {room.capacity}</span>
-                                                    </>
+                            <div className={'h-8 flex items-center pl-3'}>
+                                <span className={'w-52 font-bold text-sky-600'}>Vrsta oboljenja:</span>
+                                <span>{state.type}</span>
+                            </div>
+                            <div className={'h-8 flex items-center pl-3'}>
+                                <span className={'w-52 font-bold text-sky-600'}>Opis oboljenja:</span>
+                                <span>{state.request}</span>
+                            </div>
+                            <div className={'h-8 flex items-center pl-3'}>
+                                <span className={'w-52 font-bold text-sky-600'}>Uputnicu izdao/la:</span>
+                                <span>{state.doctorName}</span>
+                            </div>
+                            <div className={'h-8 flex items-center pl-3'}>
+                                <span className={'w-52 font-bold text-sky-600'}>Skenirana uputnica:</span>
+                                <button
+                                    onClick={() => fetchTherapyScan(state.id)}
+                                    className={'bg-sky-950 font-semibold text-white rounded-[5px] px-3 py-1'}>PRIKAŽI
+                                </button>
+                            </div>
+                        </div>
+                        <div
+                            className={'bg-sky-100 col-span-2 p-3 row-span-2 h-full rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
+                            <div className={'h-8 flex items-center'}>
+                                <h3 className={'text-sky-800 font-semibold text-lg'}>Slobodne sobe</h3>
+                            </div>
+                            {rooms.length === 0 ? (
+                                <div className={'h-5/6 flex flex-col justify-center items-center p-3'}>
+                                    <span className={'text-gray-500'}>Trenutno nema slobodnih soba.</span>
+                                </div>
+                            ) : (
+                                <div
+                                    className={'h-5/6 bg-white flex flex-col gap-3 p-3 rounded-[5px] overflow-y-scroll'}>
+                                    {rooms.map((room, key) => (
+                                        <div key={key} className="bg-sky-100 pl-3 rounded-[5px]">
+                                            <div className={'flex w-full'}>
+                                                <input type="radio" value={room.id} name="roomId" id={`room${room.id}`}
+                                                       onChange={handleOptionChange}/>
+                                                {room.status === 'OPERABLE' && (
+                                                    <CollapsibleRoomTab key={key} title={(
+                                                        <>
+                                                            <span
+                                                                className={'font-bold block text-xl'}>{room.label}</span>
+                                                            <span
+                                                                className={'font-semibold text-md'}>Kapacitet: {room.capacity}</span>
+                                                        </>
 
-                                                )} content={(
-                                                    <div>
-                                                        {equipment.map((eq, key) => (
-                                                            eq.status === 'OPERABLE' && eq.roomId === room.id &&
-                                                            <div key={key}>
-                                                                <span className={'text-sky-950'}>{eq.name}</span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )} />
-                                            )}
+                                                    )} content={(
+                                                        <div>
+                                                            {equipment.map((eq, key) => (
+                                                                eq.status === 'OPERABLE' && eq.roomId === room.id &&
+                                                                <div key={key}>
+                                                                    <span className={'text-sky-950'}>{eq.name}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}/>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+
+                        </div>
+                        <div
+                            className={'bg-sky-100 col-span-2  p-2 row-span-2 h-full w-full h-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] overflow-y-scroll'}>
+                            <div className={'h-8 flex items-center pl-2'}>
+                                <h3 className={'text-sky-800 font-semibold text-lg'}>Moji termini</h3>
+                            </div>
+
+                            {employeeTherapies.length === 0 ? (
+                                <div className={'h-5/6 flex flex-col justify-center items-center p-3'}>
+                                    <span className={'text-gray-500'}>Trenutno nema terapija.</span>
+                                </div>
+                            ) : (
+                                employeeTherapies.map((therapy, key) => (
+                                    <div key={key} className={'h-min flex flex-col items-center p-3 '}>
+                                        <div className={'bg-sky-600 w-full h-min p-2 text-sky-950 rounded-[5px]'}>
+                                            <h1 className={'font-bold text-white'}>{therapy.patientResponse.firstName} {therapy.patientResponse.lastName}</h1>
+                                            <span className={'block text-white'}>{therapy.type}</span>
+                                            <span className={'block text-white'}>{therapy.roomLabel}</span>
+                                            <span
+                                                className={'block font-semibold text-white'}>{formatDateTime(therapy.startAt, therapy.endAt).dateStart} {formatDateTime(therapy.startAt, therapy.endAt).start} - {formatDateTime(therapy.startAt, therapy.endAt).end}</span>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        )}
-
-
-                    </div>
-                    <div className={'bg-sky-100 col-span-2  p-2 row-span-2 h-full w-full h-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] overflow-y-scroll'}>
-                        <div className={'h-8 flex items-center pl-2'}>
-                            <h3 className={'text-sky-800 font-semibold text-lg'}>Moji termini</h3>
+                                ))
+                            )}
                         </div>
 
-                        {employeeTherapies.length === 0 ? (
-                            <div className={'h-5/6 flex flex-col justify-center items-center p-3'}>
-                                <span className={'text-gray-500'}>Trenutno nema terapija.</span>
+                        <div
+                            className={'bg-sky-100 col-span-1 h-full row-span-1 px-3 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px]'}>
+                            <div className={'h-8 flex items-center'}>
+                                <h3 className={'text-sky-800 font-semibold text-lg'}>Trajanje zahvata</h3>
                             </div>
-                        ) : (
-                            employeeTherapies.map((therapy, key) => (
-                                <div key={key} className={'h-min flex flex-col items-center p-3 '}>
-                                    <div className={'bg-sky-600 w-full h-min p-2 text-sky-950 rounded-[5px]'}>
-                                        <h1 className={'font-bold text-white'}>{therapy.patientResponse.firstName} {therapy.patientResponse.lastName}</h1>
-                                        <span className={'block text-white'}>{therapy.type}</span>
-                                        <span className={'block text-white'}>{therapy.roomLabel}</span>
-                                        <span className={'block font-semibold text-white'}>{formatDateTime(therapy.startAt, therapy.endAt).dateStart} {formatDateTime(therapy.startAt, therapy.endAt).start} - {formatDateTime(therapy.startAt, therapy.endAt).end}</span>
-                                    </div>
+                            <div className={'h-3/5 bg-white flex flex-col gap-2 px-3 py-1 rounded-[5px]'}>
+                                <div className={'flex'}>
+                                    <label className={'w-20'}>Početak: </label>
+                                    <input type="datetime-local" name={'startAt'} id={'startAt'}
+                                           onChange={handleChange}/>
                                 </div>
-                            ))
-                        )}
-                    </div>
-
-                    <div className={'bg-sky-100 col-span-1 h-full row-span-1 px-3 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px]'}>
-                        <div className={'h-8 flex items-center'}>
-                            <h3 className={'text-sky-800 font-semibold text-lg'}>Trajanje zahvata</h3>
-                        </div>
-                        <div className={'h-3/5 bg-white flex flex-col gap-2 px-3 py-1 rounded-[5px]'}>
-                            <div className={'flex'}>
-                                <label className={'w-20'}>Početak: </label>
-                                <input type="datetime-local" name={'startAt'} id={'startAt'} onChange={handleChange} />
-                            </div>
-                            <div className={'flex'}>
-                                <label className={'w-20'}>Kraj: </label>
-                                <input type="datetime-local" name={'endAt'} id={'endAt'} onChange={handleChange} />
+                                <div className={'flex'}>
+                                    <label className={'w-20'}>Kraj: </label>
+                                    <input type="datetime-local" name={'endAt'} id={'endAt'} onChange={handleChange}/>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
+                        <div className="bg-sky-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
 
+                        </div>
+
+                    </div>
+                    <div className={'w-full flex justify-center pb-3 gap-3'}>
+                        <AppointmentPopup data={apptData} name={{
+                            fname: state.patientResponse.firstName,
+                            lname: state.patientResponse.lastName
+                        }}/>
+                        <button onClick={() => navigate('/dashboard')}
+                                className={'bg-sky-800 w-24 p-2 rounded-[5px] text-white font-semibold'}>Odustani
+                        </button>
                     </div>
 
                 </div>
-                <div className={'w-full flex justify-center pb-3 gap-3'}>
-                    <AppointmentPopup data={apptData} name={{ fname: state.patientResponse.firstName, lname: state.patientResponse.lastName }} />
-                    <button onClick={() => navigate('/dashboard')}
-                        className={'bg-sky-800 w-24 p-2 rounded-[5px] text-white font-semibold'}>Odustani
-                    </button>
-                </div>
 
-            </div>
-
-            <ToastContainer
-                position="bottom-right"
-                autoClose={2000}
-                limit={2}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
-            <Footer />
-        </PageLayout>
-    </>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={2000}
+                    limit={2}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
+                <Footer/>
+            </PageLayout>
+        </>
     );
 }
 
