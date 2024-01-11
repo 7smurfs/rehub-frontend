@@ -87,12 +87,12 @@ function UserDashMain() {
     };
 
     return (
-        <div className="flex flex-col lg:h-4/5 lg:grid lg:grid-cols-2 lg:grid-rows-1 gap-5 p-5">
-            <div className="row-span-1 col-span-1 bg-lighterSky rounded-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
-                <div className="bg-mediumSky rounded-t-[5px] h-14">
+        <div className="flex flex-col lg:h-4/5 lg:grid lg:grid-cols-2 lg:grid-rows-1 gap-5 p-5 dark:bg-black">
+            <div className="row-span-1 col-span-1 bg-lighterSky dark:bg-darkSky rounded-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
+                <div className="bg-mediumSky dark:bg-darkestSky rounded-t-[5px] h-14">
                     <h3 className="font-bold text-lg text-white p-3">Kalendar</h3>
                 </div>
-                <div className={'lg:h-5/6 m-2'}>
+                <div className={'lg:h-5/6 m-2 dark:text-lighterSky'}>
                     <div className={'lg:hidden h-full flex flex-col md:flex-row items-center justify-around mx-2 my-5'}>
                         {formattedTherapies.slice(0, 3).map((therapy, key) => (
                             <>
@@ -147,14 +147,14 @@ function UserDashMain() {
                 </div>
             </div>
 
-            <div className="bg-lighterSky rounded-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
-                <div className="bg-mediumSky rounded-t-[5px] h-14">
+            <div className="bg-lighterSky dark:bg-darkSky rounded-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
+                <div className="bg-mediumSky dark:bg-darkestSky rounded-t-[5px] h-14">
                     <h3 className="font-bold text-lg text-white p-3">Moji termini</h3>
                 </div>
                 <div className="h-full -mt-14 pt-14 flex flex-col items-center">
                     {userTherapies.length === 0 ? (
                         <>
-                            <div className="h-full w-11/12 my-4 flex flex-col justify-center items-center bg-lighterSky">
+                            <div className="h-full w-11/12 my-4 flex flex-col justify-center items-center bg-lighterSky dark:bg-darkSky">
                                 <span
                                     className={'font-bold text-xl text-darkerSky'}>Ovdje će biti prikazani Vaši termini</span>
                                 <button
@@ -167,18 +167,18 @@ function UserDashMain() {
                     ) : (
                         <>
                             <div
-                                className="w-5/6 h-full my-4 p-5 flex flex-col items-center gap-3 bg-lighterSky overflow-y-scroll">
+                                className="w-5/6 h-full my-4 p-5 flex flex-col items-center gap-3 bg-lighterSky dark:bg-darkSky overflow-y-scroll">
                                 {userTherapies.map((therapy, key) => (
                                     <div key={key} className="rounded-md w-full">
                                         <div className={
-                                            therapy.status === 'PENDING_APPROVAL' ? 'bg-heavyGray p-1 rounded-t-md' :
-                                                therapy.status === 'APPROVED' ? 'bg-darkerSky p-1 rounded-t-md' :
+                                            therapy.status === 'PENDING_APPROVAL' ? 'bg-heavyGray dark:bg-gray p-1 rounded-t-md' :
+                                                therapy.status === 'APPROVED' ? 'bg-darkerSky dark:bg-mediumSky p-1 rounded-t-md' :
                                                     'bg-heavierGray p-1 rounded-t-md'
                                         }>
                                             <h5 className="text-white overflow-clip text-ellipsis font-semibold p-1">{therapy.type}</h5>
                                         </div>
                                         <div
-                                            className="bg-lighterSky shadow-lg p-3 flex justify-between rounded-b-[5px]">
+                                            className="bg-lighterSky dark:bg-lightSky shadow-lg dark:shadow-lg dark:shadow-darkestSky p-3 flex justify-between rounded-b-[5px]">
                                             <div className={''}>
                                                 <span className={'text-ellipsis'}><span
                                                     className={'font-semibold'}>Zahtjev: </span>{therapy.request}</span>
@@ -200,7 +200,7 @@ function UserDashMain() {
                                 ))}
                             </div>
                             <button
-                                className="bg-mediumSky shadow-md shadow-darkSky hover:bg-darkSky transition-all duration-200 px-4 py-3 my-4 flex items-center justify-center text-white font-semibold rounded-[5px]"
+                                className="bg-mediumSky dark:bg-darkerSky shadow-md shadow-darkSky dark:shadow-md dark:shadow-darkestSky hover:bg-darkSky transition-all duration-200 px-4 py-3 my-4 flex items-center justify-center text-white font-semibold rounded-[5px]"
                                 onClick={goToNewTherapy}>
                                 Dodaj novi termin
                             </button>
