@@ -167,9 +167,9 @@ function UserDashMain() {
                     ) : (
                         <>
                             <div
-                                className="w-5/6 h-full my-4 p-5 flex flex-col items-center gap-3 bg-white overflow-y-scroll">
+                                className="w-5/6 h-full my-4 p-5 flex flex-col items-center gap-3 bg-lighterSky overflow-y-scroll">
                                 {userTherapies.map((therapy, key) => (
-                                    <div key={key} className="rounded-[5px] w-full">
+                                    <div key={key} className="rounded-md w-full">
                                         <div className={
                                             therapy.status === 'PENDING_APPROVAL' ? 'bg-heavyGray p-1 rounded-t-md' :
                                                 therapy.status === 'APPROVED' ? 'bg-darkerSky p-1 rounded-t-md' :
@@ -178,13 +178,16 @@ function UserDashMain() {
                                             <h5 className="text-white overflow-clip text-ellipsis font-semibold p-1">{therapy.type}</h5>
                                         </div>
                                         <div
-                                            className="bg-lighterSky p-3 flex flex-col justify-between rounded-b-[5px]">
-                                            <span className={'text-ellipsis'}><span
-                                                className={'font-semibold'}>Zahtjev: </span>{therapy.request}</span>
-                                            <div className={'flex flex-row items-center justify-between'}>
-                                                <span
-                                                    className="flex h-full items-center font-semibold">Soba: {therapy.roomLabel}</span>
-                                                {therapy.referenceTherapyId && <span className={'font-semibold'}>Šifra ref. terapije: {therapy.referenceTherapyId}</span>}
+                                            className="bg-lighterSky shadow-lg p-3 flex justify-between rounded-b-[5px]">
+                                            <div className={''}>
+                                                <span className={'text-ellipsis'}><span
+                                                    className={'font-semibold'}>Zahtjev: </span>{therapy.request}</span>
+                                                <span className={therapy.status === 'PENDING_APPROVAL' ? 'hidden' : "flex items-center font-semibold"}>Soba: {therapy.roomLabel}</span>
+
+                                                {therapy.referenceTherapyId && <span className={'flex items-center font-semibold'}>Šifra ref. terapije: {therapy.referenceTherapyId}</span>}
+                                            </div>
+
+                                            <div className={'flex items-center justify-center'}>
                                                 <img src={arrow} alt="arrow"
                                                      onClick={() => {
                                                          setPopupTherapy(therapy);
@@ -197,7 +200,7 @@ function UserDashMain() {
                                 ))}
                             </div>
                             <button
-                                className="bg-mediumSky p-4 my-3 flex items-center justify-center text-white font-semibold rounded-[5px]"
+                                className="bg-mediumSky shadow-md shadow-darkSky hover:bg-darkSky transition-all duration-200 px-4 py-3 my-4 flex items-center justify-center text-white font-semibold rounded-[5px]"
                                 onClick={goToNewTherapy}>
                                 Dodaj novi termin
                             </button>
@@ -226,7 +229,7 @@ function UserDashMain() {
                                     {popupTherapy.startAt &&
                                         <div className={'flex'}>
                                             <span className={'w-28 font-semibold'}>DATUM: </span>
-                                            <span>{new Date(popupTherapy.startAt).getDay()}.{(new Date(popupTherapy.startAt).getMonth() + 1).toString().padStart(2, '0')}.{new Date(popupTherapy.startAt).getFullYear()}</span>
+                                            <span>{new Date(popupTherapy.startAt).getDate()}.{(new Date(popupTherapy.startAt).getMonth() + 1).toString().padStart(2, '0')}.{new Date(popupTherapy.startAt).getFullYear()}</span>
                                         </div>
                                     }
                                     {popupTherapy.endAt &&
