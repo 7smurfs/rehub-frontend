@@ -7,13 +7,14 @@ module.exports = {
     theme: {
         colors: {
             white: '#FFFFFF',
-            black: '#001011',
+            black: '#000000',
 
             lighterSky: '#e0f2fe', // sky-100
             lightSky: '#bae6fd', // sky-200
             mediumSky: '#0284c7', // sky-600
             darkSky: '#075985', // sky-800
             darkerSky: '#0c4a6e', // sky-900
+            darkestSky: '#082f49',
 
             lightGray: '#d1d5db', // gray-300
             mediumGray: '#9ca3af', // gray-400

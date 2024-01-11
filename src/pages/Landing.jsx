@@ -41,11 +41,11 @@ function Landing() {
                     <>
                         <Header/>
                         <div className="w-full h-full bg-landing-bg dark:bg-landing-bg-dark bg-cover bg-center pt-28">
-                            <h1 className="whitespace-pre-line sm:text-8xl text-5xl font-bold text-darkerSky dark:text-black ml-10">Mi
+                            <h1 className="dark:drop-shadow-lg whitespace-pre-line sm:text-8xl text-5xl font-bold text-darkSky dark:text-darkestSky ml-10">Mi
                                 brinemo{'\n'} o
                                 Vašem{'\n'} oporavku</h1>
                             <button
-                                className="ml-10 bg-mediumSky dark:bg-black hover:bg-darkSky hover:dark:bg-heavierGray transition-all duration-300 sm:p-5 p-2 text-white font-bold rounded-[5px] lg:mt-12 mt-5 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"
+                                className="ml-10 mb-10 bg-mediumSky dark:bg-darkestSky hover:bg-darkSky hover:dark:bg-darkerSky shadow-md shadow-darkestSky dark:shadow-md dark:shadow-black transition-all duration-300 sm:p-5 p-2 text-white font-bold rounded-[5px] lg:mt-12 mt-5"
                                 onClick={() => navigate('/login')} role='link'> PRIJAVI SE
                             </button>
                         </div>

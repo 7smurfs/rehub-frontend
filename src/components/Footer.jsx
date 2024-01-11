@@ -22,7 +22,7 @@ function Footer() {
     const currentYear = new Date().getFullYear();
     return (
         <footer className={'cursor-default'}>
-            <div className="bg-lightSky dark:bg-black text-sm text-darkerSky dark:text-white font-semibold w-full flex justify-center items-center h-12">
+            <div className="bg-lightSky dark:bg-darkestSky text-sm text-darkerSky dark:text-white font-semibold w-full flex justify-center items-center h-12">
                 <img onClick={toggleDarkMode} className={'cursor-pointer absolute h-7 ml-1 left-0'} src={isDarkMode ? darkSwitch : lightSwitch}
                      alt={'theme_switch'}/>
                 <span className={'z-20'}>&copy; Copyright {currentYear}, ReHub</span>
