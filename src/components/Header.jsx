@@ -61,15 +61,15 @@ function Header() {
                                 <span className="text-white font-bold p-5 self-end">FAQ</span>
                             </button>
                             <button onClick={() => navigate("/contact")}
-                                    className="hover:bg-darkSky hover:dark:bg-heavyGray dark:bg-darkerSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:shadow-md lg:dark:shadow-lg lg:shadow-darkSky lg:dark:shadow-black justify-center">
+                                    className="hover:bg-darkSky hover:dark:bg-darkSky dark:bg-darkerSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:shadow-md lg:dark:shadow-lg lg:shadow-darkSky lg:dark:shadow-black justify-center">
                                 <span className="text-white font-bold p-5 self-end">Kontakt</span>
                             </button>
                             <button onClick={() => navigate("/register")}
-                                    className="hover:bg-darkSky hover:dark:bg-heavyGray dark:bg-darkerSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:shadow-md lg:dark:shadow-lg lg:shadow-darkSky lg:dark:shadow-black justify-center">
+                                    className="hover:bg-darkSky hover:dark:bg-darkSky dark:bg-darkerSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:shadow-md lg:dark:shadow-lg lg:shadow-darkSky lg:dark:shadow-black justify-center">
                                 <span className="text-white font-bold p-5 self-end">Registracija</span>
                             </button>
                             <button onClick={() => navigate("/login")}
-                                    className="hover:bg-darkSky hover:dark:bg-heavyGray dark:bg-darkerSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:shadow-md lg:dark:shadow-lg lg:shadow-darkSky lg:dark:shadow-black justify-center">
+                                    className="hover:bg-darkSky hover:dark:bg-darkSky dark:bg-darkerSky transition-all duration-300 bg-mediumSky mr-2 flex w-36 lg:h-24 rounded-[5px] lg:rounded-t-none lg:shadow-md lg:dark:shadow-lg lg:shadow-darkSky lg:dark:shadow-black justify-center">
                                 <span className="text-white font-bold p-5 self-end">Prijava</span>
                             </button>
                         </>
