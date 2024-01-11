@@ -99,29 +99,29 @@ function NewTherapyPage() {
     return (
         <PageLayout>
             <Header/>
-            <div className={'flex flex-col h-full items-center justify-center text-darkerSky font-bold mx-3 text-center'}>
+            <div className={'dark:bg-black flex flex-col h-full items-center justify-center text-darkerSky dark:text-lightSky font-bold text-center'}>
                 <form onSubmit={requestNewTherapy}
-                      className={'w-full md:w-5/6 xl:w-1/2 flex flex-col justify-center items-center bg-lightSky p-5 h-full my-5 rounded-lg'}>
+                      className={'w-full md:w-5/6 xl:w-1/2 flex flex-col justify-center items-center bg-lightSky dark:bg-darkSky p-5 h-full my-5 rounded-lg'}>
                     <h1 className={'font-bold mb-8 text-3xl'}>Zahtjev za novu terapiju</h1>
                     <label htmlFor={'therapyType'} className={'text-start p-2'}>Vrsta oboljenja:</label>
                     <input id={'therapyType'} name={'type'} value={newTherapyData.type}
-                           className={'w-4/5 lg:w-1/2 h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2'}
+                           className={'w-4/5 lg:w-1/2 h-[40px] bg-white dark:text-darkestSky opacity-80 mb-[2px] rounded-[5px] p-2'}
                            onChange={handleChange}
                            type={'text'}/>
                     <label htmlFor={'therapyRequest'} className={'text-start p-2'}>Opis oboljenja:</label>
                     <textarea id={'therapyRequest'} name={'request'} value={newTherapyData.request}
-                              className={'w-4/5 lg:w-1/2 h-[120px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2'}
+                              className={'w-4/5 lg:w-1/2 h-[120px] bg-white dark:text-darkestSky opacity-80 mb-[2px] rounded-[5px] p-2'}
                               maxLength={255}
                               onChange={handleChange}/>
                     <label htmlFor={'doctorFullName'} className={'text-start p-2'}>Uputnicu izdao/la (Ime
                         prezime):</label>
                     <input id={'doctorFullName'} name={'doctorFullName'} value={newTherapyData.doctorFullName}
                            onChange={handleChange}
-                           className={'w-4/5 lg:w-1/2 h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2'}
+                           className={'w-4/5 lg:w-1/2 h-[40px] bg-white dark:text-darkestSky opacity-80 mb-[2px] rounded-[5px] p-2'}
                            type={'text'}/>
                     <label htmlFor={'referenceId'} className={'text-start p-2'}>Referenca na prijašnju terapiju:</label>
                     <select id={'referenceId'} name={'referenceId'} value={newTherapyData.referenceId}
-                            className="w-4/5 lg:w-1/2 h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
+                            className="w-4/5 lg:w-1/2 h-[40px] bg-white dark:text-darkestSky opacity-80 mb-[2px] rounded-[5px] p-2"
                             onChange={handleChange}>
                         <option value={""}>Odaberite terapiju po potrebi...</option>
                         {userTherapies.map((therapy, key) => (
@@ -132,9 +132,9 @@ function NewTherapyPage() {
                     <input type='file'
                            accept='application/pdf'
                            onChange={onPdfChange}
-                           className='rounded-[10px] text-darkerSky outline-dashed outline-2 p-2 w-4/5 lg:w-1/2 my-2 outline-darkerSky cursor-pointer'>
+                           className='rounded-[10px] text-darkerSky dark:text-lightSky outline-dashed outline-2 dark:outline-black p-2 w-4/5 lg:w-1/2 my-2 outline-darkerSky cursor-pointer'>
                     </input>
-                    <button className={'text-white p-4 bg-mediumSky rounded-xl my-4'} type={"submit"}>Zatraži terapiju
+                    <button className={'transition-all duration-300 dark:shadow-md dark:shadow-black text-white p-4 bg-mediumSky dark:bg-darkestSky hover:dark:bg-darkerSky rounded-md my-4'} type={"submit"}>Zatraži terapiju
                     </button>
                 </form>
             </div>
