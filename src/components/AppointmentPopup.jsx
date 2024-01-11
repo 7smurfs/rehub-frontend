@@ -119,7 +119,7 @@ function AppointmentPopup({ data, name }) {
                     <div className={'h-1/6 pb-3'}>
                         <h2 className={'font-semibold text-lg'}>Termin pacijenta {name.fname} {name.lname}</h2>
                     </div>
-                    <div className={'bg-transparentSky h-4/6 px-2 flex flex-col gap-2 py-2'}>
+                    <div className={'bg-lighterSky h-4/6 px-2 flex flex-col gap-2 py-2'}>
                         <div className={'flex'}>
                             <span className={'w-28 font-semibold'}>DATUM:</span>
                             <span>{formatDateTime(data.startAt, data.endAt).dateStart}</span>
@@ -139,7 +139,6 @@ function AppointmentPopup({ data, name }) {
                     </div>
                     <div className={'h-1/6 flex justify-center items-center gap-3'}>
                         <button onClick={handleSubmit} className={'w-24 bg-darkSky text-white rounded-[5px] p-1 font-semibold'}>
-                            Potvrdi
                             Potvrdi
                         </button>
                         <button onClick={close} className={'w-24 bg-darkSky text-white rounded-[5px] p-1 font-semibold'}>

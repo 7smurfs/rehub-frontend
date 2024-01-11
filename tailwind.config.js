@@ -9,7 +9,6 @@ module.exports = {
             white: '#FFFFFF',
             black: '#001011',
 
-            transparentSky: '#f0f9ff', // sky-50
             lighterSky: '#e0f2fe', // sky-100
             lightSky: '#bae6fd', // sky-200
             mediumSky: '#0284c7', // sky-600

@@ -105,11 +105,11 @@ function AppointmentList() {
             <span className={'text-mediumSky font-bold text-2xl'}>Pregled prijava</span>
         </div>
         {apptsList.length === 0 ? (
-            <div className={'bg-transparentSky h-5/6 mx-2 flex items-center justify-center'}>
+            <div className={'bg-lighterSky h-4/6 mx-2 flex items-center justify-center'}>
                 <span className={'text-gray text-lg'}>Trenutno nema aktivnih prijava.</span>
             </div>
         ) : (
-            <div className={'h-5/6 overflow-y-scroll bg-transparentSky mx-2 p-3 flex flex-col gap-3'}>
+            <div className={'h-4/6 overflow-y-scroll bg-lighterSky mx-2 p-3 flex flex-col gap-3'}>
                 {apptsList.map((appt, key) => (
                     <div key={key} className={'bg-lightSky w-full flex justify-between py-3 pl-3'}>
                         <div className={'h-full flex items-center'}>
@@ -147,11 +147,11 @@ function RoomList() {
             <span className={'text-mediumSky font-bold text-2xl'}>Sobe/Ordinacije</span>
         </div>
         {roomList.length === 0 ? (
-            <div className={'h-4/6 bg-transparentSky mx-2 flex justify-center items-center'}>
+            <div className={'h-4/6 bg-lighterSky mx-2 flex justify-center items-center'}>
                 <span className={'text-gray text-lg'}>Nema dostupnih soba.</span>
             </div>
         ) : (
-            <div className={'h-3/5 bg-transparentSky mx-2 overflow-y-scroll'}>
+            <div className={'h-3/5 bg-lighterSky mx-2 overflow-y-scroll'}>
                 {roomList.map((room, key) => (
                     <div
                         key={key}
@@ -191,11 +191,11 @@ function EquipmentList() {
                 <span className={'text-mediumSky font-bold text-2xl'}>Oprema</span>
             </div>
             {equipmentList.length === 0 ? (
-                <div className={'h-4/6 bg-transparentSky mx-2 flex justify-center items-center'}>
+                <div className={'h-4/6 bg-lighterSky mx-2 flex justify-center items-center'}>
                     <span className={'text-gray text-lg'}>Nema dostupne opreme.</span>
                 </div>
             ) : (
-                <div className={'h-3/5 bg-transparentSky mx-2 overflow-y-scroll'}>
+                <div className={'h-3/5 bg-lighterSky mx-2 overflow-y-scroll'}>
                     {equipmentList.map((equipment, key) => (
                         <div
                             key={key}
@@ -235,11 +235,11 @@ function AssignedApptList() {
                 <span className={'text-mediumSky font-bold text-2xl'}>Dodijeljeni termini</span>
             </div>
             {assignedApptList.length === 0 ? (
-                <div className={'h-4/6 bg-transparentSky mx-2 flex justify-center items-center'}>
+                <div className={'h-4/6 bg-lighterSky mx-2 flex justify-center items-center'}>
                     <span className={'text-gray text-lg'}>Nema dostupne opreme.</span>
                 </div>
             ) : (
-                <div className={'h-4/6 bg-transparentSky mx-2 overflow-y-scroll p-3'}>
+                <div className={'h-4/6 bg-lighterSky mx-2 overflow-y-scroll p-3'}>
                     {assignedApptList.map((appt, key) => (
                         <div className={'bg-lightSky flex justify-between items-center p-3'}>
                             <div>
@@ -281,11 +281,11 @@ function ResultList() {
                 <span className={'text-mediumSky font-bold text-2xl'}>Rezultati terapija</span>
             </div>
             {resultList.length === 0 ? (
-                <div className={'h-4/6 bg-transparentSky mx-2 flex justify-center items-center'}>
+                <div className={'h-4/6 bg-lighterSky mx-2 flex justify-center items-center'}>
                     <span className={'text-gray text-lg'}>Nema dostupnih rezultata</span>
                 </div>
             ) : (
-                <div className={'h-4/6 bg-transparentSky mx-2 overflow-y-scroll p-3'}>
+                <div className={'h-4/6 bg-lighterSky mx-2 overflow-y-scroll p-3'}>
                     {resultList.map((appt, key) => (
                         <div className={'bg-lightSky flex justify-between items-center p-3'}>
                             <div>
@@ -320,11 +320,11 @@ function PatientAndTherapyList() {
                 <span className={'text-mediumSky font-bold text-2xl'}>Pacijenti i terapije</span>
             </div>
             {patientAndTherapyList.length === 0 ? (
-                <div className={'h-4/6 bg-transparentSky mx-2 flex justify-center items-center'}>
+                <div className={'h-4/6 bg-lighterSky mx-2 flex justify-center items-center'}>
                     <span className={'text-gray text-lg'}>Nema dostupnih informacija.</span>
                 </div>
             ) : (
-                <div className={'h-4/6 bg-transparentSky mx-2 overflow-y-scroll p-3'}>
+                <div className={'h-4/6 bg-lighterSky mx-2 overflow-y-scroll p-3'}>
                     {patientAndTherapyList.map((appt, key) => (
                         <div className={'bg-lightSky flex justify-between items-center p-3'}>
                             <div>
