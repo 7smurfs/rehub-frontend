@@ -12,13 +12,13 @@ function Contact() {
     return (
         <PageLayout>
             <Header />
-            <span className="text-darkerSky dark:bg-heavyGray dark:text-lightGray font-bold text-3xl text-center pt-1 2xl:pt-2">Kontakt</span>
-            <div className="flex justify-center items-center dark:bg-heavyGray">
+            <span className="text-darkerSky dark:bg-black dark:text-lightGray font-bold text-3xl text-center pt-1 2xl:pt-2">Kontakt</span>
+            <div className="flex justify-center items-center dark:bg-black">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-10">
                     <div className="sm:my-8 sm:mr-10 flex justify-center items-center">
-                        <img src={PictureText} alt="Building" className="w-full rounded-[5px] object-cover"/>
+                        <img src={PictureText} alt="Building" className="w-full rounded-[5px] object-cover dark:brightness-75"/>
                     </div>
-                    <div className="flex flex-col text-mediumSky dark:text-lightGray justify-center sm:ml-10 text-base lg:text-lg">
+                    <div className="flex flex-col text-mediumSky dark:text-lightSky justify-center sm:ml-10 text-base lg:text-lg">
                         <div className="mb-4 mt-5 inline-block">
                             <img src={EmailIcon} alt="email_icon" className="h-8 inline-block align-middle mx-5"></img>
                             <p className="inline-block align-middle font-semibold">rehub.noreply@gmail.com</p>
