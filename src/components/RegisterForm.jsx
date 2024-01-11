@@ -210,6 +210,7 @@ function RegisterForm() {
                                 <label
                                     className="font-bold text-mediumSky text-lg mt-[15px] self-start block">E-mail:</label>
                                 <input type="email" name="username" id="username" value={registerData.username}
+                                       placeholder={'rehub@mail.com'}
                                        onChange={handleChange}
                                        className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
@@ -218,6 +219,7 @@ function RegisterForm() {
                                 <label className="font-bold text-mediumSky text-lg mt-[15px] self-start block">Broj
                                     telefona:</label>
                                 <input type="text" name="phoneNumber" id="phoneNumber" value={registerData.phoneNumber}
+                                       placeholder={'+385911234567'}
                                        onChange={handleChange}
                                        className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
@@ -228,6 +230,7 @@ function RegisterForm() {
                                 <label
                                     className="font-bold text-mediumSky text-lg mt-[15px] self-start block">OIB:</label>
                                 <input type="text" name="pin" id="pin" value={registerData.pin} onChange={handleChange}
+                                       placeholder={'12345678910'}
                                        className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
@@ -235,6 +238,7 @@ function RegisterForm() {
                                 <label
                                     className="font-bold text-mediumSky text-lg mt-[15px] self-start block">MBO:</label>
                                 <input type="text" name="phin" id="phin" value={registerData.phin}
+                                       placeholder={'123456789'}
                                        onChange={handleChange}
                                        className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
                             </div>
@@ -270,6 +274,7 @@ function RegisterForm() {
                                     <input type={showPass ? "text" : "password"} name="password" id="password"
                                            value={registerData.password}
                                            onChange={handlePasswordChange}
+                                           placeholder={'********'}
                                            className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
                                     <img src={showPass ? hide : show} onClick={togglePass}
                                          className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'passEye'}/>
@@ -287,6 +292,7 @@ function RegisterForm() {
                                     <input type={showRepeatPass ? "text" : "password"} name="confirmPassword"
                                            id="confirmPassword"
                                            value={registerData.confirmPassword} onChange={handleChange}
+                                           placeholder={'********'}
                                            className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
                                     <img src={showRepeatPass ? hide : show} onClick={toggleRepeatPass}
                                          className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'eyePass'}/>

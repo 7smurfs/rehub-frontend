@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import React, {useEffect, useState} from "react";
+import {toast, ToastContainer} from "react-toastify";
 import api from "../http/api";
 import InOperable from '../assets/inoperable_room.svg';
 import Operable from '../assets/operable_room.svg';
@@ -7,11 +7,10 @@ import Cross from '../assets/cross.svg';
 import AdminIcon from '../assets/user_admin.svg';
 
 
-
 export default function SuperAdminDashboard() {
 
     const [selected, setSelected] = useState(0);
-    const props = { selected, setSelected };
+    const props = {selected, setSelected};
     const [statistics, setStatistics] = useState({});
 
     useEffect(() => {
@@ -26,18 +25,24 @@ export default function SuperAdminDashboard() {
     return (
         <>
             <div className="flex flex-col h-full w-full dark:bg-heavyGray">
-                <div className='grid grid-cols-2 md:grid-cols-4 my-3 mx-3 gap-2 md:gap-8 font-semibold text-sm tracking-wide text-center text-darkSky'>
-                    <div onClick={() => setSelected(1)} className={`tab ${selected === 1 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OSOBLJE
+                <div
+                    className='grid grid-cols-2 md:grid-cols-4 my-3 mx-3 gap-2 md:gap-8 font-semibold text-sm tracking-wide text-center text-darkSky'>
+                    <div onClick={() => setSelected(1)}
+                         className={`tab ${selected === 1 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OSOBLJE
                     </div>
-                    <div onClick={() => setSelected(2)} className={`tab ${selected === 2 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>PACIJENTI
+                    <div onClick={() => setSelected(2)}
+                         className={`tab ${selected === 2 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>PACIJENTI
                     </div>
-                    <div onClick={() => setSelected(3)} className={`tab ${selected === 3 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer hover:bg-lightSky transition-all duration-300`}>SOBE
+                    <div onClick={() => setSelected(3)}
+                         className={`tab ${selected === 3 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer hover:bg-lightSky transition-all duration-300`}>SOBE
                     </div>
-                    <div onClick={() => setSelected(4)} className={`tab ${selected === 4 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OPREMA
+                    <div onClick={() => setSelected(4)}
+                         className={`tab ${selected === 4 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OPREMA
                     </div>
                 </div>
                 <div className={'flex justify-center h-full my-3'}>
-                    {selected === 0 && <div className={'w-full sm:w-1/2 mx-5 flex flex-col justify-center text-2xl text-darkerSky dark:text-lightGray'}>
+                    {selected === 0 && <div
+                        className={'w-full sm:w-1/2 mx-5 flex flex-col justify-center text-2xl text-darkerSky dark:text-lightGray'}>
                         <span className={'font-bold my-3'}>Broj zaposlenika: {statistics.noOfEmployees}</span>
                         <span className={'font-bold my-3'}>Broj pacijenata: {statistics.noOfPatients}</span>
                         <span className={'font-bold my-3'}>Broj soba: {statistics.noOfRooms}</span>
@@ -46,10 +51,10 @@ export default function SuperAdminDashboard() {
                         <span
                             className={'font-bold my-3'}>Broj novih korisnika u mjesecu: {statistics.noOfNewUsersForThisMonth}</span>
                     </div>}
-                    {selected === 1 && <Personel props={props} />}
-                    {selected === 2 && <Patients props={props} />}
-                    {selected === 3 && <Rooms props={props} />}
-                    {selected === 4 && <Equipment props={props} />}
+                    {selected === 1 && <Personel props={props}/>}
+                    {selected === 2 && <Patients props={props}/>}
+                    {selected === 3 && <Rooms props={props}/>}
+                    {selected === 4 && <Equipment props={props}/>}
                 </div>
             </div>
             <ToastContainer
@@ -69,7 +74,7 @@ export default function SuperAdminDashboard() {
     );
 }
 
-function Personel({ props }) {
+function Personel({props}) {
 
     const [employees, setEmployees] = useState([]);
 
@@ -85,8 +90,8 @@ function Personel({ props }) {
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setRegisterData({ ...registerData, [name]: value });
+        const {name, value} = e.target;
+        setRegisterData({...registerData, [name]: value});
     };
 
     const validateRegisterData = () => {
@@ -211,11 +216,11 @@ function Personel({ props }) {
                     <div className={'flex flex-row justify-center items-center'}>
                         <span>{employee.profession}</span>
                         <img src={Cross} alt={'cross'}
-                            onClick={() => invalidateEmployee(employee.id)}
-                            className={'h-7 mx-2 cursor-pointer'} />
+                             onClick={() => invalidateEmployee(employee.id)}
+                             className={'h-7 mx-2 cursor-pointer'}/>
                         {!employee.user.roles.includes('ADMIN') &&
                             <img src={AdminIcon} alt={'admin_icon'} className={'cursor-pointer h-8'}
-                                onClick={() => setEmployeeAsAdmin(employee.id)} />
+                                 onClick={() => setEmployeeAsAdmin(employee.id)}/>
                         }
                     </div>
                 </div>
@@ -228,60 +233,60 @@ function Personel({ props }) {
                     <label
                         className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Ime:</label>
                     <input type="text" name="firstName" id="firstName"
-                        value={registerData.firstName}
-                        onChange={handleChange}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                           value={registerData.firstName}
+                           onChange={handleChange}
+                           className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pl-1'}>
                     <label
                         className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Prezime:</label>
                     <input type="text" name="lastName" id="lastName" value={registerData.lastName}
-                        onChange={handleChange}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                           onChange={handleChange}
+                           className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pr-1'}>
                     <label
                         className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>E-mail:</label>
                     <input type="email" name="username" id="username" value={registerData.username}
-                        onChange={handleChange}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                           onChange={handleChange}
+                           className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pl-1'}>
                     <label
                         className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>OIB:</label>
                     <input type="text" name="pin" id="pin" value={registerData.pin}
-                        onChange={handleChange}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                           onChange={handleChange}
+                           className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pr-1'}>
                     <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Datum
                         rođenja:</label>
                     <input type="date" name="dateOfBirth" id="dateOfBirth"
-                        value={registerData.dateOfBirth}
-                        onChange={handleChange}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                           value={registerData.dateOfBirth}
+                           onChange={handleChange}
+                           className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pl-1'}>
                     <label
                         className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Profesija:</label>
                     <input type="text" name="profession" id="profession" onChange={handleChange}
-                        value={registerData.profession}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                           value={registerData.profession}
+                           className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pr-1'}>
                     <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Broj
                         mobitela:</label>
                     <input type="text" name="phoneNumber" id="phoneNumber"
-                        value={registerData.phoneNumber}
-                        onChange={handleChange}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                           value={registerData.phoneNumber}
+                           onChange={handleChange}
+                           className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pl-1'}>
                     <label
                         className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Spol:</label>
                     <select name="gender" id="gender" onChange={handleChange}
-                        value={registerData.gender}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
+                            value={registerData.gender}
+                            className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
                         <option value={""}>Odaberi spol</option>
                         <option value={"MALE"}>Muško</option>
                         <option value={"FEMALE"}>Žensko</option>
@@ -290,14 +295,14 @@ function Personel({ props }) {
                 </div>
             </form>
             <button onClick={registerNewEmployee}
-                className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-3'}>UNESI
+                    className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-3'}>UNESI
                 ZAPOSLENIKA
             </button>
         </div>
     </div>);
 }
 
-function Patients({ props }) {
+function Patients({props}) {
 
     const [patientsList, setPatientsList] = useState([]);
 
@@ -316,24 +321,26 @@ function Patients({ props }) {
         getPatients();
     }, []);
 
-    return (<div className='mx-2 w-[90vw] h-full'>
-        <div
-            className={'bg-lightSky flex flex-col h-full items-center rounded-xl overflow-y-scroll p-2'}>
-            {patientsList.map((patient, key) => (
-                <div
-                    key={key}
-                    className={
-                        'bg-white p-4 text-darkerSky md:text-2xl flex flex-col sm:flex-row justify-between rounded-lg mx-4 my-2 w-3/4'
-                    }>
-                    <span className={'font-bold'}>{patient.firstName} {patient.lastName}</span>
-                    <span>Datum rođenja: {patient.dateOfBirth.split('-')[2]}.{patient.dateOfBirth.split('-')[1]}.{patient.dateOfBirth.split('-')[0]}</span>
-                </div>
-            ))}
+    return (
+        <div className='mx-2 w-[90vw] h-full'>
+            <div
+                className={'bg-lightSky flex flex-col h-full items-center rounded-xl overflow-y-scroll p-2'}>
+                {patientsList.map((patient, key) => (
+                    <div
+                        key={key}
+                        className={
+                            'bg-white p-4 text-darkerSky md:text-2xl flex flex-col sm:flex-row justify-between rounded-lg mx-4 my-2 w-3/4'
+                        }>
+                        <span className={'font-bold'}>{patient.firstName} {patient.lastName}</span>
+                        <span>Datum rođenja: {patient.dateOfBirth.split('-')[2]}.{patient.dateOfBirth.split('-')[1]}.{patient.dateOfBirth.split('-')[0]}</span>
+                    </div>
+                ))}
+            </div>
         </div>
-    </div>);
+    );
 }
 
-function Rooms({ props }) {
+function Rooms({props}) {
 
     const [rooms, setRooms] = useState([]);
 
@@ -356,8 +363,8 @@ function Rooms({ props }) {
     };
 
     const handleRoomChange = (e) => {
-        const { name, value } = e.target;
-        setRoomRegisterData({ ...roomRegisterData, [name]: value });
+        const {name, value} = e.target;
+        setRoomRegisterData({...roomRegisterData, [name]: value});
     }
 
     const validateRoomRegisterData = () => {
@@ -448,14 +455,14 @@ function Rooms({ props }) {
                     <div className={'flex flex-row justify-center items-center'}>
                         <span className={'font-bold'}>Kapacitet: {room.capacity}</span>
                         <img src={Cross} alt={'cross'}
-                            onClick={() => invalidateRoom(room.id)}
-                            className={'h-7 mx-2 cursor-pointer'} />
+                             onClick={() => invalidateRoom(room.id)}
+                             className={'h-7 mx-2 cursor-pointer'}/>
                         {room.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'}
-                            onClick={() => setRoomAsInOperable(room.id)}
-                            className={'h-7 mx-2 cursor-pointer'} /> :
+                                                           onClick={() => setRoomAsInOperable(room.id)}
+                                                           className={'h-7 mx-2 cursor-pointer'}/> :
                             <img src={Operable} alt={'operable'}
-                                onClick={() => setRoomAsOperable(room.id)}
-                                className={'h-7 mx-2 cursor-pointer'} />}
+                                 onClick={() => setRoomAsOperable(room.id)}
+                                 className={'h-7 mx-2 cursor-pointer'}/>}
 
                     </div>
                 </div>
@@ -470,34 +477,34 @@ function Rooms({ props }) {
                         className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Oznaka
                         sobe:</label>
                     <input type="text" name="label" id="label"
-                        value={roomRegisterData.label}
-                        onChange={handleRoomChange}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                           value={roomRegisterData.label}
+                           onChange={handleRoomChange}
+                           className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pl-1'}>
                     <label
                         className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Kapacitet:</label>
                     <input type="text" name="capacity" id="capacity" value={roomRegisterData.capacity}
-                        onChange={handleRoomChange}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                           onChange={handleRoomChange}
+                           className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'col-span-2'}>
                     <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Dodatne
                         informacije:</label>
                     <textarea name={'specialMessage'} id={'specialMessage'} maxLength={255}
-                        className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
-                        onChange={handleRoomChange} value={roomRegisterData.specialMessage} />
+                              className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
+                              onChange={handleRoomChange} value={roomRegisterData.specialMessage}/>
                 </div>
             </form>
             <button onClick={registerNewRoom}
-                className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                    className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
                 SOBU
             </button>
         </div>
     </div>);
 }
 
-function Equipment({ props }) {
+function Equipment({props}) {
 
 
     const [equipmentList, setEquipmentList] = useState([]);
@@ -569,8 +576,8 @@ function Equipment({ props }) {
     };
 
     const handleEquipmentChange = (e) => {
-        const { name, value } = e.target;
-        setEquipmentRegisterData({ ...equipmentRegisterData, [name]: value });
+        const {name, value} = e.target;
+        setEquipmentRegisterData({...equipmentRegisterData, [name]: value});
     }
 
     const validateEquipmentRegisterData = () => {
@@ -610,19 +617,19 @@ function Equipment({ props }) {
         <div className={'bg-lightSky h-full rounded-xl overflow-y-scroll p-2'}>
             {equipmentList.map((equipment, key) => (
                 <div key={key}
-                    className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' : 'bg-lightGray p-4 text-gray flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
+                     className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' : 'bg-lightGray p-4 text-gray flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
                     <span className={'font-bold'}>{equipment.name}</span>
                     <div className={'flex flex-row justify-center items-center'}>
                         <img src={Cross} alt={'cross'}
-                            onClick={() => invalidateEquipment(equipment.id)}
-                            className={'h-7 mx-2 cursor-pointer'} />
+                             onClick={() => invalidateEquipment(equipment.id)}
+                             className={'h-7 mx-2 cursor-pointer'}/>
                         {
                             equipment.status === 'OPERABLE' ? <img src={InOperable} alt={'inoperable'}
-                                onClick={() => setEquipmentAsOutOfService(equipment.id)}
-                                className={'h-7 mx-2 cursor-pointer'} /> :
+                                                                   onClick={() => setEquipmentAsOutOfService(equipment.id)}
+                                                                   className={'h-7 mx-2 cursor-pointer'}/> :
                                 <img src={Operable} alt={'operable'}
-                                    onClick={() => setEquipmentAsOperable(equipment.id)}
-                                    className={'h-7 mx-2 cursor-pointer'} />
+                                     onClick={() => setEquipmentAsOperable(equipment.id)}
+                                     className={'h-7 mx-2 cursor-pointer'}/>
                         }
 
                     </div>
@@ -637,9 +644,9 @@ function Equipment({ props }) {
                         className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Naziv
                         opreme:</label>
                     <input type="text" name="name" id="name"
-                        value={equipmentRegisterData.name}
-                        onChange={handleEquipmentChange}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2" />
+                           value={equipmentRegisterData.name}
+                           onChange={handleEquipmentChange}
+                           className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
 
                 <div className={'pl-1'}>
@@ -647,8 +654,8 @@ function Equipment({ props }) {
                         className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Soba:</label>
 
                     <select name="roomId" id="roomId" onChange={handleEquipmentChange}
-                        value={equipmentRegisterData.roomId}
-                        className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
+                            value={equipmentRegisterData.roomId}
+                            className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
                         <option value={""}>Odaberite sobu...</option>
                         {roomList.map((room, key) => (
                             <option key={key} value={room.id}>{room.label}</option>
@@ -660,13 +667,13 @@ function Equipment({ props }) {
                     <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Dodatne
                         informacije:</label>
                     <textarea name={'specialMessage'} id={'specialMessage'} maxLength={255}
-                        className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
-                        onChange={handleEquipmentChange}
-                        value={equipmentRegisterData.specialMessage} />
+                              className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
+                              onChange={handleEquipmentChange}
+                              value={equipmentRegisterData.specialMessage}/>
                 </div>
             </form>
             <button onClick={registerNewEquipment}
-                className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                    className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
                 OPREMU
             </button>
         </div>

@@ -44,6 +44,7 @@ function LoginForm() {
                     <form className="flex flex-col gap-0 w-full justify-items-center p-10">
                         <label className="font-bold text-mediumSky text-lg mt-[30px] self-start ml-2">E-mail:</label>
                         <input type="text" name="email" id="email"
+                               placeholder={'rehub@mail.com'}
                                className="w-full h-[40px] bg-lightSky opacity-50 rounded-[5px] p-2" value={email}
                                onChange={e => setEmail(e.target.value)}/>
 
@@ -51,6 +52,7 @@ function LoginForm() {
                             className="font-bold text-mediumSky text-lg mt-[15px] self-start ml-2">Lozinka:</label>
                         <div className="relative">
                             <input type={showPass ? "text" : "password"} name="pass" id="pass"
+                                   placeholder={'* * * * * * * *'}
                                    className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"
                                    value={password} onChange={e => setPassword(e.target.value)}/>
                             <img src={showPass ? hide : show} onClick={togglePass}

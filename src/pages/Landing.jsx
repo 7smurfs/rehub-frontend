@@ -28,11 +28,15 @@ function Landing() {
 
     return (
         <PageLayout>
-            <div className="bg-landing-bg" style={{ width: 0, height: 0 }}></div>
+            <div className="bg-landing-bg" style={{width: 0, height: 0}}></div>
             {
                 isLoading ?
-                    <div className={'h-[100vh] bg-darkestSky dark:bg-black flex items-center justify-center z-30'}>
-                        <img className={'w-1/2 sm:w-1/3 lg:w-1/5 xl:w-1/6 animate-bounce'} src={logo} alt={'logo-pulse'}/>
+                    <div
+                        className={sessionStorage.getItem('theme') === 'dark' ?
+                            'h-[100vh] bg-black flex items-center justify-center z-30' :
+                            'h-[100vh] bg-darkerSky flex items-center justify-center z-30'}>
+                        <img className={'w-1/2 sm:w-1/3 lg:w-1/5 xl:w-1/6 animate-bounce'} src={logo}
+                             alt={'logo-pulse'}/>
                     </div> :
                     <>
                         <Header/>
