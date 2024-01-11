@@ -25,19 +25,19 @@ export default function SuperAdminDashboard() {
 
     return (
         <>
-            <div className="flex flex-col h-full w-full">
+            <div className="flex flex-col h-full w-full dark:bg-heavyGray">
                 <div className='grid grid-cols-2 md:grid-cols-4 my-3 mx-3 gap-2 md:gap-8 font-semibold text-sm tracking-wide text-center text-darkSky'>
-                    <div onClick={() => setSelected(1)} className={`tab ${selected === 1 ? 'bg-mediumSky text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OSOBLJE
+                    <div onClick={() => setSelected(1)} className={`tab ${selected === 1 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OSOBLJE
                     </div>
-                    <div onClick={() => setSelected(2)} className={`tab ${selected === 2 ? 'bg-mediumSky text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>PACIJENTI
+                    <div onClick={() => setSelected(2)} className={`tab ${selected === 2 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>PACIJENTI
                     </div>
-                    <div onClick={() => setSelected(3)} className={`tab ${selected === 3 ? 'bg-mediumSky text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer hover:bg-lightSky transition-all duration-300`}>SOBE
+                    <div onClick={() => setSelected(3)} className={`tab ${selected === 3 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer hover:bg-lightSky transition-all duration-300`}>SOBE
                     </div>
-                    <div onClick={() => setSelected(4)} className={`tab ${selected === 4 ? 'bg-mediumSky text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OPREMA
+                    <div onClick={() => setSelected(4)} className={`tab ${selected === 4 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OPREMA
                     </div>
                 </div>
                 <div className={'flex justify-center h-full my-3'}>
-                    {selected === 0 && <div className={'w-full sm:w-1/2 mx-5 flex flex-col justify-center text-2xl text-darkerSky'}>
+                    {selected === 0 && <div className={'w-full sm:w-1/2 mx-5 flex flex-col justify-center text-2xl text-darkerSky dark:text-lightGray'}>
                         <span className={'font-bold my-3'}>Broj zaposlenika: {statistics.noOfEmployees}</span>
                         <span className={'font-bold my-3'}>Broj pacijenata: {statistics.noOfPatients}</span>
                         <span className={'font-bold my-3'}>Broj soba: {statistics.noOfRooms}</span>

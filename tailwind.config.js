@@ -7,7 +7,7 @@ module.exports = {
     theme: {
         colors: {
             white: '#FFFFFF',
-            black: '#111111',
+            black: '#001011',
 
             transparentSky: '#f0f9ff', // sky-50
             lighterSky: '#e0f2fe', // sky-100
@@ -36,7 +36,8 @@ module.exports = {
         },
         extend: {
             backgroundImage: {
-                'landing-bg': "url('assets/landing-page-bg.webp')"
+                'landing-bg': "url('assets/landing-page-bg.webp')",
+                'landing-bg-dark': "url('assets/landing-page-dark.webp')"
             }
         },
     },

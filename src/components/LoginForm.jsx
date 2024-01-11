@@ -33,11 +33,11 @@ function LoginForm() {
 
     return (
         <>
-            <div className="flex justify-center mb-10">
+            <div className="flex justify-center h-full pb-10 dark:bg-heavyGray">
                 <div
-                    className="w-full mx-6 sm:w-2/3 sm:mx-14 lg:w-1/3 bg-white [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px] mt-8 flex flex-col">
+                    className="w-full mx-6 sm:w-2/3 h-4/5 sm:mx-14 lg:w-1/3 bg-white dark:bg-black shadow-lg rounded-[10px] mt-8 flex flex-col">
                     <div
-                        className="w-full h-24 bg-mediumSky opacity-50 rounded-tl-[10px] rounded-tr-[10px] flex justify-center items-end pb-4">
+                        className="w-full h-24 bg-mediumSky opacity-50 rounded-t-[10px] flex justify-center items-end py-4">
                         <img src={userIcon} alt="User icon" className="w-[32px] h-[32px] mr-1"/>
                         <span className="text-white font-bold text-3xl ml-1">Prijava</span>
                     </div>
@@ -56,7 +56,7 @@ function LoginForm() {
                             <img src={showPass ? hide : show} onClick={togglePass}
                                  className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
                         </div>
-                        <Link to="/passwordReset" className="self-start ml-2 pt-2"><span className="text-mediumSky">Zaboravljena lozinka?</span></Link>
+                        <Link to="/password-reset" className="self-start ml-2 pt-2"><span className="text-mediumSky">Zaboravljena lozinka?</span></Link>
                         <button className="hover:bg-darkSky transition-all duration-300 sm:w-1/2 mx-auto bg-mediumSky text-white font-semibold px-5 py-3 my-10 rounded-[5px]"
                                 onClick={handleSubmit}>Prijava
                         </button>

@@ -170,11 +170,11 @@ function RegisterForm() {
 
     return (
         <>
-            <div className="flex justify-center">
+            <div className="flex h-full justify-center dark:bg-heavyGray">
                 <div
-                    className="w-full mx-6 sm:w-2/3 sm:mx-14 lg:w-1/3 bg-white [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px] mt-8 flex flex-col">
+                    className="w-full h-4/5 mx-6 sm:w-2/3 sm:mx-14 lg:w-1/3 bg-white dark:bg-black shadow-lg rounded-[10px] mt-8 flex flex-col">
                     <div
-                        className="w-full h-24 bg-mediumSky opacity-50 rounded-tl-[10px] rounded-tr-[10px] flex justify-center items-end pb-4">
+                        className="w-full h-24 bg-mediumSky opacity-50 rounded-t-[10px] flex justify-center items-end py-4">
                         <img src={userIcon} alt="User icon" className="w-8 mr-1"/>
                         <span className="text-white font-bold text-3xl ml-1">Registracija</span>
                     </div>

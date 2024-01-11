@@ -205,7 +205,7 @@ const MyProfile = () => {
             <div>
                 {profileData ? (
                     <div>
-                        <table className="flex justify-center items-center mb-10">
+                        <table className="flex justify-center items-center pb-10">
                             <tbody className={'bg-lightSky shadow-2xl p-0 py-5 min-[300px]:p-2 min-[300px]:py-5 min-[330px]:p-5 sm:p-14 rounded-[10px] overflow-x-scroll min-[330px]:overflow-x-visible'}>
                             {!profileData.roles.includes("SUPERADMIN") && (
                                 <>

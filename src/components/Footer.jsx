@@ -20,11 +20,11 @@ function Footer() {
     const currentYear = new Date().getFullYear();
     return (
         <footer className={'cursor-default'}>
-            <div className="bg-lightSky text-sm text-darkestSky font-semibold w-full flex justify-center items-center h-12">
+            <div className="bg-lightSky dark:bg-black text-sm text-darkestSky dark:text-white font-semibold w-full flex justify-center items-center h-12">
                 <img onClick={toggleDarkMode} className={'cursor-pointer absolute h-7 ml-1 left-0'} src={isDarkMode ? lightSwitch : darkSwitch}
                      alt={'theme_switch'}/>
                 <span className={'z-20'}>&copy; Copyright {currentYear}, ReHub</span>
-                <span className={'min-[330px]:text-heavierGray absolute font-thin right-0 mr-1 text-sm text-lightSky'}>
+                <span className={'min-[330px]:text-heavierGray absolute font-thin right-0 mr-1 text-sm text-lightSky dark:text-mediumGray'}>
                     {process.env.REACT_APP_NAME}&nbsp;{process.env.REACT_APP_VERSION}
                 </span>
             </div>
