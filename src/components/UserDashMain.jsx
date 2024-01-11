@@ -88,7 +88,7 @@ function UserDashMain() {
 
     return (
         <div className="flex flex-col lg:h-4/5 lg:grid lg:grid-cols-2 lg:grid-rows-1 gap-5 p-5">
-            <div className="row-span-1 col-span-1 bg-lighterSky rounded-[5px]">
+            <div className="row-span-1 col-span-1 bg-lighterSky rounded-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
                 <div className="bg-mediumSky rounded-t-[5px] h-14">
                     <h3 className="font-bold text-lg text-white p-3">Kalendar</h3>
                 </div>
@@ -99,7 +99,7 @@ function UserDashMain() {
                                 {therapy.start && <div key={key} className={'w-full'}>
                                     <div
                                         className={
-                                            therapy.status === 'PENDING_APPROVAL' ? 'md:w-[200px] h-36 p-4 flex flex-col bg-heavyYellow text-white rounded-[10px] my-3 overflow-clip' :
+                                            therapy.status === 'PENDING_APPROVAL' ? 'md:w-[200px] h-36 p-4 flex flex-col bg-heavyGray text-white rounded-[10px] my-3 overflow-clip' :
                                                 therapy.status === 'APPROVED' ? 'md:w-[200px] h-36 p-4 flex flex-col bg-mediumSky text-white rounded-[10px] my-3 overflow-clip' :
                                                     'md:w-[200px] h-36 p-4 flex flex-col bg-heavierGray text-white rounded-[10px] my-3 overflow-clip'
                                         }>
@@ -147,18 +147,18 @@ function UserDashMain() {
                 </div>
             </div>
 
-            <div className="bg-lighterSky rounded-[5px]">
+            <div className="bg-lighterSky rounded-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
                 <div className="bg-mediumSky rounded-t-[5px] h-14">
                     <h3 className="font-bold text-lg text-white p-3">Moji termini</h3>
                 </div>
                 <div className="h-full -mt-14 pt-14 flex flex-col items-center">
                     {userTherapies.length === 0 ? (
                         <>
-                            <div className="h-full w-11/12 my-4 flex flex-col justify-center items-center bg-white">
+                            <div className="h-full w-11/12 my-4 flex flex-col justify-center items-center bg-lighterSky">
                                 <span
-                                    className={'font-bold text-xl text-darkestSky'}>Ovdje će biti prikazani Vaši termini</span>
+                                    className={'font-bold text-xl text-darkerSky'}>Ovdje će biti prikazani Vaši termini</span>
                                 <button
-                                    className="bg-mediumSky p-4 my-5 flex items-center justify-center text-white font-semibold rounded-[5px]"
+                                    className="bg-mediumSky hover:bg-darkSky transition-all duration-300 p-4 my-5 flex items-center justify-center text-white font-semibold rounded-[5px] shadow-md shadow-darkSky"
                                     onClick={goToNewTherapy}>
                                     Dodaj novi termin
                                 </button>
@@ -171,7 +171,7 @@ function UserDashMain() {
                                 {userTherapies.map((therapy, key) => (
                                     <div key={key} className="rounded-[5px] w-full">
                                         <div className={
-                                            therapy.status === 'PENDING_APPROVAL' ? 'bg-heavyYellow p-1 rounded-t-md' :
+                                            therapy.status === 'PENDING_APPROVAL' ? 'bg-heavyGray p-1 rounded-t-md' :
                                                 therapy.status === 'APPROVED' ? 'bg-darkerSky p-1 rounded-t-md' :
                                                     'bg-heavierGray p-1 rounded-t-md'
                                         }>
@@ -189,7 +189,6 @@ function UserDashMain() {
                                                      onClick={() => {
                                                          setPopupTherapy(therapy);
                                                          setOpen(true);
-                                                         fetchTherapyScan(therapy.id).catch(() => toast.error("Dogodila se pogreška."));
                                                      }}
                                                      className="h-8 cursor-pointer"/>
                                             </div>
@@ -206,7 +205,7 @@ function UserDashMain() {
                     )}
                 </div>
                 <Popup open={open} closeOnDocumentClick={false} onClose={() => setOpen(false)} modal>
-                    <div className={'bg-lighterSky h-[40vh] text-darkestSky text-xl p-5 tracking-wider'}>
+                    <div className={'bg-lighterSky h-[40vh] text-darkerSky text-xl p-5 tracking-wider'}>
                         <div className={'h-1/6 pb-3'}>
                             <h2 className={'font-semibold text-2xl'}>Terapija
                                 - {popupTherapy !== null && popupTherapy.patientResponse['firstName']}
@@ -257,7 +256,7 @@ function UserDashMain() {
                                     {
                                         popupTherapy.scan &&
                                         <>
-                                            <button className={'font-semibold p-2 text-white bg-darkestSky rounded-lg'}
+                                            <button className={'font-semibold p-2 text-white bg-darkerSky px-5 rounded-lg'}
                                                     onClick={() => fetchTherapyScan(popupTherapy.id).catch(() => toast.error("Dogodila se greska."))}>UPUTNICA
                                             </button>
                                         </>
@@ -268,14 +267,14 @@ function UserDashMain() {
                         </div>
                         <div className={'flex justify-around items-center'}>
                             <button onClick={() => setOpen(false)}
-                                    className={'w-1/3 p-3 bg-darkSky text-white rounded-xl font-semibold'}>
+                                    className={'w-1/3 p-3 bg-darkSky text-white rounded-md font-semibold'}>
                                 ZATVORI
                             </button>
                             <button onClick={() => {
                                 cancelTherapy(popupTherapy.id);
                                 setOpen(false);
                             }}
-                                    className={'w-1/3 p-3 bg-redHeavy text-white rounded-xl font-semibold'}>
+                                    className={'w-1/3 p-3 bg-redHeavy text-white rounded-md font-semibold'}>
                                 OTKAŽI
                             </button>
                         </div>

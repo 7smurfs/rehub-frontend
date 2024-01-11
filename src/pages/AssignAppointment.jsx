@@ -143,7 +143,7 @@ function AssignAppointment() {
                                 <span className={'w-52 font-bold text-mediumSky'}>Skenirana uputnica:</span>
                                 <button
                                     onClick={() => fetchTherapyScan(state.id)}
-                                    className={'bg-darkestSky font-semibold text-white rounded-[5px] px-3 py-1'}>PRIKAŽI
+                                    className={'bg-darkerSky font-semibold text-white rounded-[5px] px-3 py-1'}>PRIKAŽI
                                 </button>
                             </div>
                         </div>
@@ -178,7 +178,7 @@ function AssignAppointment() {
                                                             {equipment.map((eq, key) => (
                                                                 eq.status === 'OPERABLE' && eq.roomId === room.id &&
                                                                 <div key={key}>
-                                                                    <span className={'text-darkestSky'}>{eq.name}</span>
+                                                                    <span className={'text-darkerSky'}>{eq.name}</span>
                                                                 </div>
                                                             ))}
                                                         </div>
@@ -205,7 +205,7 @@ function AssignAppointment() {
                             ) : (
                                 employeeTherapies.map((therapy, key) => (
                                     <div key={key} className={'h-min flex flex-col items-center p-3 '}>
-                                        <div className={'bg-mediumSky w-full h-min p-2 text-darkestSky rounded-[5px]'}>
+                                        <div className={'bg-mediumSky w-full h-min p-2 text-darkerSky rounded-[5px]'}>
                                             <h1 className={'font-bold text-white'}>{therapy.patientResponse.firstName} {therapy.patientResponse.lastName}</h1>
                                             <span className={'block text-white'}>{therapy.type}</span>
                                             <span className={'block text-white'}>{therapy.roomLabel}</span>

@@ -295,7 +295,7 @@ function Personel({props}) {
                 </div>
             </form>
             <button onClick={registerNewEmployee}
-                    className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-3'}>UNESI
+                    className={'bg-darkerSky font-bold text-white p-3 rounded-xl my-3'}>UNESI
                 ZAPOSLENIKA
             </button>
         </div>
@@ -497,7 +497,7 @@ function Rooms({props}) {
                 </div>
             </form>
             <button onClick={registerNewRoom}
-                    className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                    className={'bg-darkerSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
                 SOBU
             </button>
         </div>
@@ -673,7 +673,7 @@ function Equipment({props}) {
                 </div>
             </form>
             <button onClick={registerNewEquipment}
-                    className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                    className={'bg-darkerSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
                 OPREMU
             </button>
         </div>

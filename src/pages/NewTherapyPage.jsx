@@ -82,6 +82,8 @@ function NewTherapyPage() {
     };
 
     const onPdfChange = (e) => {
+        if (e.target.value.length === 0)
+            return;
         if (e.target.files) {
             if ((e.target.files[0].size / (1024 * 1024)) > 2) {
                 toast.error('Najveća dozvoljena veličina je 2 MB.');
@@ -130,7 +132,7 @@ function NewTherapyPage() {
                     <input type='file'
                            accept='application/pdf'
                            onChange={onPdfChange}
-                           className='rounded-[10px] text-darkestSky outline-dashed outline-2 p-2 w-4/5 lg:w-1/2 my-2 outline-darkestSky cursor-pointer'>
+                           className='rounded-[10px] text-darkerSky outline-dashed outline-2 p-2 w-4/5 lg:w-1/2 my-2 outline-darkerSky cursor-pointer'>
                     </input>
                     <button className={'text-white p-4 bg-mediumSky rounded-xl my-4'} type={"submit"}>Zatraži terapiju
                     </button>
