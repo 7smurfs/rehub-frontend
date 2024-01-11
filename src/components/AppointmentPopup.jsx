@@ -111,7 +111,7 @@ function AppointmentPopup({ data, name }) {
                     setOpen(o => !o);
                 }
 
-            }} className={'bg-darkSky w-24 p-2 rounded-[5px] text-white font-semibold'}>
+            }} className={'transition-all duration-300 shadow-md shadow-darkestSky bg-darkSky dark:bg-darkerSky hover:bg-darkerSky hover:dark:bg-darkSky w-24 p-2 rounded-[5px] text-white font-semibold'}>
                 Nastavi
             </button>
             <Popup open={open} closeOnDocumentClick={false} onClose={close} modal>
@@ -138,10 +138,10 @@ function AppointmentPopup({ data, name }) {
                         </div>
                     </div>
                     <div className={'h-1/6 flex justify-center items-center gap-3'}>
-                        <button onClick={handleSubmit} className={'w-24 bg-darkSky text-white rounded-[5px] p-1 font-semibold'}>
+                        <button onClick={handleSubmit} className={'transition-all duration-300 w-24 bg-darkSky hover:bg-darkerSky text-white rounded-[5px] p-1 font-semibold'}>
                             Potvrdi
                         </button>
-                        <button onClick={close} className={'w-24 bg-darkSky text-white rounded-[5px] p-1 font-semibold'}>
+                        <button onClick={close} className={'transition-all duration-300 w-24 bg-darkSky hover:bg-darkerSky text-white rounded-[5px] p-1 font-semibold'}>
                             Odustani
                         </button>
                     </div>
