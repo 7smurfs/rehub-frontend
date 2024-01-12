@@ -200,7 +200,7 @@ function UserDashMain() {
                                 ))}
                             </div>
                             <button
-                                className="bg-mediumSky dark:bg-darkerSky shadow-md shadow-darkSky dark:shadow-md dark:shadow-darkestSky hover:bg-darkSky transition-all duration-200 px-4 py-3 my-4 flex items-center justify-center text-white font-semibold rounded-[5px]"
+                                className="bg-mediumSky dark:bg-darkestSky shadow-md shadow-darkSky dark:shadow-md dark:shadow-black hover:bg-darkSky dark:hover:bg-darkSky transition-all duration-200 px-4 py-3 my-4 flex items-center justify-center text-white font-semibold rounded-[5px]"
                                 onClick={goToNewTherapy}>
                                 Dodaj novi termin
                             </button>
@@ -208,7 +208,7 @@ function UserDashMain() {
                     )}
                 </div>
                 <Popup open={open} closeOnDocumentClick={false} onClose={() => setOpen(false)} modal>
-                    <div className={'bg-lighterSky h-[40vh] text-darkerSky text-xl p-5 tracking-wider'}>
+                    <div className={'bg-lighterSky h-[50vh] text-darkerSky text-xl p-5 tracking-wider'}>
                         <div className={'h-1/6 pb-3'}>
                             <h2 className={'font-semibold text-2xl'}>Terapija
                                 - {popupTherapy !== null && popupTherapy.patientResponse['firstName']}
