@@ -21,7 +21,7 @@ const MyCollapsibleComponent = ({ title, content }) => {
             </div>
             {isCollapsed ? null : (
                 <div>
-                    <div className="collapsible-content bg-transparentSky rounded-b-[5px] px-4 py-1">
+                    <div className="collapsible-content bg-lighterSky rounded-b-[5px] px-4 py-1">
                         {content}
                     </div>
                 </div>

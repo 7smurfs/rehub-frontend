@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from "react-google-recaptcha";
 import show from "../assets/show-pass.svg";
 import hide from "../assets/hide-pass.svg";
+import showPassWhite from "../assets/show-pass-white.svg";
+import hidePassWhite from "../assets/hide-pass-white.svg";
 import userIcon from "../assets/user-icon.svg";
 
 
@@ -170,11 +172,11 @@ function RegisterForm() {
 
     return (
         <>
-            <div className="flex h-full justify-center dark:bg-heavyGray">
+            <div className="flex h-full justify-center dark:bg-black">
                 <div
-                    className="w-full h-4/5 mx-6 sm:w-2/3 sm:mx-14 lg:w-1/3 bg-white dark:bg-black shadow-lg rounded-[10px] mt-8 flex flex-col">
+                    className="w-full h-4/5 mx-6 sm:w-2/3 sm:mx-14 lg:w-1/3 bg-white dark:bg-darkestSky shadow-lg rounded-[10px] mt-8 flex flex-col">
                     <div
-                        className="w-full h-24 bg-mediumSky opacity-50 rounded-t-[10px] flex justify-center items-end py-4">
+                        className="w-full h-24 bg-mediumSky dark:bg-darkSky opacity-50 dark:opacity-100 rounded-t-[10px] flex justify-center items-end py-4">
                         <img src={userIcon} alt="User icon" className="w-8 mr-1"/>
                         <span className="text-white font-bold text-3xl ml-1">Registracija</span>
                     </div>
@@ -191,73 +193,73 @@ function RegisterForm() {
                         {step === 0 && (<section>
                             <div className="">
                                 <label
-                                    className="font-bold text-mediumSky text-lg mt-[15px] self-start block">Ime:</label>
+                                    className="font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block">Ime:</label>
                                 <input type="text" name="firstName" id="firstName" value={registerData.firstName}
                                        onChange={handleChange}
-                                       className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                                       className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
                             <div className="">
                                 <label
-                                    className="font-bold text-mediumSky text-lg mt-[15px] self-start block">Prezime:</label>
+                                    className="font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block">Prezime:</label>
                                 <input type="text" name="lastName" id="lastName" value={registerData.lastName}
                                        onChange={handleChange}
-                                       className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                                       className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
                             </div>
                         </section>)}
                         {step === 1 && (<section>
                             <div className="">
                                 <label
-                                    className="font-bold text-mediumSky text-lg mt-[15px] self-start block">E-mail:</label>
+                                    className="font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block">E-mail:</label>
                                 <input type="email" name="username" id="username" value={registerData.username}
                                        placeholder={'rehub@mail.com'}
                                        onChange={handleChange}
-                                       className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                                       className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
                             <div className="">
-                                <label className="font-bold text-mediumSky text-lg mt-[15px] self-start block">Broj
+                                <label className="font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block">Broj
                                     telefona:</label>
                                 <input type="text" name="phoneNumber" id="phoneNumber" value={registerData.phoneNumber}
                                        placeholder={'+385911234567'}
                                        onChange={handleChange}
-                                       className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                                       className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
                             </div>
                         </section>)}
 
                         {step === 2 && (<section>
                             <div className="">
                                 <label
-                                    className="font-bold text-mediumSky text-lg mt-[15px] self-start block">OIB:</label>
+                                    className="font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block">OIB:</label>
                                 <input type="text" name="pin" id="pin" value={registerData.pin} onChange={handleChange}
                                        placeholder={'12345678910'}
-                                       className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                                       className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
                             <div className="col-span-1">
                                 <label
-                                    className="font-bold text-mediumSky text-lg mt-[15px] self-start block">MBO:</label>
+                                    className="font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block">MBO:</label>
                                 <input type="text" name="phin" id="phin" value={registerData.phin}
                                        placeholder={'123456789'}
                                        onChange={handleChange}
-                                       className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                                       className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
                         </section>)}
                         {step === 3 && (<section>
                             <div className="">
-                                <label className="font-bold text-mediumSky text-lg mt-[15px] self-start block">Datum
+                                <label className="font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block">Datum
                                     rođenja:</label>
                                 <input type="date" name="dateOfBirth" id="dateOfBirth" value={registerData.dateOfBirth}
                                        onChange={handleChange}
-                                       className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                                       className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
                             </div>
 
                             <div className="">
                                 <label htmlFor={'gender'}
-                                       className="font-bold text-mediumSky text-lg mt-[15px] self-start block">Spol:</label>
+                                       className="font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block">Spol:</label>
                                 <select name="gender" id="gender" value={registerData.gender} onChange={handleChange}
-                                        className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2">
+                                        className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2">
                                     <option value={""}>Odaberi spol</option>
                                     <option value={"MALE"}>Muško</option>
                                     <option value={"FEMALE"}>Žensko</option>
@@ -269,33 +271,37 @@ function RegisterForm() {
                         {step === 4 && (<section>
                             <div className="">
                                 <label
-                                    className="font-bold text-mediumSky text-lg mt-[15px] self-start block">Lozinka:</label>
+                                    className="font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block">Lozinka:</label>
                                 <div className="relative">
                                     <input type={showPass ? "text" : "password"} name="password" id="password"
                                            value={registerData.password}
                                            onChange={handlePasswordChange}
                                            placeholder={'********'}
-                                           className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
+                                           className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
                                     <img src={showPass ? hide : show} onClick={togglePass}
-                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'passEye'}/>
+                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer dark:hidden" alt={'passEye'}/>
+                                    <img src={showPass ? hidePassWhite : showPassWhite} onClick={togglePass}
+                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer dark:block hidden" alt={'passEye'}/>
                                 </div>
-                                <span className={'text-mediumGray ml-2'}>
-                                    {passwordStrength === 1 && <>slaba</>}
-                                    {passwordStrength === 2 && <>dobra</>}
-                                    {passwordStrength === 3 && <>jaka</>}
+                                <span className={'text-mediumGray dark:text-lightGray ml-2'}>
+                                    {passwordStrength === 1 && <>Slaba</>}
+                                    {passwordStrength === 2 && <>Dobra</>}
+                                    {passwordStrength === 3 && <>Jaka</>}
                                 </span>
                             </div>
                             <div className="">
-                                <label className="font-bold text-mediumSky text-lg mt-[15px] self-start block">Ponovljena
+                                <label className="font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block">Ponovljena
                                     lozinka:</label>
                                 <div className="relative">
                                     <input type={showRepeatPass ? "text" : "password"} name="confirmPassword"
                                            id="confirmPassword"
                                            value={registerData.confirmPassword} onChange={handleChange}
                                            placeholder={'********'}
-                                           className="w-full h-[40px] bg-lightSky opacity-50 mb-[2px] rounded-[5px] p-2"/>
-                                    <img src={showRepeatPass ? hide : show} onClick={toggleRepeatPass}
-                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'eyePass'}/>
+                                           className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
+                                    <img src={showPass ? hide : show} onClick={toggleRepeatPass}
+                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer dark:hidden" alt={'passEye'}/>
+                                    <img src={showPass ? hidePassWhite : showPassWhite} onClick={toggleRepeatPass}
+                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer dark:block hidden" alt={'passEye'}/>
                                 </div>
 
                             </div>
@@ -312,7 +318,7 @@ function RegisterForm() {
                             <button
                                 disabled={step < 1}
                                 type='button'
-                                className="hover:bg-darkSky transition-all duration-300 bg-mediumSky text-white font-semibold px-6 py-3 my-10 rounded-[5px]"
+                                className="hover:bg-darkSky hover:dark:bg-darkSky transition-all duration-300 bg-mediumSky dark:bg-darkerSky text-white font-semibold px-6 py-3 my-10 rounded-[5px]"
                                 onClick={decrementStep}>Natrag
                             </button>
 
@@ -322,7 +328,7 @@ function RegisterForm() {
                                     type='button'
                                     className={(/^\s*$/.test(registerData.firstName) || /^\s*$/.test(registerData.lastName)) ?
                                         "bg-heavyGray text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                        : " hover:bg-darkSky transition-all duration-300 bg-mediumSky text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                        : "hover:bg-darkSky hover:dark:bg-darkSky transition-all duration-300 bg-mediumSky dark:bg-darkerSky text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -332,7 +338,7 @@ function RegisterForm() {
                                     type='button'
                                     className={(/^\s*$/.test(registerData.username) || /^\s*$/.test(registerData.phoneNumber)) ?
                                         "bg-heavyGray text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                        : "hover:bg-darkSky transition-all duration-300 bg-mediumSky text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                        : "hover:bg-darkSky hover:dark:bg-darkSky transition-all duration-300 bg-mediumSky dark:bg-darkerSky text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -342,7 +348,7 @@ function RegisterForm() {
                                     type='button'
                                     className={(/^\s*$/.test(registerData.pin) || /^\s*$/.test(registerData.phin)) ?
                                         "bg-heavyGray text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                        : "hover:bg-darkSky transition-all duration-300 bg-mediumSky text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                        : "hover:bg-darkSky hover:dark:bg-darkSky transition-all duration-300 bg-mediumSky dark:bg-darkerSky text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -352,7 +358,7 @@ function RegisterForm() {
                                     type='button'
                                     className={(/^\s*$/.test(registerData.dateOfBirth)) ?
                                         "bg-heavyGray text-white font-semibold px-9 py-3 my-10 rounded-[5px]"
-                                        : "hover:bg-darkSky transition-all duration-300 bg-mediumSky text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
+                                        : "hover:bg-darkSky hover:dark:bg-darkSky transition-all duration-300 bg-mediumSky dark:bg-darkerSky text-white font-semibold px-9 py-3 my-10 rounded-[5px]"}
                                     onClick={incrementStep}>Dalje
                                 </button>
                             }
@@ -360,7 +366,7 @@ function RegisterForm() {
                                 <button
                                     disabled={!captchaValid}
                                     className={captchaValid ?
-                                        "hover:bg-darkSky transition-all duration-300 bg-mediumSky text-white font-semibold px-6 py-3 my-10 rounded-[5px]"
+                                        "hover:bg-darkSky hover:dark:bg-darkSky transition-all duration-300 bg-mediumSky dark:bg-darkerSky text-white font-semibold px-6 py-3 my-10 rounded-[5px]"
                                         :
                                         "bg-heavyGray text-white font-semibold px-6 py-3 my-10 rounded-[5px]"
                                     }
