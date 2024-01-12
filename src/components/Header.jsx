@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from "react";
-import {AuthContext} from "../auth/AuthProvider"; // replace with the actual path
+import {AuthContext} from "../auth/AuthProvider";
 import {useNavigate, useLocation} from "react-router-dom";
 import closedHamburger from '../assets/hamburger_menu.svg';
 import openedHamburger from '../assets/hamburger_menu_closed.svg';
@@ -22,11 +22,15 @@ function Header() {
 
     return (
         <div>
-            <header className={openHamburger ? "h-[100vh] fixed top-0 right-0 flex flex-col items-center w-full lg:hidden bg-lightSky dark:bg-heavyGray z-20" :
+            <header
+                className={openHamburger ? "h-[100vh] fixed top-0 right-0 flex flex-col items-center w-full lg:hidden bg-lightSky dark:bg-heavyGray z-20" :
                     "bg-lightSky dark:bg-darkestSky h-28 flex justify-between"}>
-                <img src={LogoWText} alt="ReHub logo with text" onClick={() => navigate("/")}
-                     className="w-40 sm:w-56 mb-2 cursor-pointer "/>
-                <div className={openHamburger ? "flex flex-col justify-around h-1/2 my-5" : "lg:flex justify-between hidden"}>
+                <img src={LogoWText} alt="logo_text" onClick={() => navigate("/")}
+                     className="w-40 sm:w-56 mb-2 cursor-pointer block dark:hidden"/>
+                <img src={whiteLogo} alt="logo_text" onClick={() => navigate("/")}
+                     className="w-40 sm:w-56 mb-2 cursor-pointer dark:block hidden"/>
+                <div
+                    className={openHamburger ? "flex flex-col justify-around h-1/2 my-5" : "lg:flex justify-between hidden"}>
                     {isUserAuthenticated ? (location.pathname === '/profile' ? (
                         <>
                             <button onClick={() => navigate("/contact")}

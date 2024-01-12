@@ -58,7 +58,9 @@ function LoginForm() {
                                    className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"
                                    value={password} onChange={e => setPassword(e.target.value)}/>
                             <img src={showPass ? hide : show} onClick={togglePass}
-                                 className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
+                                 className="w-6 absolute top-[22%] left-[89%] cursor-pointer dark:hidden" alt={'passEye'}/>
+                            <img src={showPass ? hidePassWhite : showPassWhite} onClick={togglePass}
+                                 className="w-6 absolute top-[22%] left-[89%] cursor-pointer hidden dark:block" alt={'passEye'}/>
                         </div>
                         <Link to="/password-reset" className="self-start ml-2 pt-2"><span className="text-mediumSky">Zaboravljena lozinka?</span></Link>
                         <button className="hover:bg-darkSky transition-all duration-300 sm:w-1/2 mx-auto bg-mediumSky dark:bg-darkerSky hover:dark:bg-darkSky dark:shadow-lg dark:shadow-black text-white font-semibold px-5 py-3 my-10 rounded-[5px]"

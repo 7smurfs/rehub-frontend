@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from "react-google-recaptcha";
 import show from "../assets/show-pass.svg";
 import hide from "../assets/hide-pass.svg";
+import showPassWhite from "../assets/show-pass-white.svg";
+import hidePassWhite from "../assets/hide-pass-white.svg";
 import userIcon from "../assets/user-icon.svg";
 
 
@@ -277,7 +279,9 @@ function RegisterForm() {
                                            placeholder={'********'}
                                            className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
                                     <img src={showPass ? hide : show} onClick={togglePass}
-                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'passEye'}/>
+                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer dark:hidden" alt={'passEye'}/>
+                                    <img src={showPass ? hidePassWhite : showPassWhite} onClick={togglePass}
+                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer dark:block hidden" alt={'passEye'}/>
                                 </div>
                                 <span className={'text-mediumGray dark:text-lightGray ml-2'}>
                                     {passwordStrength === 1 && <>Slaba</>}
@@ -294,8 +298,10 @@ function RegisterForm() {
                                            value={registerData.confirmPassword} onChange={handleChange}
                                            placeholder={'********'}
                                            className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
-                                    <img src={showRepeatPass ? hide : show} onClick={toggleRepeatPass}
-                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer" alt={'eyePass'}/>
+                                    <img src={showPass ? hide : show} onClick={toggleRepeatPass}
+                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer dark:hidden" alt={'passEye'}/>
+                                    <img src={showPass ? hidePassWhite : showPassWhite} onClick={toggleRepeatPass}
+                                         className="w-6 absolute top-[22%] left-[91%] cursor-pointer dark:block hidden" alt={'passEye'}/>
                                 </div>
 
                             </div>
