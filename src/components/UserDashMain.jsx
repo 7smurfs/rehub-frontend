@@ -229,7 +229,7 @@ function UserDashMain() {
                                     {popupTherapy.startAt &&
                                         <div className={'flex'}>
                                             <span className={'w-28 font-semibold'}>DATUM: </span>
-                                            <span>{new Date(popupTherapy.startAt).getDate()}.{(new Date(popupTherapy.startAt).getMonth() + 1).toString().padStart(2, '0')}.{new Date(popupTherapy.startAt).getFullYear()}</span>
+                                            <span>{new Date(popupTherapy.startAt).getDate().toString().padStart(2, '0')}.{(new Date(popupTherapy.startAt).getMonth() + 1).toString().padStart(2, '0')}.{new Date(popupTherapy.startAt).getFullYear()}</span>
                                         </div>
                                     }
                                     {popupTherapy.endAt &&
