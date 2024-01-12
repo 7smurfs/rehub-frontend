@@ -298,9 +298,9 @@ function RegisterForm() {
                                            value={registerData.confirmPassword} onChange={handleChange}
                                            placeholder={'********'}
                                            className="w-full h-[40px] bg-lightSky opacity-50 dark:opacity-70 mb-[2px] rounded-[5px] p-2"/>
-                                    <img src={showPass ? hide : show} onClick={toggleRepeatPass}
+                                    <img src={showRepeatPass ? hide : show} onClick={toggleRepeatPass}
                                          className="w-6 absolute top-[22%] left-[91%] cursor-pointer dark:hidden" alt={'passEye'}/>
-                                    <img src={showPass ? hidePassWhite : showPassWhite} onClick={toggleRepeatPass}
+                                    <img src={showRepeatPass ? hidePassWhite : showPassWhite} onClick={toggleRepeatPass}
                                          className="w-6 absolute top-[22%] left-[91%] cursor-pointer dark:block hidden" alt={'passEye'}/>
                                 </div>
 

@@ -105,7 +105,7 @@ function UserDashMain() {
                                         }>
                                         <span className={'text-ellipsis font-semibold text-lg'}>{therapy.title}</span>
                                         <span
-                                            className={'font-semibold'}>{new Date(therapy.start).getDay().toString().padStart(2, '0')}.{(new Date(therapy.start).getMonth() + 1).toString().padStart(2, '0')}.{new Date(therapy.start).getFullYear()}</span>
+                                            className={'font-semibold'}>{new Date(therapy.start).getDate().toString().padStart(2, '0')}.{(new Date(therapy.start).getMonth() + 1).toString().padStart(2, '0')}.{new Date(therapy.start).getFullYear()}</span>
                                         <span
                                             className={'font-semibold'}>{new Date(therapy.start).getHours().toString().padStart(2, '0')}:{new Date(therapy.start).getMinutes().toString().padStart(2, '0')} - {new Date(therapy.end).getHours().toString().padStart(2, '0')}:{new Date(therapy.end).getMinutes().toString().padStart(2, '0')}</span>
                                     </div>
@@ -229,7 +229,7 @@ function UserDashMain() {
                                     {popupTherapy.startAt &&
                                         <div className={'flex'}>
                                             <span className={'w-28 font-semibold'}>DATUM: </span>
-                                            <span>{new Date(popupTherapy.startAt).getDate()}.{(new Date(popupTherapy.startAt).getMonth() + 1).toString().padStart(2, '0')}.{new Date(popupTherapy.startAt).getFullYear()}</span>
+                                            <span>{new Date(popupTherapy.startAt).getDate().toString().padStart(2, '0')}.{(new Date(popupTherapy.startAt).getMonth() + 1).toString().padStart(2, '0')}.{new Date(popupTherapy.startAt).getFullYear()}</span>
                                         </div>
                                     }
                                     {popupTherapy.endAt &&
