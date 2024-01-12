@@ -128,153 +128,160 @@ const MyProfile = () => {
     return (
         <PageLayout>
             <Header/>
-            <span
-                className="text-darkSky font-bold text-3xl justify-self-center self-center mt-5 mb-5">Moj profil</span>
+            <div className={'dark:bg-black h-full flex flex-col items-center'}>
+                <span
+                className="text-darkSky dark:text-lightSky font-bold text-3xl mt-5 mb-5">Moj profil</span>
 
-            <PopupJS open={openInvalidate} closeOnDocumentClick={false} onClose={() => setOpenInvalidate(false)}
+                <PopupJS open={openInvalidate} closeOnDocumentClick={false} onClose={() => setOpenInvalidate(false)}
                          modal {...{contentStyle}}>
-                <div className="flex justify-center my-10 overflow-scroll min-[230px]:overflow-visible">
-                    <div className="flex-1 items-center rounded-bl-[10px] rounded-br-[10px] flex flex-col">
-                        <label className="font-bold text-mediumSky text-2xl mt-[30px] text-center">Želite li deaktivirati
-                            račun?</label>
+                    <div className="flex justify-center my-10 overflow-scroll min-[230px]:overflow-visible">
+                        <div className="flex-1 items-center rounded-bl-[10px] rounded-br-[10px] flex flex-col">
+                            <label className="font-bold text-mediumSky text-2xl mt-[30px] text-center">Želite li
+                                deaktivirati
+                                račun?</label>
 
-                        <div className="w-full flex justify-center gap-5 mt-[45px]">
-                            <button className="bg-redMedium hover:bg-redHeavy text-white px-9 py-2 font-semibold rounded-[5px]"
+                            <div className="w-full flex justify-center gap-5 mt-[45px]">
+                                <button
+                                    className="bg-redMedium hover:bg-redHeavy text-white px-9 py-2 font-semibold rounded-[5px]"
                                     onClick={() => {
                                         setOpenInvalidate(false);
                                     }}>Ne
-                            </button>
-                            <button className="bg-green hover:bg-greenMedium text-white px-9 py-2 font-semibold rounded-[5px]"
+                                </button>
+                                <button
+                                    className="bg-green hover:bg-greenMedium text-white px-9 py-2 font-semibold rounded-[5px]"
                                     onClick={() => {
                                         invalidatePatient().then(r => setOpenInvalidate(false));
                                     }}>Da
-                            </button>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </PopupJS>
+                </PopupJS>
 
-            <StyledPopup open={open} closeOnDocumentClick={false} onClose={() => setOpen(false)} modal>
-                <div className="flex justify-center relative">
-                    <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
-                        <label className="font-bold text-mediumSky text-lg mt-[30px]">Stara lozinka:</label>
-                        <div className="relative w-full min-[360px]:w-auto">
-                            <input type={showOldPass ? "text" : "password"} name="oldPass" id="oldPass"
-                                   value={data.oldPass}
-                                   onChange={handleChange}
-                                   className="w-full min-[360px]:w-[300px] h-[40px] bg-lightSky opacity-50 rounded-[5px] p-2"/>
-                            <img src={showOldPass ? hide : show} onClick={toggleOldPass}
-                                 className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
+                <StyledPopup open={open} closeOnDocumentClick={false} onClose={() => setOpen(false)} modal>
+                    <div className="flex justify-center relative">
+                        <form className="flex-1 rounded-bl-[10px] rounded-br-[10px] flex flex-col items-center">
+                            <label className="font-bold text-mediumSky text-lg mt-[30px]">Stara lozinka:</label>
+                            <div className="relative w-full min-[360px]:w-auto">
+                                <input type={showOldPass ? "text" : "password"} name="oldPass" id="oldPass"
+                                       value={data.oldPass}
+                                       onChange={handleChange}
+                                       className="w-full min-[360px]:w-[300px] h-[40px] bg-lightSky opacity-50 rounded-[5px] p-2"/>
+                                <img src={showOldPass ? hide : show} onClick={toggleOldPass}
+                                     className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
 
-                        </div>
+                            </div>
 
-                        <label className="font-bold text-mediumSky text-lg mt-[30px]">Nova lozinka:</label>
-                        <div className="relative w-full min-[360px]:w-auto">
-                            <input type={showPass ? "text" : "password"} name="newPass" id="newPass"
-                                   value={data.newPass}
-                                   onChange={handleChange}
-                                   className="w-full min-[360px]:w-[300px] h-[40px] bg-lightSky opacity-50 rounded-[5px] p-2"/>
-                            <img src={showPass ? hide : show} onClick={togglePass}
-                                 className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
+                            <label className="font-bold text-mediumSky text-lg mt-[30px]">Nova lozinka:</label>
+                            <div className="relative w-full min-[360px]:w-auto">
+                                <input type={showPass ? "text" : "password"} name="newPass" id="newPass"
+                                       value={data.newPass}
+                                       onChange={handleChange}
+                                       className="w-full min-[360px]:w-[300px] h-[40px] bg-lightSky opacity-50 rounded-[5px] p-2"/>
+                                <img src={showPass ? hide : show} onClick={togglePass}
+                                     className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
 
-                        </div>
+                            </div>
 
-                        <label className="font-bold text-mediumSky text-lg mt-[30px]">Potvrdite novu
-                            lozinku:</label>
-                        <div className="relative w-full min-[360px]:w-auto">
-                            <input type={showConfirmPass ? "text" : "password"} name="confirmPass" id="confirmPass"
-                                   value={data.confirmPass}
-                                   onChange={handleChange}
-                                   className="w-full min-[360px]:w-[300px] h-[40px] bg-lightSky opacity-50 rounded-[5px] p-2"/>
+                            <label className="font-bold text-mediumSky text-lg mt-[30px]">Potvrdite novu
+                                lozinku:</label>
+                            <div className="relative w-full min-[360px]:w-auto">
+                                <input type={showConfirmPass ? "text" : "password"} name="confirmPass" id="confirmPass"
+                                       value={data.confirmPass}
+                                       onChange={handleChange}
+                                       className="w-full min-[360px]:w-[300px] h-[40px] bg-lightSky opacity-50 rounded-[5px] p-2"/>
 
-                            <img src={showConfirmPass ? hide : show} onClick={toggleConfirmPass}
-                                 className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
-                        </div>
-                        <button className="bg-mediumSky hover:bg-darkSky text-white px-6 py-2 font-semibold rounded-[5px] mt-[45px] mb-8"
+                                <img src={showConfirmPass ? hide : show} onClick={toggleConfirmPass}
+                                     className="w-6 absolute top-[22%] left-[89%] cursor-pointer" alt={'passEye'}/>
+                            </div>
+                            <button
+                                className="bg-mediumSky hover:bg-darkSky text-white px-6 py-2 font-semibold rounded-[5px] mt-[45px] mb-8"
                                 onClick={handleSubmit}>Nastavi
+                            </button>
+
+                        </form>
+                        <button
+                            className="bg-mediumSky hover:bg-darkSky text-white p-1 rounded-[5px] absolute top-0 right-0 w-[32px] font-extrabold"
+                            onClick={() => setOpen(false)}>X
                         </button>
-
-                    </form>
-                    <button
-                        className="bg-mediumSky hover:bg-darkSky text-white p-1 rounded-[5px] absolute top-0 right-0 w-[32px] font-extrabold"
-                        onClick={() => setOpen(false)}>X
-                    </button>
-                </div>
-            </StyledPopup>
-
-            <div>
-                {profileData ? (
-                    <div>
-                        <table className="flex justify-center items-center pb-10">
-                            <tbody className={'bg-lightSky shadow-2xl p-0 py-5 min-[300px]:p-2 min-[300px]:py-5 min-[330px]:p-5 sm:p-14 rounded-[10px] overflow-x-scroll min-[330px]:overflow-x-visible'}>
-                            {!profileData.roles.includes("SUPERADMIN") && (
-                                <>
-                                    <tr>
-                                        <td className={'font-bold text-mediumSky text-end text-lg sm:text-2xl'}>Ime:</td>
-                                        <td className={'text-darkSky text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.firstName}</td>
-                                    </tr>
-                                    <tr>
-                                        <td className={'font-bold text-mediumSky text-end text-lg sm:text-2xl'}>Prezime:</td>
-                                        <td className={'text-darkSky text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.lastName}</td>
-                                    </tr>
-                                </>
-                            )}
-                            <tr>
-                                <td className={'font-bold text-mediumSky text-end text-lg sm:text-2xl'}>Email:</td>
-                                <td className={'text-darkSky text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.username}</td>
-                            </tr>
-                            <tr>
-                                <td className={'font-bold text-mediumSky text-end text-lg pb-4 sm:pb-0 sm:text-2xl'}>Uloga:</td>
-                                <td className={'text-darkSky text-start text-lg sm:text-2xl p-1 pb-5 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>
-                                    {profileData.roles.includes('ADMIN') ? 'ADMIN' :
-                                        (profileData.roles.includes('PATIENT') ? 'PACIJENT' :
-                                            (profileData.roles.includes('SUPERADMIN') ? 'SUPER ADMIN' :
-                                                (profileData.roles.includes('EMPLOYEE') && profileData.roles.length === 1 ? 'ZAPOSLENIK' :
-                                                    'Nije poznata uloga.')))}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colSpan={2} className={'text-center'}>
-                                    {profileData.roles.includes("PATIENT") && (
-                                        <button
-                                            className={'bg-mediumSky hover:bg-darkSky text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md mx-1'}
-                                            onClick={() => {
-                                                setOpenInvalidate(true);
-                                            }}>
-                                            Deaktiviraj račun
-                                        </button>
-                                    )}
-                                    <button
-                                        className={'bg-mediumSky hover:bg-darkSky text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md mt-2 sm:mt-5 mx-1'}
-                                        onClick={() => {
-                                            setOpen(true);
-                                        }}>
-                                        Promijeni lozinku
-                                    </button>
-                                </td>
-
-                            </tr>
-                            </tbody>
-                        </table>
                     </div>
+                </StyledPopup>
 
-                ) : (
-                    <p>Učitavanje...</p>
-                )}
-            </div>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={2000}
-                limit={2}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
+                <div>
+                    {profileData ? (
+                        <div>
+                            <table className="flex justify-center items-center pb-10">
+                                <tbody
+                                    className={'bg-lightSky dark:bg-darkerSky shadow-2xl p-0 py-5 min-[300px]:p-2 min-[300px]:py-5 min-[330px]:p-5 sm:p-14 rounded-[10px] overflow-x-scroll min-[330px]:overflow-x-visible'}>
+                                {!profileData.roles.includes("SUPERADMIN") && (
+                                    <>
+                                        <tr>
+                                            <td className={'font-bold text-mediumSky dark:text-lightSky text-end text-lg sm:text-2xl'}>Ime:</td>
+                                            <td className={'text-darkSky dark:text-lighterSky text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.firstName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className={'font-bold text-mediumSky dark:text-lightSky text-end text-lg sm:text-2xl'}>Prezime:</td>
+                                            <td className={'text-darkSky dark:text-lighterSky text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.lastName}</td>
+                                        </tr>
+                                    </>
+                                )}
+                                <tr>
+                                    <td className={'font-bold text-mediumSky dark:text-lightSky text-end text-lg sm:text-2xl'}>Email:</td>
+                                    <td className={'text-darkSky dark:text-lighterSky text-start text-lg sm:text-2xl p-1 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>{profileData.username}</td>
+                                </tr>
+                                <tr>
+                                    <td className={'font-bold text-mediumSky dark:text-lightSky text-end text-lg pb-4 sm:pb-0 sm:text-2xl'}>Uloga:</td>
+                                    <td className={'text-darkSky dark:text-lighterSky text-start text-lg sm:text-2xl p-1 pb-5 sm:px-5 sm:py-3 pl-3 sm:pl-10'}>
+                                        {profileData.roles.includes('ADMIN') ? 'ADMIN' :
+                                            (profileData.roles.includes('PATIENT') ? 'PACIJENT' :
+                                                (profileData.roles.includes('SUPERADMIN') ? 'SUPER ADMIN' :
+                                                    (profileData.roles.includes('EMPLOYEE') && profileData.roles.length === 1 ? 'ZAPOSLENIK' :
+                                                        'Nije poznata uloga.')))}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={2} className={'text-center'}>
+                                        {profileData.roles.includes("PATIENT") && (
+                                            <button
+                                                className={'transition-all duration-300 bg-mediumSky dark:bg-darkestSky hover:bg-darkSky hover:dark:bg-darkSky shadow-md shadow-darkerSky dark:shadow-md dark:shadow-black text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md mx-1'}
+                                                onClick={() => {
+                                                    setOpenInvalidate(true);
+                                                }}>
+                                                Deaktiviraj račun
+                                            </button>
+                                        )}
+                                        <button
+                                            className={'transition-all duration-300 bg-mediumSky dark:bg-darkestSky hover:bg-darkSky hover:dark:bg-darkSky shadow-md shadow-darkerSky dark:shadow-md dark:shadow-black text-white p-2 px-4 border-none cursor-pointer text-base font-semibold rounded-md mt-2 sm:mt-5 mx-1'}
+                                            onClick={() => {
+                                                setOpen(true);
+                                            }}>
+                                            Promijeni lozinku
+                                        </button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    ) : (
+                        <p>Učitavanje...</p>
+                    )}
+                </div>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={2000}
+                    limit={2}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                /></div>
+
             <Footer/>
         </PageLayout>
     );

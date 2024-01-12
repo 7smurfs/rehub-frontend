@@ -24,20 +24,20 @@ export default function SuperAdminDashboard() {
 
     return (
         <>
-            <div className="flex flex-col h-full w-full dark:bg-heavyGray">
+            <div className="flex flex-col h-full w-full dark:bg-black">
                 <div
-                    className='grid grid-cols-2 md:grid-cols-4 my-3 mx-3 gap-2 md:gap-8 font-semibold text-sm tracking-wide text-center text-darkSky'>
+                    className='grid grid-cols-2 md:grid-cols-4 my-3 mx-3 gap-2 md:gap-8 font-semibold text-sm tracking-wide text-center text-darkSky dark:text-lighterSky'>
                     <div onClick={() => setSelected(1)}
-                         className={`tab ${selected === 1 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OSOBLJE
+                         className={`tab ${selected === 1 ? 'bg-mediumSky dark:bg-darkestSky text-white dark:text-white font-bold shadow-lg shadow-darkerSky dark:shadow-none' : 'bg-lightSky hover:bg-darkSky dark:bg-darkSky hover:dark:bg-darkerSky shadow-md'}  rounded-lg p-3 cursor-pointer hover:bg-mediumSky hover:text-white transition-all duration-300`}>OSOBLJE
                     </div>
                     <div onClick={() => setSelected(2)}
-                         className={`tab ${selected === 2 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>PACIJENTI
+                         className={`tab ${selected === 2 ? 'bg-mediumSky dark:bg-darkestSky text-white font-bold shadow-lg shadow-darkerSky dark:shadow-none' : 'bg-lightSky hover:bg-darkSky dark:bg-darkSky hover:dark:bg-darkerSky shadow-md'}  rounded-lg p-3 cursor-pointer hover:bg-mediumSky hover:text-white transition-all duration-300`}>PACIJENTI
                     </div>
                     <div onClick={() => setSelected(3)}
-                         className={`tab ${selected === 3 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer hover:bg-lightSky transition-all duration-300`}>SOBE
+                         className={`tab ${selected === 3 ? 'bg-mediumSky dark:bg-darkestSky text-white font-bold shadow-lg shadow-darkerSky dark:shadow-none' : 'bg-lightSky hover:bg-darkSky dark:bg-darkSky hover:dark:bg-darkerSky shadow-md'}  rounded-lg p-3 cursor-pointer hover:bg-mediumSky hover:text-white transition-all duration-300`}>SOBE
                     </div>
                     <div onClick={() => setSelected(4)}
-                         className={`tab ${selected === 4 ? 'bg-mediumSky dark:bg-black text-white font-bold shadow-xl hover:bg-mediumSky' : 'bg-lightSky'}  rounded-lg p-3 cursor-pointer  hover:bg-lightSky transition-all duration-300`}>OPREMA
+                         className={`tab ${selected === 4 ? 'bg-mediumSky dark:bg-darkestSky text-white font-bold shadow-lg shadow-darkerSky dark:shadow-none' : 'bg-lightSky hover:bg-darkSky dark:bg-darkSky hover:dark:bg-darkerSky shadow-md'}  rounded-lg p-3 cursor-pointer hover:bg-mediumSky hover:text-white transition-all duration-300`}>OPREMA
                     </div>
                 </div>
                 <div className={'flex justify-center h-full my-3'}>
@@ -203,12 +203,12 @@ function Personel({props}) {
 
 
     return (<div className='mx-2 w-full grid md:grid-cols-2 gap-2 grid-cols-1'>
-        <div className={'bg-lightSky h-full rounded-xl overflow-y-scroll p-2'}>
+        <div className={'bg-lightSky dark:bg-darkerSky h-full rounded-xl overflow-y-scroll p-2'}>
             {employees.map((employee, key) => (
                 <div
                     key={key}
                     className={
-                        'bg-white p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'
+                        'bg-white dark:bg-lightSky dark:shadow-lg dark:shadow-darkestSky p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'
                     }>
                     <span>{employee.firstName} {employee.lastName} {employee.user.roles.includes('ADMIN') &&
                         <span
@@ -226,12 +226,12 @@ function Personel({props}) {
                 </div>
             ))}
         </div>
-        <div className={'bg-lightSky h-full rounded-xl p-2 text-center'}>
-            <span className={'font-bold text-2xl text-darkerSky'}>UNESI NOVOG ZAPOSLENIKA</span>
+        <div className={'bg-lightSky dark:bg-darkerSky h-full rounded-xl p-2 text-center'}>
+            <span className={'font-bold text-2xl text-darkerSky dark:text-lightSky'}>UNESI NOVOG ZAPOSLENIKA</span>
             <form className={'grid grid-cols-2'}>
                 <div className={'pr-1'}>
                     <label
-                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Ime:</label>
+                        className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Ime:</label>
                     <input type="text" name="firstName" id="firstName"
                            value={registerData.firstName}
                            onChange={handleChange}
@@ -239,27 +239,27 @@ function Personel({props}) {
                 </div>
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Prezime:</label>
+                        className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Prezime:</label>
                     <input type="text" name="lastName" id="lastName" value={registerData.lastName}
                            onChange={handleChange}
                            className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pr-1'}>
                     <label
-                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>E-mail:</label>
+                        className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>E-mail:</label>
                     <input type="email" name="username" id="username" value={registerData.username}
                            onChange={handleChange}
                            className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>OIB:</label>
+                        className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>OIB:</label>
                     <input type="text" name="pin" id="pin" value={registerData.pin}
                            onChange={handleChange}
                            className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pr-1'}>
-                    <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Datum
+                    <label className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Datum
                         rođenja:</label>
                     <input type="date" name="dateOfBirth" id="dateOfBirth"
                            value={registerData.dateOfBirth}
@@ -268,13 +268,13 @@ function Personel({props}) {
                 </div>
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Profesija:</label>
+                        className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Profesija:</label>
                     <input type="text" name="profession" id="profession" onChange={handleChange}
                            value={registerData.profession}
                            className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'pr-1'}>
-                    <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Broj
+                    <label className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Broj
                         mobitela:</label>
                     <input type="text" name="phoneNumber" id="phoneNumber"
                            value={registerData.phoneNumber}
@@ -283,7 +283,7 @@ function Personel({props}) {
                 </div>
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Spol:</label>
+                        className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Spol:</label>
                     <select name="gender" id="gender" onChange={handleChange}
                             value={registerData.gender}
                             className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2">
@@ -295,7 +295,7 @@ function Personel({props}) {
                 </div>
             </form>
             <button onClick={registerNewEmployee}
-                    className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-3'}>UNESI
+                    className={'transition-all duration-300 shadow-md shadow-darkestSky dark:shadow-md dark:shadow-black bg-darkSky hover:bg-darkerSky dark:bg-darkestSky hover:dark:bg-darkSky font-bold text-white p-3 rounded-xl my-3'}>UNESI
                 ZAPOSLENIKA
             </button>
         </div>
@@ -324,12 +324,12 @@ function Patients({props}) {
     return (
         <div className='mx-2 w-[90vw] h-full'>
             <div
-                className={'bg-lightSky flex flex-col h-full items-center rounded-xl overflow-y-scroll p-2'}>
+                className={'bg-lightSky dark:bg-darkerSky flex flex-col h-[70vh] items-center rounded-xl overflow-y-scroll p-2'}>
                 {patientsList.map((patient, key) => (
                     <div
                         key={key}
                         className={
-                            'bg-white p-4 text-darkerSky md:text-2xl flex flex-col sm:flex-row justify-between rounded-lg mx-4 my-2 w-3/4'
+                            'bg-white dark:bg-lightSky dark:shadow-lg shadow-lg dark:shadow-darkestSky p-4 text-darkerSky md:text-2xl flex flex-col sm:flex-row justify-between rounded-lg mx-4 my-2 w-3/4'
                         }>
                         <span className={'font-bold'}>{patient.firstName} {patient.lastName}</span>
                         <span>Datum rođenja: {patient.dateOfBirth.split('-')[2]}.{patient.dateOfBirth.split('-')[1]}.{patient.dateOfBirth.split('-')[0]}</span>
@@ -444,13 +444,13 @@ function Rooms({props}) {
     }, []);
 
     return (<div className='mx-2 w-full grid md:grid-cols-2 grid-cols-1 gap-2'>
-        <div className='bg-lightSky h-full rounded-xl overflow-y-scroll p-2'>
+        <div className='bg-lightSky dark:bg-darkerSky h-full rounded-xl overflow-y-scroll p-2'>
             {rooms.map((room, key) => (
                 <div
                     key={key}
                     className={room.status === 'OPERABLE' ?
-                        'bg-white p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' :
-                        'bg-lightGray p-4 text-gray flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
+                        'bg-white dark:bg-lightSky shadow-lg dark:shadow-lg dark:shadow-darkestSky p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' :
+                        'bg-lightGray shadow-lg dark:shadow-lg dark:shadow-darkestSky p-4 text-gray flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
                     <span className={'font-bold'}>{room.label}</span>
                     <div className={'flex flex-row justify-center items-center'}>
                         <span className={'font-bold'}>Kapacitet: {room.capacity}</span>
@@ -469,12 +469,12 @@ function Rooms({props}) {
             ))}
 
         </div>
-        <div className={'bg-lightSky h-full rounded-xl p-2 text-center'}>
-            <span className={'font-bold text-2xl text-darkerSky'}>UNESI NOVU SOBU</span>
+        <div className={'bg-lightSky dark:bg-darkerSky h-full rounded-xl p-2 text-center'}>
+            <span className={'font-bold text-2xl text-darkerSky dark:text-lightSky'}>UNESI NOVU SOBU</span>
             <form className={'grid grid-cols-2'}>
                 <div className={'pr-1'}>
                     <label
-                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Oznaka
+                        className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Oznaka
                         sobe:</label>
                     <input type="text" name="label" id="label"
                            value={roomRegisterData.label}
@@ -483,13 +483,13 @@ function Rooms({props}) {
                 </div>
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Kapacitet:</label>
+                        className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Kapacitet:</label>
                     <input type="text" name="capacity" id="capacity" value={roomRegisterData.capacity}
                            onChange={handleRoomChange}
                            className="w-full h-[40px] bg-white opacity-80 mb-[2px] rounded-[5px] p-2"/>
                 </div>
                 <div className={'col-span-2'}>
-                    <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Dodatne
+                    <label className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Dodatne
                         informacije:</label>
                     <textarea name={'specialMessage'} id={'specialMessage'} maxLength={255}
                               className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
@@ -497,7 +497,7 @@ function Rooms({props}) {
                 </div>
             </form>
             <button onClick={registerNewRoom}
-                    className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                    className={'transition-all duration-300 shadow-md shadow-darkestSky dark:shadow-md dark:shadow-black bg-darkSky hover:bg-darkerSky dark:bg-darkestSky hover:dark:bg-darkSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
                 SOBU
             </button>
         </div>
@@ -614,10 +614,10 @@ function Equipment({props}) {
     }, []);
 
     return (<div className='mx-2 w-full grid grid-cols-1 md:grid-cols-2 gap-2'>
-        <div className={'bg-lightSky h-full rounded-xl overflow-y-scroll p-2'}>
+        <div className={'bg-lightSky dark:bg-darkerSky h-full rounded-xl overflow-y-scroll p-2'}>
             {equipmentList.map((equipment, key) => (
                 <div key={key}
-                     className={equipment.status === 'OPERABLE' ? 'bg-white p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' : 'bg-lightGray p-4 text-gray flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
+                     className={equipment.status === 'OPERABLE' ? 'bg-white dark:bg-lightSky shadow-lg dark:shadow-lg dark:shadow-darkestSky p-4 text-darkerSky flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500' : 'bg-lightGray shadow-lg dark:shadow-lg dark:shadow-darkestSky p-4 text-gray flex flex-row justify-between rounded-lg text-2xl m-4 transition-all duration-500'}>
                     <span className={'font-bold'}>{equipment.name}</span>
                     <div className={'flex flex-row justify-center items-center'}>
                         <img src={Cross} alt={'cross'}
@@ -636,12 +636,12 @@ function Equipment({props}) {
                 </div>
             ))}
         </div>
-        <div className={'bg-lightSky h-full rounded-xl p-2 text-center'}>
-            <span className={'font-bold text-2xl text-darkerSky'}>UNESI NOVU OPREMU</span>
+        <div className={'bg-lightSky dark:bg-darkerSky h-full rounded-xl p-2 text-center'}>
+            <span className={'font-bold text-2xl text-darkerSky dark:text-lightSky'}>UNESI NOVU OPREMU</span>
             <form className={'grid grid-cols-2'}>
                 <div className={'pr-1'}>
                     <label
-                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Naziv
+                        className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Naziv
                         opreme:</label>
                     <input type="text" name="name" id="name"
                            value={equipmentRegisterData.name}
@@ -651,7 +651,7 @@ function Equipment({props}) {
 
                 <div className={'pl-1'}>
                     <label
-                        className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Soba:</label>
+                        className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Soba:</label>
 
                     <select name="roomId" id="roomId" onChange={handleEquipmentChange}
                             value={equipmentRegisterData.roomId}
@@ -664,7 +664,7 @@ function Equipment({props}) {
                 </div>
 
                 <div className={'col-span-2'}>
-                    <label className={'font-bold text-mediumSky text-lg mt-[15px] self-start block'}>Dodatne
+                    <label className={'font-bold text-mediumSky dark:text-lightSky text-lg mt-[15px] self-start block'}>Dodatne
                         informacije:</label>
                     <textarea name={'specialMessage'} id={'specialMessage'} maxLength={255}
                               className="text-start h-56 text-ellipsis w-full bg-white opacity-80 mb-[2px] rounded-[5px] p-2"
@@ -673,7 +673,7 @@ function Equipment({props}) {
                 </div>
             </form>
             <button onClick={registerNewEquipment}
-                    className={'bg-darkestSky font-bold text-white p-3 rounded-xl my-2'}>UNESI
+                    className={'transition-all duration-300 bg-darkSky dark:bg-darkestSky hover:bg-darkerSky hover:dark:bg-darkSky shadow-md shadow-darkestSky dark:shadow-md dark:shadow-black font-bold text-white p-3 rounded-xl my-2'}>UNESI
                 OPREMU
             </button>
         </div>

@@ -7,15 +7,14 @@ module.exports = {
     theme: {
         colors: {
             white: '#FFFFFF',
-            black: '#001011',
+            black: '#000000',
 
-            transparentSky: '#f0f9ff', // sky-50
             lighterSky: '#e0f2fe', // sky-100
             lightSky: '#bae6fd', // sky-200
             mediumSky: '#0284c7', // sky-600
             darkSky: '#075985', // sky-800
             darkerSky: '#0c4a6e', // sky-900
-            darkestSky: '#082f49', // sky-950
+            darkestSky: '#082f49',
 
             lightGray: '#d1d5db', // gray-300
             mediumGray: '#9ca3af', // gray-400
@@ -31,7 +30,6 @@ module.exports = {
             greenMedium: '#047857',
             greenHeavy: '#064e3b',
 
-            heavyYellow: '#854d0e',
             lightYellow: '#facc15'
         },
         extend: {

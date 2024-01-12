@@ -120,69 +120,75 @@ function AssignAppointment() {
     return (<>
             <PageLayout>
                 <Header/>
-                <div className={'h-full flex flex-col'}>
+                <div className={'h-full flex flex-col dark:bg-black'}>
                     <div className={'h-min grid grid-cols-4 grid-rows-3 gap-3 p-3'}>
                         <div
-                            className={'p-2 h-full row-span-4/5 col-span-2 bg-lighterSky rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
+                            className={'p-2 h-full row-span-4/5 col-span-2 bg-lighterSky dark:bg-darkerSky rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
                             <div className={'h-14 flex items-center pl-5'}>
-                                <h1 className={'text-darkSky font-bold text-2xl underline'}>Pacijent {state.patientResponse.firstName} {state.patientResponse.lastName}</h1>
+                                <h1 className={'text-darkSky dark:text-lightSky font-bold text-2xl underline'}>Pacijent {state.patientResponse.firstName} {state.patientResponse.lastName}</h1>
                             </div>
                             <div className={'h-8 flex items-center pl-3'}>
-                                <span className={'w-52 font-bold text-mediumSky'}>Vrsta oboljenja:</span>
-                                <span>{state.type}</span>
+                                <span className={'w-52 font-bold text-mediumSky dark:text-lightSky'}>Vrsta oboljenja:</span>
+                                <span className={'dark:text-lighterSky'}>{state.type}</span>
                             </div>
                             <div className={'h-8 flex items-center pl-3'}>
-                                <span className={'w-52 font-bold text-mediumSky'}>Opis oboljenja:</span>
-                                <span>{state.request}</span>
+                                <span className={'w-52 font-bold text-mediumSky dark:text-lightSky'}>Opis oboljenja:</span>
+                                <span className={'dark:text-lighterSky'}>{state.request}</span>
                             </div>
                             <div className={'h-8 flex items-center pl-3'}>
-                                <span className={'w-52 font-bold text-mediumSky'}>Uputnicu izdao/la:</span>
-                                <span>{state.doctorName}</span>
+                                <span className={'w-52 font-bold text-mediumSky dark:text-lightSky'}>Uputnicu izdao/la:</span>
+                                <span className={'dark:text-lighterSky'}>{state.doctorName}</span>
                             </div>
                             <div className={'h-8 flex items-center pl-3'}>
-                                <span className={'w-52 font-bold text-mediumSky'}>Skenirana uputnica:</span>
+                                <span className={'w-52 font-bold text-mediumSky dark:text-lightSky'}>Skenirana uputnica:</span>
                                 <button
                                     onClick={() => fetchTherapyScan(state.id)}
-                                    className={'bg-darkestSky font-semibold text-white rounded-[5px] px-3 py-1'}>PRIKAŽI
+                                    className={'bg-darkerSky dark:bg-darkestSky shadow-md shadow-darkestSky dark:shadow-md dark:shadow-black font-semibold text-white rounded-[5px] px-3 py-1'}>PRIKAŽI
                                 </button>
                             </div>
                         </div>
                         <div
-                            className={'bg-lighterSky col-span-2 p-3 row-span-2 h-full rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
+                            className={'bg-lighterSky dark:bg-darkerSky col-span-2 p-3 row-span-2 h-full rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]'}>
                             <div className={'h-8 flex items-center'}>
-                                <h3 className={'text-darkSky font-semibold text-lg'}>Slobodne sobe</h3>
+                                <h3 className={'text-darkSky dark:text-lightSky font-semibold text-lg'}>Slobodne sobe</h3>
                             </div>
                             {rooms.length === 0 ? (
                                 <div className={'h-5/6 flex flex-col justify-center items-center p-3'}>
-                                    <span className={'text-gray'}>Trenutno nema slobodnih soba.</span>
+                                    <span className={'text-gray dark:text-lighterSky'}>Trenutno nema slobodnih soba.</span>
                                 </div>
                             ) : (
                                 <div
-                                    className={'h-5/6 bg-white flex flex-col gap-3 p-3 rounded-[5px] overflow-y-scroll'}>
+                                    className={'h-5/6 bg-white dark:bg-darkerSky flex flex-col gap-3 p-3 rounded-[5px] overflow-y-scroll'}>
                                     {rooms.map((room, key) => (
-                                        <div key={key} className="bg-lighterSky pl-3 rounded-[5px]">
+                                        <div key={key} className="bg-lighterSky shadow-lg pl-3 rounded-[5px]">
                                             <div className={'flex w-full'}>
-                                                <input type="radio" value={room.id} name="roomId" id={`room${room.id}`}
-                                                       onChange={handleOptionChange}/>
                                                 {room.status === 'OPERABLE' && (
-                                                    <CollapsibleRoomTab key={key} title={(
-                                                        <>
+                                                    <>
+                                                        <input type="radio" value={room.id} name="roomId"
+                                                             id={`room${room.id}`}
+                                                             onChange={handleOptionChange}/>
+
+                                                        <CollapsibleRoomTab key={key} title={(
+                                                            <>
                                                             <span
                                                                 className={'font-bold block text-xl'}>{room.label}</span>
-                                                            <span
-                                                                className={'font-semibold text-md'}>Kapacitet: {room.capacity}</span>
-                                                        </>
+                                                                <span
+                                                                    className={'font-semibold text-md'}>Kapacitet: {room.capacity}</span>
+                                                            </>
 
-                                                    )} content={(
-                                                        <div>
-                                                            {equipment.map((eq, key) => (
-                                                                eq.status === 'OPERABLE' && eq.roomId === room.id &&
-                                                                <div key={key}>
-                                                                    <span className={'text-darkestSky'}>{eq.name}</span>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    )}/>
+                                                        )} content={(
+                                                            <div>
+                                                                {equipment.map((eq, key) => (
+                                                                    eq.status === 'OPERABLE' && eq.roomId === room.id &&
+                                                                    <div key={key}>
+                                                                        <span
+                                                                            className={'text-darkerSky'}>{eq.name}</span>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}/>
+                                                    </>
+
                                                 )}
                                             </div>
                                         </div>
@@ -193,9 +199,10 @@ function AssignAppointment() {
 
                         </div>
                         <div
-                            className={'bg-lighterSky col-span-2  p-2 row-span-2 h-full w-full h-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] overflow-y-scroll'}>
+                            className={'bg-lighterSky dark:bg-darkerSky col-span-2  p-2 row-span-2 h-full w-full h-100 rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] overflow-y-scroll'}>
                             <div className={'h-8 flex items-center pl-2'}>
-                                <h3 className={'text-darkSky font-semibold text-lg'}>Moji termini</h3>
+                                <h3 className={'text-darkSky dark:text-lightSky font-semibold text-lg'}>Moji
+                                    termini</h3>
                             </div>
 
                             {employeeTherapies.length === 0 ? (
@@ -205,7 +212,8 @@ function AssignAppointment() {
                             ) : (
                                 employeeTherapies.map((therapy, key) => (
                                     <div key={key} className={'h-min flex flex-col items-center p-3 '}>
-                                        <div className={'bg-mediumSky w-full h-min p-2 text-darkestSky rounded-[5px]'}>
+                                        <div
+                                            className={'bg-mediumSky dark:bg-darkestSky shadow-md shadow-darkerSky dark:shadow-md dark:shadow-black  w-full h-min p-2 text-darkerSky rounded-[5px]'}>
                                             <h1 className={'font-bold text-white'}>{therapy.patientResponse.firstName} {therapy.patientResponse.lastName}</h1>
                                             <span className={'block text-white'}>{therapy.type}</span>
                                             <span className={'block text-white'}>{therapy.roomLabel}</span>
@@ -218,23 +226,23 @@ function AssignAppointment() {
                         </div>
 
                         <div
-                            className={'bg-lighterSky col-span-1 h-full row-span-1 px-3 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px]'}>
+                            className={'bg-lighterSky dark:bg-darkerSky col-span-1 h-full row-span-1 px-3 [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)] rounded-[10px]'}>
                             <div className={'h-8 flex items-center'}>
-                                <h3 className={'text-darkSky font-semibold text-lg'}>Trajanje zahvata</h3>
+                                <h3 className={'text-darkSky dark:text-lightSky font-semibold text-lg'}>Trajanje zahvata</h3>
                             </div>
-                            <div className={'h-3/5 bg-white flex flex-col gap-2 px-3 py-1 rounded-[5px]'}>
+                            <div className={'h-3/5 bg-white dark:bg-darkerSky flex flex-col gap-2 px-3 py-1 rounded-[5px]'}>
                                 <div className={'flex'}>
-                                    <label className={'w-20'}>Početak: </label>
+                                    <label className={'w-20 dark:text-lighterSky'}>Početak: </label>
                                     <input type="datetime-local" name={'startAt'} id={'startAt'}
                                            onChange={handleChange}/>
                                 </div>
                                 <div className={'flex'}>
-                                    <label className={'w-20'}>Kraj: </label>
+                                    <label className={'w-20 dark:text-lighterSky'}>Kraj: </label>
                                     <input type="datetime-local" name={'endAt'} id={'endAt'} onChange={handleChange}/>
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-lighterSky rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
+                        <div className="bg-lighterSky dark:bg-darkerSky rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
 
                         </div>
 
@@ -245,7 +253,7 @@ function AssignAppointment() {
                             lname: state.patientResponse.lastName
                         }}/>
                         <button onClick={() => navigate('/dashboard')}
-                                className={'bg-darkSky w-24 p-2 rounded-[5px] text-white font-semibold'}>Odustani
+                                className={'transition-all duration-300 shadow-md shadow-darkestSky bg-darkSky dark:bg-darkerSky hover:dark:bg-darkSky hover:bg-darkerSky w-24 p-2 rounded-[5px] text-white font-semibold'}>Odustani
                         </button>
                     </div>
 

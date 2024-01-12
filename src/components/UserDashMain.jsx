@@ -87,19 +87,19 @@ function UserDashMain() {
     };
 
     return (
-        <div className="flex flex-col lg:h-4/5 lg:grid lg:grid-cols-2 lg:grid-rows-1 gap-5 p-5">
-            <div className="row-span-1 col-span-1 bg-lighterSky rounded-[5px]">
-                <div className="bg-mediumSky rounded-t-[5px] h-14">
+        <div className="flex flex-col lg:h-4/5 lg:grid lg:grid-cols-2 lg:grid-rows-1 gap-5 p-5 dark:bg-black">
+            <div className="row-span-1 col-span-1 bg-lighterSky dark:bg-darkSky rounded-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
+                <div className="bg-mediumSky dark:bg-darkestSky rounded-t-[5px] h-14">
                     <h3 className="font-bold text-lg text-white p-3">Kalendar</h3>
                 </div>
-                <div className={'lg:h-5/6 m-2'}>
+                <div className={'lg:h-5/6 m-2 dark:text-lighterSky'}>
                     <div className={'lg:hidden h-full flex flex-col md:flex-row items-center justify-around mx-2 my-5'}>
                         {formattedTherapies.slice(0, 3).map((therapy, key) => (
                             <>
                                 {therapy.start && <div key={key} className={'w-full'}>
                                     <div
                                         className={
-                                            therapy.status === 'PENDING_APPROVAL' ? 'md:w-[200px] h-36 p-4 flex flex-col bg-heavyYellow text-white rounded-[10px] my-3 overflow-clip' :
+                                            therapy.status === 'PENDING_APPROVAL' ? 'md:w-[200px] h-36 p-4 flex flex-col bg-heavyGray text-white rounded-[10px] my-3 overflow-clip' :
                                                 therapy.status === 'APPROVED' ? 'md:w-[200px] h-36 p-4 flex flex-col bg-mediumSky text-white rounded-[10px] my-3 overflow-clip' :
                                                     'md:w-[200px] h-36 p-4 flex flex-col bg-heavierGray text-white rounded-[10px] my-3 overflow-clip'
                                         }>
@@ -147,18 +147,18 @@ function UserDashMain() {
                 </div>
             </div>
 
-            <div className="bg-lighterSky rounded-[5px]">
-                <div className="bg-mediumSky rounded-t-[5px] h-14">
+            <div className="bg-lighterSky dark:bg-darkSky rounded-[5px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]">
+                <div className="bg-mediumSky dark:bg-darkestSky rounded-t-[5px] h-14">
                     <h3 className="font-bold text-lg text-white p-3">Moji termini</h3>
                 </div>
                 <div className="h-full -mt-14 pt-14 flex flex-col items-center">
                     {userTherapies.length === 0 ? (
                         <>
-                            <div className="h-full w-11/12 my-4 flex flex-col justify-center items-center bg-white">
+                            <div className="h-full w-11/12 my-4 flex flex-col justify-center items-center bg-lighterSky dark:bg-darkSky">
                                 <span
-                                    className={'font-bold text-xl text-darkestSky'}>Ovdje će biti prikazani Vaši termini</span>
+                                    className={'font-bold text-xl text-darkerSky'}>Ovdje će biti prikazani Vaši termini</span>
                                 <button
-                                    className="bg-mediumSky p-4 my-5 flex items-center justify-center text-white font-semibold rounded-[5px]"
+                                    className="bg-mediumSky hover:bg-darkSky transition-all duration-300 p-4 my-5 flex items-center justify-center text-white font-semibold rounded-[5px] shadow-md shadow-darkSky"
                                     onClick={goToNewTherapy}>
                                     Dodaj novi termin
                                 </button>
@@ -167,29 +167,31 @@ function UserDashMain() {
                     ) : (
                         <>
                             <div
-                                className="w-5/6 h-full my-4 p-5 flex flex-col items-center gap-3 bg-white overflow-y-scroll">
+                                className="w-5/6 h-full my-4 p-5 flex flex-col items-center gap-3 bg-lighterSky dark:bg-darkSky overflow-y-scroll">
                                 {userTherapies.map((therapy, key) => (
-                                    <div key={key} className="rounded-[5px] w-full">
+                                    <div key={key} className="rounded-md w-full">
                                         <div className={
-                                            therapy.status === 'PENDING_APPROVAL' ? 'bg-heavyYellow p-1 rounded-t-md' :
-                                                therapy.status === 'APPROVED' ? 'bg-darkerSky p-1 rounded-t-md' :
+                                            therapy.status === 'PENDING_APPROVAL' ? 'bg-heavyGray dark:bg-gray p-1 rounded-t-md' :
+                                                therapy.status === 'APPROVED' ? 'bg-darkerSky dark:bg-mediumSky p-1 rounded-t-md' :
                                                     'bg-heavierGray p-1 rounded-t-md'
                                         }>
                                             <h5 className="text-white overflow-clip text-ellipsis font-semibold p-1">{therapy.type}</h5>
                                         </div>
                                         <div
-                                            className="bg-lighterSky p-3 flex flex-col justify-between rounded-b-[5px]">
-                                            <span className={'text-ellipsis'}><span
-                                                className={'font-semibold'}>Zahtjev: </span>{therapy.request}</span>
-                                            <div className={'flex flex-row items-center justify-between'}>
-                                                <span
-                                                    className="flex h-full items-center font-semibold">Soba: {therapy.roomLabel}</span>
-                                                {therapy.referenceTherapyId && <span className={'font-semibold'}>Šifra ref. terapije: {therapy.referenceTherapyId}</span>}
+                                            className="bg-lighterSky dark:bg-lightSky shadow-lg dark:shadow-lg dark:shadow-darkestSky p-3 flex justify-between rounded-b-[5px]">
+                                            <div className={''}>
+                                                <span className={'text-ellipsis'}><span
+                                                    className={'font-semibold'}>Zahtjev: </span>{therapy.request}</span>
+                                                <span className={therapy.status === 'PENDING_APPROVAL' ? 'hidden' : "flex items-center font-semibold"}>Soba: {therapy.roomLabel}</span>
+
+                                                {therapy.referenceTherapyId && <span className={'flex items-center font-semibold'}>Šifra ref. terapije: {therapy.referenceTherapyId}</span>}
+                                            </div>
+
+                                            <div className={'flex items-center justify-center'}>
                                                 <img src={arrow} alt="arrow"
                                                      onClick={() => {
                                                          setPopupTherapy(therapy);
                                                          setOpen(true);
-                                                         fetchTherapyScan(therapy.id).catch(() => toast.error("Dogodila se pogreška."));
                                                      }}
                                                      className="h-8 cursor-pointer"/>
                                             </div>
@@ -198,7 +200,7 @@ function UserDashMain() {
                                 ))}
                             </div>
                             <button
-                                className="bg-mediumSky p-4 my-3 flex items-center justify-center text-white font-semibold rounded-[5px]"
+                                className="bg-mediumSky dark:bg-darkestSky shadow-md shadow-darkSky dark:shadow-md dark:shadow-black hover:bg-darkSky dark:hover:bg-darkSky transition-all duration-200 px-4 py-3 my-4 flex items-center justify-center text-white font-semibold rounded-[5px]"
                                 onClick={goToNewTherapy}>
                                 Dodaj novi termin
                             </button>
@@ -206,7 +208,7 @@ function UserDashMain() {
                     )}
                 </div>
                 <Popup open={open} closeOnDocumentClick={false} onClose={() => setOpen(false)} modal>
-                    <div className={'bg-lighterSky h-[40vh] text-darkestSky text-xl p-5 tracking-wider'}>
+                    <div className={'bg-lighterSky h-[50vh] text-darkerSky text-xl p-5 tracking-wider'}>
                         <div className={'h-1/6 pb-3'}>
                             <h2 className={'font-semibold text-2xl'}>Terapija
                                 - {popupTherapy !== null && popupTherapy.patientResponse['firstName']}
@@ -227,7 +229,7 @@ function UserDashMain() {
                                     {popupTherapy.startAt &&
                                         <div className={'flex'}>
                                             <span className={'w-28 font-semibold'}>DATUM: </span>
-                                            <span>{new Date(popupTherapy.startAt).getDay()}.{(new Date(popupTherapy.startAt).getMonth() + 1).toString().padStart(2, '0')}.{new Date(popupTherapy.startAt).getFullYear()}</span>
+                                            <span>{new Date(popupTherapy.startAt).getDate()}.{(new Date(popupTherapy.startAt).getMonth() + 1).toString().padStart(2, '0')}.{new Date(popupTherapy.startAt).getFullYear()}</span>
                                         </div>
                                     }
                                     {popupTherapy.endAt &&
@@ -257,7 +259,7 @@ function UserDashMain() {
                                     {
                                         popupTherapy.scan &&
                                         <>
-                                            <button className={'font-semibold p-2 text-white bg-darkestSky rounded-lg'}
+                                            <button className={'font-semibold p-2 text-white bg-darkerSky px-5 rounded-lg'}
                                                     onClick={() => fetchTherapyScan(popupTherapy.id).catch(() => toast.error("Dogodila se greska."))}>UPUTNICA
                                             </button>
                                         </>
@@ -268,14 +270,14 @@ function UserDashMain() {
                         </div>
                         <div className={'flex justify-around items-center'}>
                             <button onClick={() => setOpen(false)}
-                                    className={'w-1/3 p-3 bg-darkSky text-white rounded-xl font-semibold'}>
+                                    className={'w-1/3 p-3 bg-darkSky text-white rounded-md font-semibold'}>
                                 ZATVORI
                             </button>
                             <button onClick={() => {
                                 cancelTherapy(popupTherapy.id);
                                 setOpen(false);
                             }}
-                                    className={'w-1/3 p-3 bg-redHeavy text-white rounded-xl font-semibold'}>
+                                    className={'w-1/3 p-3 bg-redHeavy text-white rounded-md font-semibold'}>
                                 OTKAŽI
                             </button>
                         </div>
