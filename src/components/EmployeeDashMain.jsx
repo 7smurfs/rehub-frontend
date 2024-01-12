@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Arrow from "../assets/right-arrow.svg";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import api from "../http/api";
 import { toast } from "react-toastify";
 import FullCalendar from "@fullcalendar/react";
@@ -15,8 +15,8 @@ export default function EmployeeDashMain() {
             <RoomList />
             <EquipmentList />
             <AssignedApptList />
+            <FinishedApptList />
             <ResultList />
-            <PatientAndTherapyList />
         </div>
     </>)
 }
@@ -224,8 +224,10 @@ function AssignedApptList() {
                 'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
             }
         }).then(res => {
-            let therapies = res.data;
-            setAssignedApptList(therapies);
+
+            const filteredTherapies = res.data.filter(appt => (new Date(appt.endAt) > new Date()));
+            setAssignedApptList(filteredTherapies);
+
         }).catch(() => toast.error('Dogodila se pogreška.'));
     }, []);
 
@@ -250,6 +252,54 @@ function AssignedApptList() {
                                 <Link to={null}>
                                     <img src={Arrow} alt="Arrow" className={'h-10'} />
                                 </Link>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}
+
+function FinishedApptList() {
+
+    const navigate = useNavigate();
+    const [finishedApptList, setFinishedApptList] = useState([]);
+
+    useEffect(() => {
+        api.get('/employee/accountable/therapies', {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('access-token')
+            }
+        }).then(res => {
+            const filteredTherapies = res.data.filter(appt => appt.therapyResultResponse == null && (new Date(appt.endAt) < new Date()));
+            setFinishedApptList(filteredTherapies)
+        }).catch(() => toast.error('Dogodila se pogreška.'));
+    }, []);
+    return (
+        <div className={"row-span-1 col-span-1 bg-lighterSky rounded-[10px] [box-shadow:-2px_15px_30px_rgba(23,_37,_84,_0.2)]"}>
+            <div className={'h-10 flex justify-center items-center'}>
+                <span className={'text-mediumSky font-bold text-2xl'}>Gotovi termini</span>
+            </div>
+            {finishedApptList.length === 0 ? (
+                <div className={'h-4/6 bg-transparentSky mx-2 flex justify-center items-center'}>
+                    <span className={'text-gray text-lg'}>Nema gotovih termina.</span>
+                </div>
+            ) : (
+                <div className={'h-4/6 bg-transparentSky mx-2 overflow-y-scroll p-3'}>
+                    {finishedApptList.map((appt, key) => (
+                        <div className={'bg-lightSky flex justify-between items-center p-3'}>
+                            <div>
+                                <span className={'font-bold text-darkerSky'}>{appt.patientResponse.firstName} {appt.patientResponse.lastName}</span>
+                                <p className={'text-darkSky text-sm'}>{appt.type}</p>
+                            </div>
+                            <div>
+                                <img
+                                    src={Arrow}
+                                    alt="Arrow"
+                                    className={'h-10'}
+                                    onClick={() => navigate('/appointmentResult', { state: { appointmentInfo: appt , patientResponse: appt.patientResponse} })}
+                                />
                             </div>
                         </div>
                     ))}
@@ -287,15 +337,14 @@ function ResultList() {
             ) : (
                 <div className={'h-4/6 bg-transparentSky mx-2 overflow-y-scroll p-3'}>
                     {resultList.map((appt, key) => (
-                        <div className={'bg-lightSky flex justify-between items-center p-3'}>
+                        <div className={'bg-lightSky flex justify-between items-center p-3 mb-3'}>
                             <div>
-                                <span className={'font-bold text-darkerSky'}>{}</span>
-                                <p className={'text-darkSky text-sm'}>{"TODO"}</p>
-                            </div>
-                            <div>
-                                <Link to={'/appointmentResult'}>
-                                    <img src={Arrow} alt="Arrow" className={'h-10'} />
-                                </Link>
+                                <span className={'font-bold text-darkerSky'}>{appt.patientName} : </span>
+                                {appt.status === "uspjesno" ? (
+                                    <span className={'font-bold text-green'}>{appt.status}</span>
+                                ) : (
+                                    <span className={'font-bold text-redLight'}>{appt.status}</span>)}
+                                <p className={'text-darkSky text-sm'}>{appt.result}</p>
                             </div>
                         </div>
 
