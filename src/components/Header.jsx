@@ -3,6 +3,8 @@ import {AuthContext} from "../auth/AuthProvider";
 import {useNavigate, useLocation} from "react-router-dom";
 import closedHamburger from '../assets/hamburger_menu.svg';
 import openedHamburger from '../assets/hamburger_menu_closed.svg';
+import closedHamburgerWhite from '../assets/hamburger_menu_white.svg';
+import openedHamburgerWhite from '../assets/hamburger_menu_closed_white.svg';
 import whiteLogo from "../assets/RH-logo-with-text-white.svg";
 import LogoWText from "../assets/RH-logo-with-text.svg"
 
@@ -81,12 +83,24 @@ function Header() {
                 </div>
                 <div className={'lg:hidden flex justify-center items-center mx-4'}>
                     {openHamburger ?
-                        <img onClick={() => setOpenHamburger(o => !o)} className={'h-7 cursor-pointer'}
-                             src={openedHamburger}
-                             alt={'openedHamburger'}/> :
-                        <img onClick={() => setOpenHamburger(o => !o)} className={'h-7 cursor-pointer'}
-                             src={closedHamburger}
-                             alt={'closedHamburger'}/>}
+                        <>
+                            <img onClick={() => setOpenHamburger(o => !o)} className={'h-7 cursor-pointer dark:hidden'}
+                                 src={openedHamburger}
+                                 alt={'openedHamburger'}/>
+                            <img onClick={() => setOpenHamburger(o => !o)} className={'h-7 cursor-pointer hidden dark:block'}
+                                 src={openedHamburgerWhite}
+                                 alt={'openedHamburger'}/>
+                        </>
+                        :
+                        <>
+                            <img onClick={() => setOpenHamburger(o => !o)} className={'h-7 cursor-pointer dark:hidden'}
+                                 src={closedHamburger}
+                                 alt={'closedHamburger'}/>
+                            <img onClick={() => setOpenHamburger(o => !o)} className={'h-7 cursor-pointer hidden dark:block'}
+                                 src={closedHamburgerWhite}
+                                 alt={'closedHamburger'}/>
+                        </>
+                    }
                 </div>
 
             </header>
